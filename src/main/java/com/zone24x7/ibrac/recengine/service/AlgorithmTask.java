@@ -1,5 +1,6 @@
 package com.zone24x7.ibrac.recengine.service;
 
+import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -14,18 +15,18 @@ public class AlgorithmTask implements Callable<AlgorithmResult> {
     @Autowired
     private AlgorithmService algorithmService;
 
-    private InputParams inputParams;
+    private RecInputParams recInputParams;
     private ActiveBundle activeBundle;
     private RecCycleStatus recCycleStatus;
 
-    public AlgorithmTask(InputParams inputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
-        this.inputParams = inputParams;
+    public AlgorithmTask(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
+        this.recInputParams = recInputParams;
         this.activeBundle = activeBundle;
         this.recCycleStatus = recCycleStatus;
     }
 
     @Override
     public AlgorithmResult call() {
-       return algorithmService.getAlgorithmResult(inputParams, activeBundle, recCycleStatus);
+       return algorithmService.getAlgorithmResult(recInputParams, activeBundle, recCycleStatus);
     }
 }

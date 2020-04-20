@@ -1,10 +1,10 @@
 package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline;
 
-
 import com.zone24x7.ibrac.recengine.pipeline.RecGenerationStrategy;
 import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers.RecUnitHandler;
-import com.zone24x7.ibrac.recengine.pojo.FlatRecOtherInfo;
-import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.pojo.RecommendationStatusParams;
+import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
+import com.zone24x7.ibrac.recengine.pojo.FlatRecMetaInfo;
+import com.zone24x7.ibrac.recengine.pojo.RecStatusParams;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -13,30 +13,28 @@ import org.springframework.stereotype.Component;
 import java.util.LinkedList;
 import java.util.List;
 
-
 /**
- * Only flat algorithms included recommendation generation strategy
+ * Class to represent flat recommendations only recommendation generation strategy
  */
 @Component
-public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationStrategy<InputParams> {
-
+public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationStrategy<RecInputParams> {
     @Autowired
     @Qualifier("coreRecommendationHandler")
     private RecUnitHandler coreRecommendationHandler;
 
     /**
-     * Generates an experience.
+     * Method to generate recommendations
      *
-     * @param activeBundle   Active bundle containing the configuration to execute the
+     * @param activeBundle   the active bundle containing the configuration to execute the
      *                       strategy.
-     * @param inputParams    input parameter object which includes cid, pgId, placementId, context params, limit
+     * @param recInputParams the input parameter object which includes cid, pgId, placementId, context params, limit
      * @param recCycleStatus the object to track the status of the recommendation generation
      * @return the generated experience.
      */
     @Override
-    public RecResult<FlatRecPayload, FlatRecOtherInfo> getRecommendations(ActiveBundle activeBundle, InputParams inputParams, RecCycleStatus recCycleStatus) {
+    public RecResult<FlatRecPayload, FlatRecMetaInfo> getRecommendations(ActiveBundle activeBundle, RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
         //Creates a status object. Initialize the with the recommendation limit provided by the channel.
-        RecommendationStatusParams recStatusParams = new RecommendationStatusParams();
+        RecStatusParams recStatusParams = new RecStatusParams();
         recStatusParams.setRecCycleStatus(recCycleStatus);
         recStatusParams.setLimit(5);
         //List of recommendation unit handlers are initialized
@@ -49,8 +47,8 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
         //The unit handlers of the chain will be executed in this loop. If at any stage an EdeExperience object is available in the recStatusParsms
         //that means an result has been generated. So it will be returned
         for (RecUnitHandler handler : handlers) {
-            handler.handleTask(inputParams, recStatusParams, activeBundle);
-            RecResult<FlatRecPayload, FlatRecOtherInfo> recResult = recStatusParams.getRecResult();
+            handler.handleTask(recInputParams, recStatusParams, activeBundle);
+            RecResult<FlatRecPayload, FlatRecMetaInfo> recResult = recStatusParams.getRecResult();
             if (recResult != null) {
                 return recResult;
             }

@@ -1,7 +1,7 @@
 package com.zone24x7.ibrac.recengine.strategy;
 
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
-import com.zone24x7.ibrac.recengine.pojo.InputParams;
+import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
 import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -16,16 +16,16 @@ public class PlacementTask implements Callable<RecResult> {
     @Autowired
     private RecGenerationEngine recGenerationEngine;
 
-    private InputParams inputParams;
+    private RecInputParams recInputParams;
     private RecCycleStatus recCycleStatus;
 
-    public PlacementTask(InputParams inputParams, RecCycleStatus recCycleStatus) {
-        this.inputParams = inputParams;
+    public PlacementTask(RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
+        this.recInputParams = recInputParams;
         this.recCycleStatus = recCycleStatus;
     }
 
     @Override
     public RecResult call() throws Exception {
-        return recGenerationEngine.getResult(inputParams, recCycleStatus);
+        return recGenerationEngine.getResult(recInputParams, recCycleStatus);
     }
 }

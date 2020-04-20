@@ -1,8 +1,8 @@
 package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers;
 
-import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.pojo.RecommendationStatusParams;
+import com.zone24x7.ibrac.recengine.pojo.RecStatusParams;
 import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
-import com.zone24x7.ibrac.recengine.pojo.InputParams;
+import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
 
 /**
  * Abstract class for handling Recs
@@ -10,11 +10,11 @@ import com.zone24x7.ibrac.recengine.pojo.InputParams;
 public abstract class RecUnitHandler {
 
     /**
-     * Abstract method to be implemented for all Recunit handler's  sub classes
+     * Abstract method to be implemented for all RecUnit handler's  sub classes
      *
-     * @param recInputParams  rec input params
-     * @param recStatusParams rec status params
-     * @param activeBundle    activeBundle
+     * @param recInputParams  the input parameters for recommendation generation
+     * @param recStatusParams rec status parameters for recommendation generation
+     * @param activeBundle    the activeBundle for recommendation generation
      */
-    public abstract void handleTask(InputParams recInputParams, RecommendationStatusParams recStatusParams, ActiveBundle activeBundle);
+    public abstract void handleTask(RecInputParams recInputParams, RecStatusParams recStatusParams, ActiveBundle activeBundle);
 }

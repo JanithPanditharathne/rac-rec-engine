@@ -10,12 +10,24 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+/**
+ * Class to represent HBase DAO implementation.
+ */
 @Component
 public class RecHBaseDao implements HBaseDao {
 
     @Autowired
     private HBaseConnection hBaseConnection;
 
+    /**
+     * Method to get the hbase result for a given key, table, column family and qualifier.
+     *
+     * @param key          the key to retrieve the result
+     * @param tableName    the table to retrieve the result
+     * @param columnFamily the column family to retrieve the result
+     * @param qualifier    the qualifier to retrieve the result
+     * @return the result from hbase
+     */
     @Override
     public Result getResult(String key, String tableName, String columnFamily, String qualifier) {
         Connection connection = hBaseConnection.getConnection();
@@ -28,7 +40,7 @@ public class RecHBaseDao implements HBaseDao {
             table.close();
             return result;
         } catch (IOException e) {
-           //TODO Handle exception
+            //TODO Handle exception
         }
         return null;
     }
