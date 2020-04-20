@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Component
-public class HBaseDaoImpl implements HBaseDao {
+public class RecHBaseDao implements HBaseDao {
 
     @Autowired
     private HBaseConnection hBaseConnection;

@@ -13,7 +13,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
 @Component
-public class AlgorithmCombinatorImpl implements AlgorithmCombinator {
+public class RecAlgorithmCombinator implements AlgorithmCombinator {
 
     @Autowired
     private AlgorithmTaskFactory algorithmTaskFactory;

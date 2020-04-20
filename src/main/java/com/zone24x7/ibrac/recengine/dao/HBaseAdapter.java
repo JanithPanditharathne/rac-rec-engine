@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
 
-
-public class HBaseAdapterImpl implements DatasourceAdapter {
+public class HBaseAdapter implements DatasourceAdapter {
 
     @Autowired
     private HBaseDao hBaseDao;

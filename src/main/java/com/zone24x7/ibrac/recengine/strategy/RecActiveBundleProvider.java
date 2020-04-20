@@ -5,7 +5,7 @@ import com.zone24x7.ibrac.recengine.pojo.InputParams;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ActiveBundleProviderImpl implements ActiveBundleProvider {
+public class RecActiveBundleProvider implements ActiveBundleProvider {
     @Override
     public ActiveBundle getActiveBundle(InputParams inputParams) {
         //TODO: Write logic

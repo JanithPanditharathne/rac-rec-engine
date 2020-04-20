@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class AlgorithmServiceImpl implements AlgorithmService {
+public class RecAlgorithmService implements AlgorithmService {
 
     @Autowired
     private DatasourceAdapter datasourceAdapter;
