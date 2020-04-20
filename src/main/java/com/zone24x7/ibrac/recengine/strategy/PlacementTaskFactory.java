@@ -3,12 +3,15 @@ package com.zone24x7.ibrac.recengine.strategy;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.InputParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PlacementTaskFactory {
     @Autowired
-    private RecGenerationEngine recGenerationEngine;
+    private ApplicationContext context;
 
-    public PlacementTask create(InputParams inputParams, RecCycleStatus recCycleStatus){
-        return new PlacementTask(inputParams, recCycleStatus, recGenerationEngine);
+    public PlacementTask create(InputParams inputParams, RecCycleStatus recCycleStatus) {
+        return context.getBean(PlacementTask.class, inputParams, recCycleStatus);
     }
 }

@@ -1,13 +1,13 @@
 package com.zone24x7.ibrac.recengine.controller;
 
-import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.InputParams;
+import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTask;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTaskFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.ExecutorService;
@@ -22,7 +22,7 @@ public class RecController {
     @Autowired
     private PlacementTaskFactory placementTaskFactory;
 
-    @RequestMapping("/recengine/v1/recommendations")
+    @GetMapping("/recengine/v1/recommendations")
     public RecResult getRecommendation() throws Exception {
         InputParams inputParams = new InputParams();
         RecCycleStatus recCycleStatus = new RecCycleStatus();

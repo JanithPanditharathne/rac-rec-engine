@@ -4,13 +4,16 @@ import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.InputParams;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AlgorithmTaskFactory {
 
     @Autowired
-    private AlgorithmService algorithmService;
+    private ApplicationContext context;
 
     public AlgorithmTask create(InputParams inputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
-        return new AlgorithmTask(inputParams, activeBundle, recCycleStatus, algorithmService);
+        return context.getBean(AlgorithmTask.class, inputParams, activeBundle, recCycleStatus);
     }
 }
