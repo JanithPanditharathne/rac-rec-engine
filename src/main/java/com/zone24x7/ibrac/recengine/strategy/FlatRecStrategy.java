@@ -8,12 +8,23 @@ import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * Strategy to return flat type of recommendations.
+ */
 @Component
 public class FlatRecStrategy extends StrategyExecutor {
 
     @Autowired
     private FlatRecOnlyIncludedRecGenerationStrategy flatRecOnlyIncludedRecGenerationStrategy;
 
+    /**
+     * Calls the flat rec strategy if the parameters satisfy the conditions.
+     *
+     * @param recInputParams input parameters received.
+     * @param activeBundle   active bundle object containing details for algo execution.
+     * @param recCycleStatus recCycle status.
+     * @return a flat recommendation result.
+     */
     public RecResult execute(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
         if ("flat".equalsIgnoreCase(activeBundle.getType())) {
             return flatRecOnlyIncludedRecGenerationStrategy.getRecommendations(activeBundle, recInputParams, recCycleStatus);

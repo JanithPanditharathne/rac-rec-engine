@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Callable;
 
+/**
+ * Recommendation generation task for a given placement.
+ */
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class PlacementTask implements Callable<RecResult> {
@@ -19,11 +22,22 @@ public class PlacementTask implements Callable<RecResult> {
     private RecInputParams recInputParams;
     private RecCycleStatus recCycleStatus;
 
+    /**
+     * Constructor for placement task.
+     *
+     * @param recInputParams input parameters received.
+     * @param recCycleStatus recCycle status.recCycleStatus.
+     */
     public PlacementTask(RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
         this.recInputParams = recInputParams;
         this.recCycleStatus = recCycleStatus;
     }
 
+    /**
+     * Overridden call method of the callable task to call the recommendation engine.
+     *
+     * @return returns an recommendation result.
+     */
     @Override
     public RecResult call() throws Exception {
         return recGenerationEngine.getResult(recInputParams, recCycleStatus);
