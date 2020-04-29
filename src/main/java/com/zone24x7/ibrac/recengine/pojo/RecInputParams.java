@@ -6,8 +6,65 @@ import java.util.Map;
  * Class to represent recommendation input parameters.
  */
 public class RecInputParams {
+    private String channelId;
+    private String pageId;
+    private PlaceholderId placeholderId;
     private Map<String, String> ccp;
     private int limit;
+
+    /**
+     * Method to get the channel id.
+     *
+     * @return id of the channel.
+     */
+    public String getChannelId() {
+        return channelId;
+    }
+
+    /**
+     * Method to set the channel id.
+     *
+     * @param channelId id of the channel.
+     */
+    public void setChannelId(String channelId) {
+        this.channelId = channelId;
+    }
+
+    /**
+     * Method to get the page id.
+     *
+     * @return id of the page.
+     */
+    public String getPageId() {
+        return pageId;
+    }
+
+    /**
+     * Method to set the page id.
+     *
+     * @param pageId id of the page.
+     */
+    public void setPageId(String pageId) {
+        this.pageId = pageId;
+    }
+
+    /**
+     * Method to get the placeholder id.
+     *
+     * @return id of the placeholder.
+     */
+    public PlaceholderId getPlaceholderId() {
+        return placeholderId;
+    }
+
+    /**
+     * Method to set the placeholder id.
+     *
+     * @param placeholderId id of the placeholder.
+     */
+    public void setPlaceholderId(PlaceholderId placeholderId) {
+        this.placeholderId = placeholderId;
+    }
 
     /**
      * Method to get the channel context parameters.
