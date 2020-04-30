@@ -7,23 +7,23 @@ import java.util.Map;
  * Class to represent the product.
  */
 public class Product {
-    private Map<String, String> attributes = new LinkedHashMap<>();
+    private Map<String, String> attributesMap = new LinkedHashMap<>();
 
     /**
      * Method to get the product attributes.
      *
      * @return the product attributes
      */
-    public Map<String, String> getAttributes() {
-        return attributes;
+    public Map<String, String> getAttributesMap() {
+        return attributesMap;
     }
 
     /**
      * Method to set the product attributes
      *
-     * @param attributes the product attributes to set
+     * @param attributesMap the product attributes to set
      */
-    public void setAttributes(Map<String, String> attributes) {
-        this.attributes = attributes;
+    public void setAttributesMap(Map<String, String> attributesMap) {
+        this.attributesMap = attributesMap;
     }
 }
