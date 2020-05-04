@@ -26,6 +26,13 @@ public class StringEvaluator extends BaseEvaluator {
     }
 
     /**
+     * Default Constructor
+     */
+    private StringEvaluator() {
+        // Default constructor
+    }
+
+    /**
      * Evaluates strings
      *
      * @param internalWorkingMemory the internal working memory
