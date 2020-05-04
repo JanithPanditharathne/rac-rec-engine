@@ -32,10 +32,10 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
     private static final int TWO = 2;
 
     private static final String MATCHING_CONDITION_START = "MatchingCondition(";
-    private static final String MATCHING_CONDITION_END = ") ";
+    private static final String MATCHING_CONDITION_END = ")";
 
     private static final String ACTION_CONDITION_START = "Product(";
-    private static final String ACTION_CONDITION_END = ")) ";
+    private static final String ACTION_CONDITION_END = "))";
 
     private static final String INVALID_RULE_EXC_MSG = "Error parsing input rule string";
     private static final String INVALID_RULE_FORMAT_ERROR_MSG = "Rule provided has an incorrect format.";

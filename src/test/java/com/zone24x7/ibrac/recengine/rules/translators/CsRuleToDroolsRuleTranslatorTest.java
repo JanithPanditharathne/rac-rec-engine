@@ -21,20 +21,20 @@ public class CsRuleToDroolsRuleTranslatorTest {
     private static final String CS_MATCHING_RULE_2 = "department #= \"Clothing & Shoes & a & b\"";
     private static final String CS_MATCHING_RULE_3 = "((department #= \"Clothing\" || department == \"Shoes\") && (category == \"sports\" || category #= \"sport\")) && brand #= \"Nike\"";
 
-    private static final String EXPECTED_MATCHING_RULE_1 = "MatchingCondition(matchingMap[\"department\"] == \"Clothing\") ";
-    private static final String EXPECTED_MATCHING_RULE_2 = "MatchingCondition(matchingMap[\"department\"] equalsIgnoreCase \"Clothing & Shoes & a & b\") ";
-    private static final String EXPECTED_MATCHING_RULE_3 = "MatchingCondition(( ( matchingMap[\"department\"] equalsIgnoreCase \"Clothing\" || matchingMap[\"department\"] == \"Shoes\" ) && ( matchingMap[\"category\"] == \"sports\" || matchingMap[\"category\"] equalsIgnoreCase \"sport\" ) ) && matchingMap[\"brand\"] equalsIgnoreCase \"Nike\") ";
+    private static final String EXPECTED_MATCHING_RULE_1 = "MatchingCondition(matchingMap[\"department\"] == \"Clothing\")";
+    private static final String EXPECTED_MATCHING_RULE_2 = "MatchingCondition(matchingMap[\"department\"] equalsIgnoreCase \"Clothing & Shoes & a & b\")";
+    private static final String EXPECTED_MATCHING_RULE_3 = "MatchingCondition(( ( matchingMap[\"department\"] equalsIgnoreCase \"Clothing\" || matchingMap[\"department\"] == \"Shoes\" ) && ( matchingMap[\"category\"] == \"sports\" || matchingMap[\"category\"] equalsIgnoreCase \"sport\" ) ) && matchingMap[\"brand\"] equalsIgnoreCase \"Nike\")";
 
     private static final String CS_ACTION_RULE_1 = "department == \"Clothing\"";
     private static final String CS_ACTION_RULE_2 = "department #= \"Clothing & Shoes & a & b\"";
     private static final String CS_ACTION_RULE_3 = "((department #= \"Clothing\" || department == \"Shoes\") && (category == \"sports\" || category #= \"sport\")) && brand #= \"Nike\"";
     private static final String CS_ACTION_RULE_4 = "((department #= \"Clothing\" || price > \"12.99\") && rating > \"2\")";
 
-    private static final String EXPECTED_ACTION_RULE_1 = "Product(" + UUID_CONDITION + "(attributesMap[\"department\"] == \"Clothing\")) ";
-    private static final String EXPECTED_ACTION_RULE_1_1 = "Product((attributesMap[\"department\"] == \"Clothing\")) ";
-    private static final String EXPECTED_ACTION_RULE_2 = "Product(" + UUID_CONDITION + "(attributesMap[\"department\"] equalsIgnoreCase \"Clothing & Shoes & a & b\")) ";
-    private static final String EXPECTED_ACTION_RULE_3 = "Product(" + UUID_CONDITION + "(( ( attributesMap[\"department\"] equalsIgnoreCase \"Clothing\" || attributesMap[\"department\"] == \"Shoes\" ) && ( attributesMap[\"category\"] == \"sports\" || attributesMap[\"category\"] equalsIgnoreCase \"sport\" ) ) && attributesMap[\"brand\"] equalsIgnoreCase \"Nike\")) ";
-    private static final String EXPECTED_ACTION_RULE_4 = "Product(" + UUID_CONDITION + "(( ( attributesMap[\"department\"] equalsIgnoreCase \"Clothing\" || Double.valueOf(attributesMap[\"price\"]) > \"12.99\" ) && Integer.valueOf(attributesMap[\"rating\"]) > \"2\" ))) ";
+    private static final String EXPECTED_ACTION_RULE_1 = "Product(" + UUID_CONDITION + "(attributesMap[\"department\"] == \"Clothing\"))";
+    private static final String EXPECTED_ACTION_RULE_1_1 = "Product((attributesMap[\"department\"] == \"Clothing\"))";
+    private static final String EXPECTED_ACTION_RULE_2 = "Product(" + UUID_CONDITION + "(attributesMap[\"department\"] equalsIgnoreCase \"Clothing & Shoes & a & b\"))";
+    private static final String EXPECTED_ACTION_RULE_3 = "Product(" + UUID_CONDITION + "(( ( attributesMap[\"department\"] equalsIgnoreCase \"Clothing\" || attributesMap[\"department\"] == \"Shoes\" ) && ( attributesMap[\"category\"] == \"sports\" || attributesMap[\"category\"] equalsIgnoreCase \"sport\" ) ) && attributesMap[\"brand\"] equalsIgnoreCase \"Nike\"))";
+    private static final String EXPECTED_ACTION_RULE_4 = "Product(" + UUID_CONDITION + "(( ( attributesMap[\"department\"] equalsIgnoreCase \"Clothing\" || Double.valueOf(attributesMap[\"price\"]) > \"12.99\" ) && Integer.valueOf(attributesMap[\"rating\"]) > \"2\" )))";
 
     /**
      * Method to setup the dependencies for the test class
@@ -92,7 +92,6 @@ public class CsRuleToDroolsRuleTranslatorTest {
     public void should_throw_exception_when_the_matching_rule_is_empty() throws InvalidRuleException {
         csRuleToDroolsRuleTranslator.convertToMatchingCondition("");
     }
-
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
