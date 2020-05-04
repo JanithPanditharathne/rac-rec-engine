@@ -30,6 +30,9 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
 
     private static final int ONE = 1;
     private static final int TWO = 2;
+    private static final String OPEN_BRACKET = "(";
+    private static final String CLOSE_BRACKET = ")";
+
 
     private static final String MATCHING_CONDITION_START = "MatchingCondition(";
     private static final String MATCHING_CONDITION_END = ")";
@@ -72,7 +75,7 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
             throw new InvalidRuleException(INVALID_RULE_EXC_MSG, e);
         }
 
-        String newRuleString = StringUtils.join(tokenList, " ");
+        String newRuleString = joinTokensToRuleString(tokenList).trim();
         newRuleString = StringUtils.isEmpty(newRuleString) ? "" : MATCHING_CONDITION_START + newRuleString.trim() + MATCHING_CONDITION_END;
         return newRuleString;
     }
@@ -88,7 +91,7 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
     @Override
     public String convertToActionCondition(String rule, String uniqueId) throws InvalidRuleException {
         if (StringUtils.isEmpty(rule)) {
-            throw new InvalidRuleException("Input rule condition cannot be null.");
+            throw new InvalidRuleException("Input action rule condition cannot be null.");
         }
 
         List<String> tokenList = processRule(rule.trim());
@@ -105,7 +108,7 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
             throw new InvalidRuleException(INVALID_RULE_EXC_MSG, e);
         }
 
-        String newRuleString = StringUtils.join(tokenList, " ");
+        String newRuleString = joinTokensToRuleString(tokenList).trim();
         newRuleString = StringUtils.isEmpty(newRuleString) ? "" : ACTION_CONDITION_START + generateUniqueIdCondition(uniqueId) + newRuleString.trim() + ACTION_CONDITION_END;
         return newRuleString;
     }
@@ -384,5 +387,34 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
         if (OR_OPERATOR.equals(token)) {
             throw new InvalidRuleException("A rule cannot have a single | symbol as a comparator.");
         }
+    }
+
+    /**
+     * Method to join the tokens to a rule string.
+     *
+     * @param tokenList the token list
+     * @return the rule string
+     */
+    private String joinTokensToRuleString(List<String> tokenList) {
+        StringBuilder builder = new StringBuilder();
+
+        int i = 0;
+        while (i < tokenList.size()) {
+            String currentToken = tokenList.get(i);
+            String nextToken = (i >= tokenList.size() - 1) ? "" : tokenList.get(i + ONE);
+
+            if (OPEN_BRACKET.equals(currentToken)) {
+                builder.append(currentToken);
+            } else if (CLOSE_BRACKET.equals(nextToken)) {
+                builder.append(currentToken);
+            } else {
+                builder.append(currentToken);
+                builder.append(" ");
+            }
+
+            i++;
+        }
+
+        return builder.toString();
     }
 }
