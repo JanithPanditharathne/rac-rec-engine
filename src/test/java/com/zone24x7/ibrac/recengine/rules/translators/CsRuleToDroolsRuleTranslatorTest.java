@@ -1,9 +1,9 @@
 package com.zone24x7.ibrac.recengine.rules.translators;
 
 import com.zone24x7.ibrac.recengine.rules.exceptions.InvalidRuleException;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +39,7 @@ public class CsRuleToDroolsRuleTranslatorTest {
     /**
      * Method to setup the dependencies for the test class
      */
-    @Before
+    @BeforeEach
     public void setup() {
         csRuleToDroolsRuleTranslator = new CsRuleToDroolsRuleTranslator();
         Map<String, String> map = new HashMap<>();
@@ -56,10 +56,10 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_generate_the_matching_condition_correctly_for_single_condition() throws InvalidRuleException {
         String actualResult = csRuleToDroolsRuleTranslator.convertToMatchingCondition(CS_MATCHING_RULE_1);
-        Assert.assertEquals(EXPECTED_MATCHING_RULE_1, actualResult);
+        assertEquals(EXPECTED_MATCHING_RULE_1, actualResult);
 
         String actualResult2 = csRuleToDroolsRuleTranslator.convertToMatchingCondition(CS_MATCHING_RULE_2);
-        Assert.assertEquals(EXPECTED_MATCHING_RULE_2, actualResult2);
+        assertEquals(EXPECTED_MATCHING_RULE_2, actualResult2);
     }
 
     /**
@@ -70,168 +70,136 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_generate_the_matching_condition_correctly_for_complex_conditions() throws InvalidRuleException {
         String actualResult = csRuleToDroolsRuleTranslator.convertToMatchingCondition(CS_MATCHING_RULE_3);
-        Assert.assertEquals(EXPECTED_MATCHING_RULE_3, actualResult);
+        assertEquals(EXPECTED_MATCHING_RULE_3, actualResult);
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is null.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_null() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition(null);
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_null() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition(null));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is empty.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_empty() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_empty() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition(""));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed1() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department = \"shoes\"");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed1() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department = \"shoes\""));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed2() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department # \"shoes\"");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed2() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department # \"shoes\""));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed3() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" & category = \"sports\"");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed3() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" & category = \"sports\""));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed4() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" | category = \"sports\"");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed4() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" | category = \"sports\""));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed5() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department ==");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed5() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department =="));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed6() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == ");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed6() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == "));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed7() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("== \"shoes\"");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed7() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("== \"shoes\""));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test (expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed8() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition(" == \"shoes\"");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed8() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition(" == \"shoes\""));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed9() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" &&");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed9() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" &&"));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed10() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" && ");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed10() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" && "));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed11() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" ||");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed11() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" ||"));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed12() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" || ");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed12() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" || "));
     }
 
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test (expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed13() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" || category ==");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed13() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" || category =="));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test (expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_matching_rule_is_malformed14() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" category  == \"sports\"");
+    @Test
+    public void should_throw_exception_when_the_matching_rule_is_malformed14() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" category  == \"sports\""));
     }
 
     /**
@@ -242,10 +210,10 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_generate_the_action_condition_correctly_for_single_condition() throws InvalidRuleException {
         String actualResult = csRuleToDroolsRuleTranslator.convertToActionCondition(CS_ACTION_RULE_1, UUID);
-        Assert.assertEquals(EXPECTED_ACTION_RULE_1, actualResult);
+        assertEquals(EXPECTED_ACTION_RULE_1, actualResult);
 
         String actualResult2 = csRuleToDroolsRuleTranslator.convertToActionCondition(CS_ACTION_RULE_2, UUID);
-        Assert.assertEquals(EXPECTED_ACTION_RULE_2, actualResult2);
+        assertEquals(EXPECTED_ACTION_RULE_2, actualResult2);
     }
 
     /**
@@ -256,7 +224,7 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_generate_the_action_condition_correctly_when_unique_id_is_null() throws InvalidRuleException {
         String actualResult = csRuleToDroolsRuleTranslator.convertToActionCondition(CS_ACTION_RULE_1, null);
-        Assert.assertEquals(EXPECTED_ACTION_RULE_1_1, actualResult);
+        assertEquals(EXPECTED_ACTION_RULE_1_1, actualResult);
     }
 
     /**
@@ -267,7 +235,7 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_generate_the_action_condition_correctly_when_unique_id_is_empty() throws InvalidRuleException {
         String actualResult = csRuleToDroolsRuleTranslator.convertToActionCondition(CS_ACTION_RULE_1, "");
-        Assert.assertEquals(EXPECTED_ACTION_RULE_1_1, actualResult);
+        assertEquals(EXPECTED_ACTION_RULE_1_1, actualResult);
     }
 
     /**
@@ -278,7 +246,7 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_generate_the_action_condition_correctly_for_complex_conditions() throws InvalidRuleException {
         String actualResult = csRuleToDroolsRuleTranslator.convertToActionCondition(CS_ACTION_RULE_3, UUID);
-        Assert.assertEquals(EXPECTED_ACTION_RULE_3, actualResult);
+        assertEquals(EXPECTED_ACTION_RULE_3, actualResult);
     }
 
     /**
@@ -289,26 +257,23 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_generate_the_action_condition_correctly_for_complex_conditions_with_double_and_integer_attributes() throws InvalidRuleException {
         String actualResult = csRuleToDroolsRuleTranslator.convertToActionCondition(CS_ACTION_RULE_4, UUID);
-        Assert.assertEquals(EXPECTED_ACTION_RULE_4, actualResult);
+        assertEquals(EXPECTED_ACTION_RULE_4, actualResult);
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the action rule is null.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_action_rule_is_null() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToActionCondition(null, UUID);
+    @Test
+    public void should_throw_exception_when_the_action_rule_is_null() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToActionCondition(null, UUID));
     }
 
     /**
      * Test to verify that InvalidRuleException is thrown when the action rule is empty.
-     *
-     * @throws InvalidRuleException if the input rec slot object is invalid
      */
-    @Test(expected = InvalidRuleException.class)
-    public void should_throw_exception_when_the_action_rule_is_empty() throws InvalidRuleException {
-        csRuleToDroolsRuleTranslator.convertToActionCondition("", UUID);
+    @Test
+    public void should_throw_exception_when_the_action_rule_is_empty() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToActionCondition("", UUID));
+
     }
 }
