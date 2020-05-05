@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RecEngineApplication {
 
     /**
-     * Main mehtod of tha application to for bootstrapping application.
+     * Main method of tha application to for bootstrapping application.
      *
      * @param args input arguments.
      */
