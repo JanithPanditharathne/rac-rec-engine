@@ -1,4 +1,4 @@
-package com.zone24x7.ibrac.recengine.rules.exceptions;
+package com.zone24x7.ibrac.recengine.exceptions;
 
 /**
  * Exception to be thrown when invalid rule is passed into a generate rule method.

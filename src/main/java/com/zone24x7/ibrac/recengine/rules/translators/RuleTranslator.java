@@ -1,8 +1,6 @@
 package com.zone24x7.ibrac.recengine.rules.translators;
 
-import com.zone24x7.ibrac.recengine.rules.exceptions.InvalidRuleException;
-
-import java.util.Map;
+import com.zone24x7.ibrac.recengine.exceptions.InvalidRuleException;
 
 /**
  * Interface to translate rules.
@@ -26,12 +24,4 @@ public interface RuleTranslator {
      * @throws InvalidRuleException if a rule is invalid
      */
     String convertToActionCondition(String rule, String uniqueId) throws InvalidRuleException;
-
-    /**
-     * Method to set the attribute mapping information.
-     * Example: if price attribute is a double, there should be a map entry for price|double
-     *
-     * @param mappingInfo the mapping information
-     */
-    void setAttributeTypeMappingInfo(Map<String, String> mappingInfo);
 }

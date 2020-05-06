@@ -11,15 +11,14 @@ import org.drools.core.spi.InternalReadAccessor;
 
 /**
  * Custom string evaluators class used by Drools to compare strings in a case ignored manner
- *
  */
 public class StringEvaluator extends BaseEvaluator {
 
     /**
      * Creates and instance of the StringEvaluator
      *
-     * @param type      the value type of the evaluator
-     * @param operator  the operator type of the evaluator
+     * @param type     the value type of the evaluator
+     * @param operator the operator type of the evaluator
      */
     public StringEvaluator(final ValueType type, final Operator operator) {
         super(type, operator);

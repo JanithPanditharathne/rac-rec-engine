@@ -6,7 +6,6 @@ import java.util.Map;
  * POJO class for Matching Conditions
  */
 public class MatchingCondition {
-
     private Map<String, String> matchingMap;
 
     /**
@@ -26,17 +25,4 @@ public class MatchingCondition {
     public Map<String, String> getMatchingMap() {
         return matchingMap;
     }
-
-    /**
-     * Sets a given matching condition key value to the matching condition map
-     *
-     * @param key   the matching condition key
-     * @param value the matching condition value
-     */
-    public void setKeyValue(String key, String value) {
-        if (matchingMap != null) {
-            matchingMap.put(key, value);
-        }
-    }
-
 }

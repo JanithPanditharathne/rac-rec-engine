@@ -1,7 +1,9 @@
 package com.zone24x7.ibrac.recengine.rules.translators;
 
-import com.zone24x7.ibrac.recengine.rules.exceptions.InvalidRuleException;
+import com.zone24x7.ibrac.recengine.exceptions.InvalidRuleException;
+import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -33,7 +35,6 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
     private static final String OPEN_BRACKET = "(";
     private static final String CLOSE_BRACKET = ")";
 
-
     private static final String MATCHING_CONDITION_START = "MatchingCondition(";
     private static final String MATCHING_CONDITION_END = ")";
 
@@ -47,6 +48,18 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
     private static final Set<String> complexComparatorTokens = new HashSet<>(Arrays.asList(DOUBLE_EQUAL_SYMBOL, NOT_EQUAL_SYMBOL, LESS_THAN_SYMBOL, GREATER_THAN_SYMBOL, LESS_THAN_OR_EQUAL_SYMBOL, GREATER_THAN_OR_EQUAL_SYMBOL, EQUALS_IGNORE_CASE));
 
     private Map<String, String> attributeTypeMappingInfo = new HashMap<>();
+
+    /**
+     * Class to instantiate CsRuleToDroolsRuleTranslator
+     *
+     * @param mappingInfo mapping information of attribute types
+     */
+    //TODO: Remove this attribute mapping to the configuration constants class
+    public CsRuleToDroolsRuleTranslator(@Value("#{${ruleTranslator.attributeMapping}}") Map<String, String> mappingInfo) {
+        if (MapUtils.isNotEmpty(mappingInfo)) {
+            this.attributeTypeMappingInfo.putAll(mappingInfo);
+        }
+    }
 
     /**
      * Method to convert a rule to a matching condition.
@@ -111,17 +124,6 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
         String newRuleString = joinTokensToRuleString(tokenList).trim();
         newRuleString = StringUtils.isEmpty(newRuleString) ? "" : ACTION_CONDITION_START + generateUniqueIdCondition(uniqueId) + newRuleString.trim() + ACTION_CONDITION_END;
         return newRuleString;
-    }
-
-    /**
-     * Method to set the attribute mapping information.
-     * Example: if price attribute is a double, there should be a map entry for price|double
-     *
-     * @param mappingInfo the mapping information
-     */
-    @Override
-    public void setAttributeTypeMappingInfo(Map<String, String> mappingInfo) {
-        this.attributeTypeMappingInfo.putAll(mappingInfo);
     }
 
     /**

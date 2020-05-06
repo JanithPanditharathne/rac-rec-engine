@@ -1,0 +1,164 @@
+package mrulespack
+
+import java.util.List;
+import java.util.LinkedList;
+import com.zone24x7.ibrac.recengine.enumeration.RuleType;
+import com.zone24x7.ibrac.recengine.pojo.Product;
+import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;
+import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;
+
+// Boost Rules
+rule "1"
+when
+    $products: List();
+    $product : Product(("1" == "1") && (attributesMap["department"] equalsIgnoreCase "SHOES")) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);
+end
+
+rule "2"
+when
+    MatchingCondition(matchingMap["department"] equalsIgnoreCase "SHOES" && matchingMap["category"] equalsIgnoreCase "Sports")
+    $products: List();
+    $product : Product(("2" == "2") && ((attributesMap["department"] equalsIgnoreCase "SHOES") || (attributesMap["brand"] equalsIgnoreCase "Nike" && attributesMap["category"] equalsIgnoreCase "Tops"))) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);
+end
+
+rule "3"
+when
+    $products: List();
+    $product : Product(("3" == "3") && (attributesMap["department"] equalsIgnoreCase "SHOES")) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    if ($ruleExecutionStatus.getHitCount(drools.getRule().getName()) < 2) {
+        $products.remove($product);
+        $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);
+        $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);
+    }
+end
+
+rule "4"
+when
+    $products: List();
+    $product : Product(("4" == "4") && (attributesMap["department"] equalsIgnoreCase "wrong department")) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);
+end
+
+// Bury Rules
+rule "5"
+when
+    $products: List();
+    $product : Product(("5" == "5") && (attributesMap["department"] equalsIgnoreCase "SHOES")) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BURY);
+end
+
+rule "6"
+when
+    MatchingCondition(matchingMap["department"] equalsIgnoreCase "SHOES" && matchingMap["category"] equalsIgnoreCase "Sports")
+    $products: List();
+    $product : Product(("6" == "6") && ((attributesMap["department"] equalsIgnoreCase "SHOES") || (attributesMap["brand"] equalsIgnoreCase "Nike" && attributesMap["category"] equalsIgnoreCase "Tops"))) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BURY);
+end
+
+rule "7"
+when
+    $products: List();
+    $product : Product(("7" == "7") && (attributesMap["department"] equalsIgnoreCase "wrong department")) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BURY);
+end
+
+// Only Recommend Rules
+rule "8"
+when
+    $products: List();
+    $newProductList : LinkedList() from collect(Product(("8" == "8") && (attributesMap["department"] equalsIgnoreCase "SHOES")) from $products)
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.clear();
+    $products.addAll($newProductList);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.ONLY_RECOMMEND);
+end
+
+rule "9"
+when
+    MatchingCondition(matchingMap["department"] equalsIgnoreCase "SHOES" && matchingMap["category"] equalsIgnoreCase "Sports")
+    $products: List();
+    $newProductList : LinkedList() from collect(Product(("9" == "9") && ((attributesMap["department"] equalsIgnoreCase "SHOES") || (attributesMap["brand"] equalsIgnoreCase "Nike" && attributesMap["category"] equalsIgnoreCase "Tops"))) from $products)
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.clear();
+    $products.addAll($newProductList);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.ONLY_RECOMMEND);
+end
+
+rule "10"
+when
+    $products: List();
+    $newProductList : LinkedList() from collect(Product(("10" == "10") && (attributesMap["department"] equalsIgnoreCase "wrong department")) from $products)
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.clear();
+    $products.addAll($newProductList);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.ONLY_RECOMMEND);
+end
+
+// Do Not Recommend Rules
+rule "11"
+when
+    $products: List();
+    $newProductList : LinkedList() from collect(Product(("11" == "11") && (attributesMap["department"] equalsIgnoreCase "SHOES")) from $products)
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    if (!$newProductList.isEmpty()) {
+        $products.removeAll($newProductList);
+        $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.DO_NOT_RECOMMEND);
+    }
+end
+
+rule "12"
+when
+    MatchingCondition(matchingMap["department"] equalsIgnoreCase "SHOES" && matchingMap["category"] equalsIgnoreCase "Sports")
+    $products: List();
+    $newProductList : LinkedList() from collect(Product(("12" == "12") && ((attributesMap["department"] equalsIgnoreCase "SHOES") || (attributesMap["brand"] equalsIgnoreCase "Nike" && attributesMap["category"] equalsIgnoreCase "Tops"))) from $products)
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    if (!$newProductList.isEmpty()) {
+        $products.removeAll($newProductList);
+        $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.DO_NOT_RECOMMEND);
+    }
+end
+
+rule "13"
+when
+    $products: List();
+    $newProductList : LinkedList() from collect(Product(("13" == "13") && (attributesMap["department"] equalsIgnoreCase "wrong department")) from $products)
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    if (!$newProductList.isEmpty()) {
+        $products.removeAll($newProductList);
+        $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.DO_NOT_RECOMMEND);
+    }
+end

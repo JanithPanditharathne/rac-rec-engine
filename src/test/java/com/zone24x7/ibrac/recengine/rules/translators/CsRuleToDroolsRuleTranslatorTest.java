@@ -1,6 +1,6 @@
 package com.zone24x7.ibrac.recengine.rules.translators;
 
-import com.zone24x7.ibrac.recengine.rules.exceptions.InvalidRuleException;
+import com.zone24x7.ibrac.recengine.exceptions.InvalidRuleException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,11 +41,10 @@ public class CsRuleToDroolsRuleTranslatorTest {
      */
     @BeforeEach
     public void setup() {
-        csRuleToDroolsRuleTranslator = new CsRuleToDroolsRuleTranslator();
         Map<String, String> map = new HashMap<>();
         map.put("price", "double");
         map.put("rating", "integer");
-        csRuleToDroolsRuleTranslator.setAttributeTypeMappingInfo(map);
+        csRuleToDroolsRuleTranslator = new CsRuleToDroolsRuleTranslator(map);
     }
 
     /**
@@ -185,7 +184,6 @@ public class CsRuleToDroolsRuleTranslatorTest {
         assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" || "));
     }
 
-
     /**
      * Test to verify that InvalidRuleException is thrown when the matching rule is malformed.
      */
@@ -200,6 +198,14 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_throw_exception_when_the_matching_rule_is_malformed14() {
         assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToMatchingCondition("department == \"shoes\" category  == \"sports\""));
+    }
+
+    /**
+     * Test to verify that InvalidRuleException is thrown when the action rule is malformed.
+     */
+    @Test
+    public void should_throw_exception_when_the_action_rule_is_malformed() {
+        assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToActionCondition("== \"shoes\"", "11"));
     }
 
     /**
@@ -274,6 +280,5 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @Test
     public void should_throw_exception_when_the_action_rule_is_empty() {
         assertThrows(InvalidRuleException.class, () -> csRuleToDroolsRuleTranslator.convertToActionCondition("", UUID));
-
     }
 }
