@@ -6,4 +6,6 @@ package com.zone24x7.ibrac.recengine.util;
 public class StringConstants {
     public static final String REQUEST_ID_LOG_MSG_PREFIX = "[RequestId: {}] ";
     public static final String DROOLS_KNOWLEDGE_BASE_NULL_MSG = "Knowledge base is null.";
+
+    public static final String RECSLOT_GENERATED_ID_SEPARATOR = "_";
 }

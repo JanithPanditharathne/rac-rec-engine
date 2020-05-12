@@ -14,6 +14,7 @@ public class BundleAlgorithm {
 
     private String type;
 
+    @NotEmpty
     private String defaultDisplayText;
 
     private String customDisplayText;

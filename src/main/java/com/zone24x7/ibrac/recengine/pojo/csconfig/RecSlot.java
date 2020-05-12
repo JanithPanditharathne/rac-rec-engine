@@ -1,16 +1,27 @@
 package com.zone24x7.ibrac.recengine.pojo.csconfig;
 
+import com.zone24x7.ibrac.recengine.util.StringConstants;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
  * Pojo for Recslots
  */
 public class RecSlot {
+    @NotEmpty
     private String channel;
+
+    @NotEmpty
     private String page;
+
+    @NotEmpty
     private String placeholder;
+
     private List<String> recIds;
     private List<String> ruleIds;
+
+    private static final int HASH_SEED = 31;
 
     /**
      * Returns the channel.
@@ -100,5 +111,68 @@ public class RecSlot {
      */
     public void setRuleIds(List<String> ruleIds) {
         this.ruleIds = ruleIds;
+    }
+
+    /**
+     * Overridden equals method
+     *
+     * @param o object to compare
+     * @return true if equal and false if not
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        RecSlot recSlot = (RecSlot) o;
+
+        if (channel != null ? !channel.equals(recSlot.channel) : recSlot.channel != null) {
+            return false;
+        }
+
+        if (page != null ? !page.equals(recSlot.page) : recSlot.page != null) {
+            return false;
+        }
+
+        if (placeholder != null ? !placeholder.equals(recSlot.placeholder) : recSlot.placeholder != null) {
+            return false;
+        }
+
+        if (recIds != null ? !recIds.equals(recSlot.recIds) : recSlot.recIds != null) {
+            return false;
+        }
+
+        return ruleIds != null ? ruleIds.equals(recSlot.ruleIds) : recSlot.ruleIds == null;
+    }
+
+    /**
+     * Overridden hash code method
+     *
+     * @return the hashcode
+     */
+    @Override
+    public int hashCode() {
+        int result = channel != null ? channel.hashCode() : 0;
+        result = HASH_SEED * result + (page != null ? page.hashCode() : 0);
+        result = HASH_SEED * result + (placeholder != null ? placeholder.hashCode() : 0);
+        result = HASH_SEED * result + (recIds != null ? recIds.hashCode() : 0);
+        result = HASH_SEED * result + (ruleIds != null ? ruleIds.hashCode() : 0);
+        return result;
+    }
+
+    /**
+     * Overridden toString method.
+     * @return string representation of the rec slot object
+     */
+    @Override
+    public String toString() {
+        return channel + StringConstants.RECSLOT_GENERATED_ID_SEPARATOR +
+                page + StringConstants.RECSLOT_GENERATED_ID_SEPARATOR +
+                placeholder;
     }
 }
