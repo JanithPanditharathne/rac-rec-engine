@@ -7,7 +7,7 @@ import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.Rec;
 import com.zone24x7.ibrac.recengine.pojo.recbundle.ActiveBundleProviderConfig;
-import com.zone24x7.ibrac.recengine.recrules.executors.RecRuleExecutor;
+import com.zone24x7.ibrac.recengine.rules.recrules.executors.RecRuleExecutor;
 import com.zone24x7.ibrac.recengine.util.JsonPojoConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

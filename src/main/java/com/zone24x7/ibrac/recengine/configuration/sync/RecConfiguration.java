@@ -4,8 +4,8 @@ import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
-import com.zone24x7.ibrac.recengine.recrules.executors.RecRuleExecutor;
-import com.zone24x7.ibrac.recengine.recrules.knowledgebase.RecRuleKnowledgeBaseGenerator;
+import com.zone24x7.ibrac.recengine.rules.recrules.executors.RecRuleExecutor;
+import com.zone24x7.ibrac.recengine.rules.recrules.knowledgebase.RecRuleKnowledgeBaseGenerator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
