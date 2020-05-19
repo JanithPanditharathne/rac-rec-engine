@@ -166,11 +166,12 @@ public class RecSlot {
     }
 
     /**
-     * Overridden toString method.
-     * @return string representation of the rec slot object
+     * Method to get the placement information as a string.
+     * NOTE: Modifying this method will affect active bundle config generator and active bundle provider.
+     *
+     * @return string representation of the placement information
      */
-    @Override
-    public String toString() {
+    public String getPlacementInfoAsString() {
         return channel + StringConstants.RECSLOT_GENERATED_ID_SEPARATOR +
                 page + StringConstants.RECSLOT_GENERATED_ID_SEPARATOR +
                 placeholder;

@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pojo.csconfig;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -116,6 +117,10 @@ public class Bundle {
      * @param algorithms the algorithms
      */
     public void setAlgorithms(List<BundleAlgorithmContainer> algorithms) {
+        if (algorithms != null) {
+            Collections.sort(algorithms);
+        }
+
         this.algorithms = algorithms;
     }
 

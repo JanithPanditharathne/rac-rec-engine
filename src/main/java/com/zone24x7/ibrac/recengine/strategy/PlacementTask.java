@@ -26,7 +26,7 @@ public class PlacementTask implements Callable<RecResult> {
      * Constructor for placement task.
      *
      * @param recInputParams input parameters received.
-     * @param recCycleStatus recCycle status.recCycleStatus.
+     * @param recCycleStatus recCycle status.
      */
     public PlacementTask(RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
         this.recInputParams = recInputParams;

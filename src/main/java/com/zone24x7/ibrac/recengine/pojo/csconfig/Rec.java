@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
  * Class to represent recommendation.
  */
 public class Rec {
-
     @NotEmpty
     private String id;
 

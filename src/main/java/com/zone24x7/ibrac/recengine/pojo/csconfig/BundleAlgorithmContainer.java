@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 /**
  * Class to represent bundle algorithm container.
  */
-public class BundleAlgorithmContainer {
+public class BundleAlgorithmContainer implements Comparable<BundleAlgorithmContainer> {
     private int rank;
 
     @Valid
@@ -86,5 +86,19 @@ public class BundleAlgorithmContainer {
         int result = rank;
         result = HASH_SEED * result + (algorithm != null ? algorithm.hashCode() : 0);
         return result;
+    }
+
+    /**
+     * Compares this BundleAlgorithmContainer object with the specified BundleAlgorithmContainer object for order based on the rank.
+     *
+     * @param compareToBundleAlgorithmContainer the other BundleAlgorithmContainer object to be compared.
+     * @return a negative integer, zero, or a positive integer as this BundleAlgorithmContainer object is less than, equal to,
+     * or greater than the specified BundleAlgorithmContainer object in terms of the BundleAlgorithmContainer object's rank attribute.
+     */
+    @Override
+    public int compareTo(BundleAlgorithmContainer compareToBundleAlgorithmContainer) {
+        int compareToBundleAlgorithmRank = compareToBundleAlgorithmContainer.getRank();
+
+        return this.rank - compareToBundleAlgorithmRank;
     }
 }

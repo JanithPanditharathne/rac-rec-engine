@@ -81,7 +81,7 @@ public class RecActiveBundleConfigGenerator implements ActiveBundleConfigGenerat
         ActiveBundleProviderConfig activeBundleProviderConfig = new ActiveBundleProviderConfig();
 
         if (recSlotConfig != null && CollectionUtils.isNotEmpty(recSlotConfig.getRecSlots())) {
-            Map<String, RecSlot> recSlotMap = recSlotConfig.getRecSlots().stream().collect(Collectors.toMap(RecSlot::toString, recSlot -> recSlot));
+            Map<String, RecSlot> recSlotMap = recSlotConfig.getRecSlots().stream().collect(Collectors.toMap(RecSlot::getPlacementInfoAsString, recSlot -> recSlot));
             activeBundleProviderConfig.setRecSlotMap(recSlotMap);
         }
 

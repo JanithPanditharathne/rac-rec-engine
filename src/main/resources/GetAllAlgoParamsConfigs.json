@@ -1,0 +1,4498 @@
+{
+  "algorithmParams": [
+    {
+      "algoId": "142",
+      "algoName": "SeasonalViewTopTrendingByAttribute",
+      "optionalCombEnabled": true,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "151",
+      "algoName": "NewArrivalsByDate",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "152",
+      "algoName": "TopTrendingDecay",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "153",
+      "algoName": "FrequentlyBoughtTimeSeries",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "permutedProductNumbers"
+        ],
+        [
+          "productNumbers"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "193",
+      "algoName": "ALSViewView",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "194",
+      "algoName": "Word2VecViewView",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "195",
+      "algoName": "SimilarProductsV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "196",
+      "algoName": "DriveToStore",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+          "storeNumber",
+          "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "197",
+      "algoName": "SparkCustomerCollaborativeFiltering",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "atgId"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "198",
+      "algoName": "SparkCustomerCollaborativeFilteringByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "atgId",
+          "primaryProductType"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "199",
+      "algoName": "TopRatedProducts",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "200",
+      "algoName": "TopRatedProductsByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "201",
+      "algoName": "SparkFrequentlyBought",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "206",
+      "algoName": "SparkBestSeller",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "207",
+      "algoName": "SparkBestSellerByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "208",
+      "algoName": "SparkBestSellerInNewArrivals",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "209",
+      "algoName": "SparkBestSellerInNewArrivalsByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "210",
+      "algoName": "SparkBestSellerSlotRecommendations",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "211",
+      "algoName": "SparkTrending",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "212",
+      "algoName": "SparkTrendingByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "213",
+      "algoName": "SparkTrendingInNewArrivals",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "214",
+      "algoName": "SparkTrendingInNewArrivalsByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "215",
+      "algoName": "SparkTrendingSlotRecommendations",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "218",
+      "algoName": "AdvancedViewBought",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "219",
+      "algoName": "SearchedBasedRecommendation",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "220",
+      "algoName": "SearchedBasedRecommendationByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "221",
+      "algoName": "SearchedRecommendationBasedonSparkBestSellerByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "222",
+      "algoName": "SearchedRecommendationBasedonSparkTrendingByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "223",
+      "algoName": "SparkBestSellersByLocalizationReorderedRecommendation",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "224",
+      "algoName": "EnhancedFrequentlyBoughtV1",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "225",
+      "algoName": "EnhancedFrequentlyBoughtV2",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "permutedProductNumbers"
+        ],
+        [
+          "productNumbers"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "226",
+      "algoName": "SparkViewViewHybridRecommendation",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "227",
+      "algoName": "EnhancedFrequentlyBoughtV1WithCategoryFiltering",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "228",
+      "algoName": "EnhancedFrequentlyBoughtV2WithCategoryFiltering",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "permutedProductNumbers"
+        ],
+        [
+          "productNumbers"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "229",
+      "algoName": "KDPTopTrendingPopular",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "230",
+      "algoName": "KDPCartRecommendations",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "231",
+      "algoName": "KDPViewViewV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "233",
+      "algoName": "KDPSeasonalViewTopTrending",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "234",
+      "algoName": "KDPBestSellers",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "storeGroup",
+        "geoClimateZone"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "235",
+      "algoName": "KDPBestSellerDealsByAttribute",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "236",
+      "algoName": "KDPBestSellersByAttribute",
+      "optionalCombEnabled": true,
+      "localization": true,
+      "localizationParams": [
+        "geoClimateZone"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "237",
+      "algoName": "KDPBestSellersByCategory",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "storeGroup",
+        "geoClimateZone"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "productNumbers"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "238",
+      "algoName": "KDPTopTrending",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "storeGroup",
+        "geoClimateZone"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "239",
+      "algoName": "KDPTopTrendingByAttribute",
+      "optionalCombEnabled": true,
+      "localization": true,
+      "localizationParams": [
+        "geoClimateZone"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "240",
+      "algoName": "KDPTTDealsByAttribute",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "241",
+      "algoName": "KDPTopTrendingByCategory",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "storeGroup",
+        "geoClimateZone"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "productNumbers"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "242",
+      "algoName": "KDPTopCategoriesTrending",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "storeGroup",
+        "geoClimateZone"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "245",
+      "algoName": "KDPPersonalizedPopularProducts",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "atgId"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "246",
+      "algoName": "KDPPersonalizedBestSellers",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "atgId"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "247",
+      "algoName": "KDPPersonalizedBestSellerByCategory",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "atgId",
+        "primaryProductType",
+        "productType",
+        "subProductType"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "249",
+      "algoName": "KDPPastPurchasedProducts",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "atgId"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "250",
+      "algoName": "KDPPastSearchTerms",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "atgId"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "251",
+      "algoName": "KDPViewView",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "254",
+      "algoName": "KDPViewViewTabletV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "255",
+      "algoName": "KDPViewViewMobileV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "256",
+      "algoName": "KDPViewBought",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "257",
+      "algoName": "KDPContextualSearch",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "258",
+      "algoName": "KDPSimilarProduct",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "259",
+      "algoName": "KDPFrequentlyBought",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "permutedProductNumbers"
+        ],
+        [
+          "productNumbers"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "260",
+      "algoName": "ImageSimilarityRecommendation",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "261",
+      "algoName": "SparkBestSellerV2",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "262",
+      "algoName": "SparkBestSellerByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "263",
+      "algoName": "SparkBestSellerInNewArrivalsV2",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "264",
+      "algoName": "SparkBestSellerInNewArrivalsByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "265",
+      "algoName": "SparkBestSellerSlotRecommendationsV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "266",
+      "algoName": "SparkTrendingV2",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "267",
+      "algoName": "SparkTrendingByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "268",
+      "algoName": "SparkTrendingInNewArrivalsV2",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "269",
+      "algoName": "SparkTrendingInNewArrivalsByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "270",
+      "algoName": "SparkTrendingSlotRecommendationsV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "271",
+      "algoName": "SparkBestSellersByLocalizationReorderedRecommendationV2",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "geoLocation"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "272",
+      "algoName": "KDPTopTrendingNewArrivals",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "273",
+      "algoName": "KDPTopTrendingNewArrivalsByAttribute",
+      "optionalCombEnabled": true,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+           "primaryProductType",
+           "productType",
+           "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "274",
+      "algoName": "KDPCustomerRecommendationsV4",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "atgId"
+        ],
+        [
+          "customerEmailHash"
+        ],
+        [
+          "cookieId"
+        ],
+        [
+          "customerEmail"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "275",
+      "algoName": "KDPCustomerRecommendationsV3",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "atgId"
+        ],
+        [
+          "customerEmailHash"
+        ],
+        [
+          "cookieId"
+        ],
+        [
+          "customerEmail"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "276",
+      "algoName": "SearchedRecommendationBasedonSparkBestSellerByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "277",
+      "algoName": "SearchedRecommendationBasedonSparkTrendingByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "278",
+      "algoName": "Spark Best Seller By Attribute",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+      ]
+    },
+    {
+      "algoId": "279",
+      "algoName": "Spark Trending By Attribute",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "280",
+      "algoName": "Spark Trending New Arrivals By Attribute",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "brandName"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "ageAppropriate",
+          "brandName",
+          "silhouette"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender",
+          "ageAppropriate"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType",
+          "gender"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType",
+          "gender"
+        ],
+        [
+          "primaryProductType"
+        ],
+        [
+          "gender"
+        ],
+        [
+          "ageAppropriate"
+        ],
+        [
+          "brandName"
+        ],
+        [
+          "silhouette"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "281",
+      "algoName": "EnhancedFrequentlyBoughtV2.1",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "permutedProductNumbers"
+        ],
+        [
+          "productNumbers"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "282",
+      "algoName": "EnhancedFrequentlyBoughtCategoryFilteredVersion2.1",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "permutedProductNumbers"
+        ],
+        [
+          "productNumbers"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "283",
+      "algoName": "Spark Best Sellers Customer Segmented By Gender",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segGender"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "284",
+      "algoName": "Spark Best Sellers Customer Segmented By Having Children",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segParent"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "285",
+      "algoName": "Spark Best Sellers Customer Segmented By Marital Status",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segMaritalStatus"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "286",
+      "algoName": "Spark Best Sellers Customer Segmented By Millennial",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segMillennial"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "287",
+      "algoName": "Spark Trending Customer Segmented By Gender",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segGender"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "288",
+      "algoName": "Spark Trending Customer Segmented By Having Children",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segParent"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "289",
+      "algoName": "Spark Trending Customer Segmented By Marital Status",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segMaritalStatus"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "290",
+      "algoName": "Spark Trending Customer Segmented By Millennial",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "segMillennial"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "291",
+      "algoName": "Spark ViewView 3.0 Customer Segmented By Having Children",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segParent"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "292",
+      "algoName": "Spark ViewView 3.0 Customer Segmented By Gender",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segGender"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "293",
+      "algoName": "Spark ViewView 3.0 Customer Segmented By Millennial",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segMillennial"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "294",
+      "algoName": "Spark ViewView 3.0 Customer Segmented By Marital Status",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segMaritalStatus"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "295",
+      "algoName": "ViewView 2.0 Customer Segmented By Having Children",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segParent"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "296",
+      "algoName": "View View 2.0 Customer Segmented By Gender",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segGender"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "297",
+      "algoName": "ViewView 2.0 Customer Segmented By Marital Status",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segMaritalStatus"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "298",
+      "algoName": "ViewView 2.0 Customer Segmented By Millennial",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+      ],
+      "mandatoryParams": [
+        "productNumbers",
+        "segMillennial"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "299",
+      "algoName": "SparkViewView2.0",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "300",
+      "algoName": "SparkViewView2.1",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "301",
+      "algoName": "SparkViewView2.2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "302",
+      "algoName": "SparkViewBought",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "303",
+      "algoName": "SparkFrequentlyBoughtTogetherAdvanced",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "304",
+      "algoName": "SparkEnhancedFrequentlyBoughtV1",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+         "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "305",
+      "algoName": "SparkEnhancedFrequentlyBoughtV2",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+          "storeNumber",
+          "zipCode",
+          "storeGroup"
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "306",
+      "algoName": "SparkAdvancedViewBought",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "307",
+      "algoName": "SparkCartRecommendations",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "308",
+      "algoName": "SparkTopTrendingPopular",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "309",
+      "algoName": "SparkViewView1.0",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "803",
+      "algoName": "PickUpWhereYouLeft",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "atgId"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "rvProductsWithDates"
+      ]
+    },
+    {
+      "algoId": "814",
+      "algoName": "YouViewedPeopleAlsoViewed",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "815",
+      "algoName": "RecentCatBasedRecs",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "816",
+      "algoName": "SimilarProductComparison",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "817",
+      "algoName": "InspiredByRecentlyViewed",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "818",
+      "algoName": "TopTrendingVarieties",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "819",
+      "algoName": "TopTrendingInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+            "atgId"
+        ],
+        [
+            "mcmId"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "820",
+      "algoName": "BestSellersInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "821",
+      "algoName": "TopTrendingVarietiesInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "822",
+      "algoName": "BestSellersVarietiesInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "823",
+      "algoName": "TopTrendingDealsInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "824",
+      "algoName": "BestSellersDealsInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+       "conditionalMandatoryParams": [
+           [
+               "atgId"
+           ],
+           [
+               "mcmId"
+           ]
+      ],
+       "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "825",
+      "algoName": "TopTrendingDealsInspiredByYourPreferencesByPriceRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "826",
+      "algoName": "TopTrendingDealsInspiredByYourPreferencesByPercentageRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "827",
+      "algoName": "BestSellersDealsInspiredByYourPreferencesByPriceRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "828",
+      "algoName": "BestSellersDealsInspiredByYourPreferencesByPercentageRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "829",
+      "algoName": "TopTrendingDealsVarietiesInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "830",
+      "algoName": "BestSellersDealsVarietiesInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+       ],
+       "mandatoryParams": [
+
+       ],
+       "conditionalMandatoryParams": [
+           [
+               "atgId"
+           ],
+           [
+               "mcmId"
+           ]
+       ],
+       "optionalParams": [
+
+       ]
+    },
+    {
+      "algoId": "831",
+      "algoName": "TopTrendingDealsVarietiesInspiredByYourPreferencesByPriceRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "832",
+      "algoName": "TopTrendingDealsVarietiesInspiredByYourPreferencesByPercentageRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "833",
+      "algoName": "BestSellersDealsVarietiesInspiredByYourPreferencesByPriceRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "834",
+      "algoName": "BestSellersDealsVarietiesInspiredByYourPreferencesByPercentageRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "835",
+      "algoName": "TopTrendingDealsVarietiesInspiredByYourRecentlyViewed",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "836",
+      "algoName": "BestSellerDealsVarietiesInspiredByYourRecentlyViewed",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "837",
+      "algoName": "TopTrendingDealsVarietiesInspiredByYourRecentlyViewedByPriceRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "838",
+      "algoName": "TopTrendingDealsVarietiesInspiredByYourRecentlyViewedByPercentageRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "839",
+      "algoName": "BestSellerDealsVarietiesInspiredByYourRecentlyViewedByPriceRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "840",
+      "algoName": "BestSellerDealsVarietiesInspiredByYourRecentlyViewedByPercentageRange",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "841",
+      "algoName": "RecentlyViewedSeededTopTrendingByAttribute",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "842",
+      "algoName": "RecentlyViewedSeededBestSellerByAttribute",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "843",
+      "algoName": "TopTrendingVarietiesInspiredByYourRecentlyViewed",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "844",
+      "algoName": "BestSellerVarietiesInspiredByYourRecentlyViewed",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "846",
+      "algoName": "NewArrivalsInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "847",
+      "algoName": "NewArrivalsVarietiesInspiredByYourPreferences",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+          [
+              "atgId"
+          ],
+          [
+              "mcmId"
+          ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "848",
+      "algoName": "RecentlyViewSeededNewArrivalsByAttribute",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+       "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "849",
+      "algoName": "NewArrivalsVarietiesInspiredByYourRecentlyViewed",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "852",
+      "algoName": "MoreLikeThis",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "853",
+      "algoName": "RecentSearchTermInspiredRecommendationsV1",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "atgId"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "854",
+      "algoName": "RecentSearchTermInspiredRecommendationsV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "rSearchTerms"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "855",
+      "algoName": "NextProductToBuyRecommendationsV1",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+          "atgId"
+      ]
+    },
+    {
+      "algoId": "856",
+      "algoName": "NextProductToBuyRecommendationsV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId"
+      ]
+    },
+    {
+      "algoId": "857",
+      "algoName": "NextProductToBuyRecommendationsV3",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId"
+      ]
+    },
+    {
+      "algoId": "858",
+      "algoName": "NextProductToBuyRecommendationsV4",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId"
+      ]
+    },
+    {
+      "algoId": "859",
+      "algoName": "NextProductToBuyRecommendationsV5",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId"
+      ]
+    },
+    {
+      "algoId": "860",
+      "algoName": "NextProductToBuyRecommendationsV6",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId"
+      ]
+    },
+    {
+      "algoId": "861",
+      "algoName": "NextProductToBuyRecommendationsV7",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId"
+      ]
+    },
+    {
+      "algoId": "862",
+      "algoName": "NextProductToBuyRecommendationsV8",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId"
+      ]
+    },
+    {
+      "algoId": "863",
+      "algoName": "V6PropensityLeafScorePersonalizedInspiredByRecentlyViewed",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "rvProductNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId"
+      ]
+    },
+    {
+      "algoId": "864",
+      "algoName": "RealTimePersonalizedBestSellers",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "atgId"
+        ],
+        [
+          "mcmId"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "865",
+      "algoName": "RealTimePersonalizedTopTrending",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "atgId"
+        ],
+        [
+          "mcmId"
+        ]
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "2000",
+      "algoName": "ShoptelligenceBasketBooster",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "2001",
+      "algoName": "ShoptelligenceConversionBooster",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "501",
+      "algoName": "TestRec1",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "502",
+      "algoName": "TestRec2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "503",
+      "algoName": "TestRec3",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "504",
+      "algoName": "TestRec4",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "505",
+      "algoName": "TestRec5",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "506",
+      "algoName": "TestRec6",
+      "optionalCombEnabled": false,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "507",
+      "algoName": "TestRec7",
+      "optionalCombEnabled": true,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "primaryProductType",
+        "productType",
+        "subProductType",
+        "brandName",
+        "gender",
+        "silhouette",
+        "ageAppropriate",
+        "occasion"
+      ]
+    },
+    {
+      "algoId": "508",
+      "algoName": "TestRec8",
+      "optionalCombEnabled": true,
+      "localization": true,
+      "localizationParams": [
+        "storeNumber",
+        "zipCode",
+        "storeGroup"
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "primaryProductType",
+        "productType",
+        "subProductType",
+        "brandName",
+        "gender",
+        "silhouette",
+        "ageAppropriate",
+        "occasion"
+      ]
+    },
+    {
+      "algoId": "509",
+      "algoName": "TestRec9",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "510",
+      "algoName": "TestRec10",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "511",
+      "algoName": "CartRecommendationsV1",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+          "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
+      "algoId": "866",
+      "algoName": "GenericPersonalizedKDPCartRecommendations",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "867",
+      "algoName": "GenericPersonalizedAdvancedViewBought",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "868",
+      "algoName": "GenericPersonalizedSparkBestSellerByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "869",
+      "algoName": "GenericPersonalizedSparkTrendingByCategoryV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+        [
+          "primaryProductType",
+          "productType",
+          "subProductType"
+        ],
+        [
+          "primaryProductType",
+          "productType"
+        ],
+        [
+          "primaryProductType"
+        ]
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "870",
+      "algoName": "GenericPersonalizedSparkBestSellerByAttribute",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "primaryProductType",
+        "productType",
+        "subProductType",
+        "brandName",
+        "gender",
+        "silhouette",
+        "ageAppropriate",
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "871",
+      "algoName": "GenericPersonalizedSparkTrendingByAttribute",
+      "optionalCombEnabled": true,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "primaryProductType",
+        "productType",
+        "subProductType",
+        "brandName",
+        "gender",
+        "silhouette",
+        "ageAppropriate",
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "872",
+      "algoName": "GenericPersonalizedSimilarProductsV2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "873",
+      "algoName": "GenericPersonalizedKDPTopTrendingPopular",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "874",
+      "algoName": "GenericPersonalizedKDPContextualSearch",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "searchTerm"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "875",
+      "algoName": "GenericPersonalizedMoreLikeThis",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "876",
+      "algoName": "Personalized Variety View View RR By 3 with leading personalized recs",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "877",
+      "algoName": "Personalized Variety View View RR By 3 with leading non-personalized recs",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    },
+    {
+      "algoId": "878",
+      "algoName": "Personalized Variety View View RR By 2",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+        "productNumbers"
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+        "atgId",
+        "mcmId",
+        "cookieId"
+      ]
+    }
+  ]
+}
