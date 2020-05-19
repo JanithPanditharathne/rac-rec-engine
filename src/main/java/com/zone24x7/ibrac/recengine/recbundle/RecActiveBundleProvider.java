@@ -32,8 +32,7 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
     @Autowired
     private AlgoParamsValidator algoParamsValidator;
 
-    //    TODO: uncomment below when integrated
-    //@Autowired
+    @Autowired
     private RecRuleExecutor recRuleExecutor;
 
     @Log
