@@ -1,8 +1,14 @@
 package com.zone24x7.ibrac.recengine.configuration.sync;
 
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache;
+import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
+import com.zone24x7.ibrac.recengine.logging.Log;
+import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
+import com.zone24x7.ibrac.recengine.recrules.executors.RecRuleExecutor;
+import com.zone24x7.ibrac.recengine.recrules.knowledgebase.RecRuleKnowledgeBaseGenerator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,12 +22,23 @@ public class RecConfiguration implements CsConfiguration {
     @Autowired
     private CsConfigurationTempCache csConfigurationTempCache;
 
+    @Autowired
+    private RecRuleKnowledgeBaseGenerator recRuleKnowledgeBaseGenerator;
+
+    @Autowired
+    private RecRuleExecutor recRuleExecutor;
+
+    @Log
+    private Logger logger;
+
     private String recSlotConfig;
     private String recConfig;
     private String bundleConfig;
     private static String hashOfLastUsedRecSlotConfig;
     private static String hashOfLastUsedRecConfig;
     private static String hashOfLastUsedBundleConfig;
+
+    private RecRuleKnowledgeBaseInfo knowledgeBaseInfo;
 
     /**
      * Loads latest configuration from the cache.
@@ -79,24 +96,17 @@ public class RecConfiguration implements CsConfiguration {
      */
     @Override
     public CsConfigurationStatus configure() {
-        //Generate Knowledge base
+        //Generate knowledgeBaseInfo
+        CsConfigurationStatus status = CsConfigurationStatus.SUCCESS;
+        try {
+            recRuleKnowledgeBaseGenerator.setConfigurations(recConfig);
+            knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo();
+        } catch (MalformedConfigurationException e) {
+            logger.error("Error in configuring rec configuration", e);
+            status = CsConfigurationStatus.FAIL;
+        }
 
-        /*
-         * ConfigStatus status = ConfigStatus.SUCCESS;
-         *         try {
-         *             activeBundleProviderConfig = activeBundleProviderConfigGenerator.generateConfiguration(placementConfig, bundleConfig, channelPlacementRuleConfig);
-         *             channelPlacementRuleKnowledgeBaseGenerator.setRuleConfigurations(activeBundleProviderConfig.getChannelPlacementRules());
-         *             channelPlacementRuleKnowledgeBase = channelPlacementRuleKnowledgeBaseGenerator.getRuleKnowledgeBase();
-         *             placementValidator = channelPlacementRuleKnowledgeBaseGenerator.getPlacementValidator();
-         *         } catch (MalformedConfigurationException e) {
-         *             LOGGER.error("Error in trying placement configuration", e);
-         *             status = ConfigStatus.FAIL;
-         *             configurationStatus.setLastSyncedState("FAIL : " + LogUtilities.getMinifiedMessage(e));
-         *         }
-         *
-         *         return status;
-         */
-        return CsConfigurationStatus.SUCCESS;
+        return status;
     }
 
     /**
@@ -106,27 +116,18 @@ public class RecConfiguration implements CsConfiguration {
      */
     @Override
     public CsConfigurationStatus apply() {
-        //Apply knowledge base
+        //Apply knowledgeBaseInfo
+        CsConfigurationStatus status = CsConfigurationStatus.SUCCESS;
 
-        /*
-         * ConfigStatus status = ConfigStatus.SUCCESS;
-         *         try {
-         *             activeBundleProvider.updateConfiguration(activeBundleProviderConfig);
-         *             channelPlacementRuleExecutor.setKnowledgeBase(channelPlacementRuleKnowledgeBase);
-         *             channelPlacementRuleExecutor.setPlacementValidator(placementValidator);
-         *             updateHashOfLastUsedConfig(placementConfig, bundleConfig, channelPlacementRuleConfig);
-         *             configurationStatus.setLastSyncedPlacementConfigs(placementConfig);
-         *             configurationStatus.setLastSyncedBundleConfigs(bundleConfig);
-         *             configurationStatus.setLastSyncedChannelPlacementRuleConfigs(channelPlacementRuleConfig);
-         *         } catch (Exception e) {
-         *             LOGGER.error("Error applying placement configuration", e);
-         *             status = ConfigStatus.FAIL;
-         *         }
-         *         return status;
-         */
+        try {
+            updateHashOfLastUsedConfig(recSlotConfig, recConfig, bundleConfig);
+            recRuleExecutor.setRecRuleKnowledgeBaseInfo(knowledgeBaseInfo);
+        } catch (Exception e) {
+            logger.error("Error applying rec configuration", e);
+            status = CsConfigurationStatus.FAIL;
+        }
 
-        updateHashOfLastUsedConfig(recSlotConfig, recConfig, bundleConfig);
-        return CsConfigurationStatus.SUCCESS;
+        return status;
     }
 
     /**

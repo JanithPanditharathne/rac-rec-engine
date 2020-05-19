@@ -2,6 +2,7 @@ package com.zone24x7.ibrac.recengine.recrules.executors;
 
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.Rec;
+import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
 
 import java.util.List;
 import java.util.Map;
@@ -23,4 +24,11 @@ public interface RecRuleExecutor {
     List<Rec> getMatchingRecs(final Set<String> recIds,
                               final Map<String, String> ccp,
                               final RecCycleStatus recCycleStatus);
+
+    /**
+     * Method to set recRuleKnowledgeBaseInfo
+     *
+     * @param recRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo to set
+     */
+    void setRecRuleKnowledgeBaseInfo(RecRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo);
 }

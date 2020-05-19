@@ -1,0 +1,32 @@
+package mrulespack
+
+import java.util.List;
+import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;
+import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
+
+rule "100"
+when
+ 	$recs: List();
+ 	RecRuleKnowledgeBaseInfo($recIdToRecMap : recIdToRecMap);
+    MatchingCondition(matchingMap["department"] equalsIgnoreCase "Clothing" && matchingMap["brand"] equalsIgnoreCase "Tommy")
+then
+    $recs.add($recIdToRecMap.get("100"));
+end
+
+rule "101"
+when
+ 	$recs: List();
+ 	RecRuleKnowledgeBaseInfo($recIdToRecMap : recIdToRecMap);
+    MatchingCondition((matchingMap["department"] equalsIgnoreCase "Clothing" || matchingMap["department"] equalsIgnoreCase "Shoes") && matchingMap["brand"] equalsIgnoreCase "Tommy")
+then
+    $recs.add($recIdToRecMap.get("101"));
+end
+
+rule "102"
+when
+ 	$recs: List();
+ 	RecRuleKnowledgeBaseInfo($recIdToRecMap : recIdToRecMap);
+    MatchingCondition(matchingMap["brand"] equalsIgnoreCase "Tommy")
+then
+    $recs.add($recIdToRecMap.get("102"));
+end

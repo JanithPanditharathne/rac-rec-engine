@@ -1,5 +1,7 @@
 package com.zone24x7.ibrac.recengine.pojo.csconfig;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -7,6 +9,9 @@ import java.util.List;
  *
  */
 public class RecConfig {
+
+    @Valid
+    @NotNull
     private List<Rec> recs;
 
     /**

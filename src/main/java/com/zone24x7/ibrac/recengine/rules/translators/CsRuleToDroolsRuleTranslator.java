@@ -1,6 +1,7 @@
 package com.zone24x7.ibrac.recengine.rules.translators;
 
 import com.zone24x7.ibrac.recengine.exceptions.InvalidRuleException;
+import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -55,7 +56,8 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
      * @param mappingInfo mapping information of attribute types
      */
     //TODO: Remove this attribute mapping to the configuration constants class
-    public CsRuleToDroolsRuleTranslator(@Value("#{${ruleTranslator.attributeMapping}}") Map<String, String> mappingInfo) {
+    public CsRuleToDroolsRuleTranslator(@Value(AppConfigStringConstants.RULE_TRANSLATOR_ATTRIBUTE_MAPPING)
+                                                Map<String, String> mappingInfo) {
         if (MapUtils.isNotEmpty(mappingInfo)) {
             this.attributeTypeMappingInfo.putAll(mappingInfo);
         }

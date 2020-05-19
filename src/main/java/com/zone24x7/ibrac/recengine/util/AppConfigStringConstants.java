@@ -12,4 +12,12 @@ public class AppConfigStringConstants {
     public static final String CONFIG_SYNC_API_CALL_READ_TIMEOUT = "${config.sync.api.call.read.timeout}";
     public static final String CONFIG_SYNC_API_CALL_CONNECTION_TIMEOUT = "${config.sync.api.call.connection.timeout}";
     public static final String CONFIG_RESOURCE_CLASSPATH_ALGO_PARAMS = "${resource.file.classpath.algoParams}";
+    public static final String RULE_TRANSLATOR_ATTRIBUTE_MAPPING = "#{${ruleTranslator.attributeMapping}}";
+
+    /**
+     * Private constructor to stop initiation
+     */
+    private AppConfigStringConstants() {
+        throw new IllegalStateException("AppConfigStringConstants is a utility class");
+    }
 }
