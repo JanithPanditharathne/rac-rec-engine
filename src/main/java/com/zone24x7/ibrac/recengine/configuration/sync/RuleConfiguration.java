@@ -1,8 +1,14 @@
 package com.zone24x7.ibrac.recengine.configuration.sync;
 
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache;
+import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
+import com.zone24x7.ibrac.recengine.logging.Log;
+import com.zone24x7.ibrac.recengine.pojo.rules.MerchandisingRuleKnowledgeBaseInfo;
+import com.zone24x7.ibrac.recengine.rules.merchandisingrules.executors.MerchandisingRuleExecutor;
+import com.zone24x7.ibrac.recengine.rules.merchandisingrules.knowledgebase.KnowledgeBaseGenerator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +21,18 @@ public class RuleConfiguration implements CsConfiguration {
     @Autowired
     private CsConfigurationTempCache csConfigurationTempCache;
 
+    @Autowired
+    private KnowledgeBaseGenerator<String, MerchandisingRuleKnowledgeBaseInfo> knowledgeBaseGenerator;
+
+    @Autowired
+    private MerchandisingRuleExecutor ruleExecutor;
+
+    @Log
+    private Logger logger;
+
     private String ruleConfig;
     private static String hashOfLastUsedRuleConfig;
+    private MerchandisingRuleKnowledgeBaseInfo knowledgeBaseInfo;
 
     /**
      * Loads latest configuration from the config manager.
@@ -63,24 +79,19 @@ public class RuleConfiguration implements CsConfiguration {
      */
     @Override
     public CsConfigurationStatus configure() {
-        //Generate Knowledge base
+        // Generate Knowledge base
 
-        /*
-         * ConfigStatus status = ConfigStatus.SUCCESS;
-         *         try {
-         *             activeBundleProviderConfig = activeBundleProviderConfigGenerator.generateConfiguration(placementConfig, bundleConfig, channelPlacementRuleConfig);
-         *             channelPlacementRuleKnowledgeBaseGenerator.setRuleConfigurations(activeBundleProviderConfig.getChannelPlacementRules());
-         *             channelPlacementRuleKnowledgeBase = channelPlacementRuleKnowledgeBaseGenerator.getRuleKnowledgeBase();
-         *             placementValidator = channelPlacementRuleKnowledgeBaseGenerator.getPlacementValidator();
-         *         } catch (MalformedConfigurationException e) {
-         *             LOGGER.error("Error in trying placement configuration", e);
-         *             status = ConfigStatus.FAIL;
-         *             configurationStatus.setLastSyncedState("FAIL : " + LogUtilities.getMinifiedMessage(e));
-         *         }
-         *
-         *         return status;
-         */
-        return CsConfigurationStatus.SUCCESS;
+        CsConfigurationStatus status = CsConfigurationStatus.SUCCESS;
+
+        try {
+            knowledgeBaseGenerator.setConfigurations(ruleConfig);
+            knowledgeBaseInfo = knowledgeBaseGenerator.getKnowledgeBaseInfo();
+        } catch (MalformedConfigurationException e) {
+            logger.error("Error reading rule configuration", e);
+            status = CsConfigurationStatus.FAIL;
+        }
+
+        return status;
     }
 
     /**
@@ -90,29 +101,20 @@ public class RuleConfiguration implements CsConfiguration {
      */
     @Override
     public CsConfigurationStatus apply() {
-        //Apply knowledge base
-
-        /*
-         * ConfigStatus status = ConfigStatus.SUCCESS;
-         *         try {
-         *             activeBundleProvider.updateConfiguration(activeBundleProviderConfig);
-         *             channelPlacementRuleExecutor.setKnowledgeBase(channelPlacementRuleKnowledgeBase);
-         *             channelPlacementRuleExecutor.setPlacementValidator(placementValidator);
-         *             updateHashOfLastUsedConfig(placementConfig, bundleConfig, channelPlacementRuleConfig);
-         *             configurationStatus.setLastSyncedPlacementConfigs(placementConfig);
-         *             configurationStatus.setLastSyncedBundleConfigs(bundleConfig);
-         *             configurationStatus.setLastSyncedChannelPlacementRuleConfigs(channelPlacementRuleConfig);
-         *         } catch (Exception e) {
-         *             LOGGER.error("Error applying placement configuration", e);
-         *             status = ConfigStatus.FAIL;
-         *         }
-         *         return status;
-         */
+        // Apply knowledge base
+        ruleExecutor.setKnowledgeBaseInfo(knowledgeBaseInfo);
 
         // Update hash
-        hashOfLastUsedRuleConfig = DigestUtils.sha256Hex(ruleConfig);
+        updateHashOfLastUsedConfig(ruleConfig);
         return CsConfigurationStatus.SUCCESS;
     }
 
-
+    /**
+     * Method to update hash of last used configuration.
+     *
+     * @param ruleConfig configuration to calculate hash
+     */
+    private static synchronized void updateHashOfLastUsedConfig(String ruleConfig) {
+        hashOfLastUsedRuleConfig = DigestUtils.sha256Hex(ruleConfig);
+    }
 }

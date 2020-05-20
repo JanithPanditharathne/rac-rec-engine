@@ -3,9 +3,12 @@ package com.zone24x7.ibrac.recengine.configuration.sync;
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache;
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.logging.Log;
+import com.zone24x7.ibrac.recengine.pojo.recbundle.ActiveBundleProviderConfig;
 import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
+import com.zone24x7.ibrac.recengine.recbundle.ActiveBundleConfigGenerator;
+import com.zone24x7.ibrac.recengine.recbundle.ActiveBundleProvider;
+import com.zone24x7.ibrac.recengine.rules.merchandisingrules.knowledgebase.KnowledgeBaseGenerator;
 import com.zone24x7.ibrac.recengine.rules.recrules.executors.RecRuleExecutor;
-import com.zone24x7.ibrac.recengine.rules.recrules.knowledgebase.RecRuleKnowledgeBaseGenerator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -18,15 +21,20 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RecConfiguration implements CsConfiguration {
-
     @Autowired
     private CsConfigurationTempCache csConfigurationTempCache;
 
     @Autowired
-    private RecRuleKnowledgeBaseGenerator recRuleKnowledgeBaseGenerator;
+    private KnowledgeBaseGenerator<String, RecRuleKnowledgeBaseInfo> recRuleKnowledgeBaseGenerator;
 
     @Autowired
     private RecRuleExecutor recRuleExecutor;
+
+    @Autowired
+    private ActiveBundleProvider activeBundleProvider;
+
+    @Autowired
+    private ActiveBundleConfigGenerator activeBundleConfigGenerator;
 
     @Log
     private Logger logger;
@@ -37,8 +45,8 @@ public class RecConfiguration implements CsConfiguration {
     private static String hashOfLastUsedRecSlotConfig;
     private static String hashOfLastUsedRecConfig;
     private static String hashOfLastUsedBundleConfig;
-
     private RecRuleKnowledgeBaseInfo knowledgeBaseInfo;
+    private ActiveBundleProviderConfig activeBundleProviderConfig;
 
     /**
      * Loads latest configuration from the cache.
@@ -98,7 +106,9 @@ public class RecConfiguration implements CsConfiguration {
     public CsConfigurationStatus configure() {
         //Generate knowledgeBaseInfo
         CsConfigurationStatus status = CsConfigurationStatus.SUCCESS;
+
         try {
+            activeBundleProviderConfig = activeBundleConfigGenerator.generateConfiguration(recSlotConfig, bundleConfig);
             recRuleKnowledgeBaseGenerator.setConfigurations(recConfig);
             knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo();
         } catch (MalformedConfigurationException e) {
@@ -120,8 +130,9 @@ public class RecConfiguration implements CsConfiguration {
         CsConfigurationStatus status = CsConfigurationStatus.SUCCESS;
 
         try {
-            updateHashOfLastUsedConfig(recSlotConfig, recConfig, bundleConfig);
+            activeBundleProvider.setConfig(activeBundleProviderConfig);
             recRuleExecutor.setRecRuleKnowledgeBaseInfo(knowledgeBaseInfo);
+            updateHashOfLastUsedConfig(recSlotConfig, recConfig, bundleConfig);
         } catch (Exception e) {
             logger.error("Error applying rec configuration", e);
             status = CsConfigurationStatus.FAIL;
