@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import com.zone24x7.ibrac.recengine.pojo.tableconfigs.TableConfigList;
 
 import java.io.IOException;
 
@@ -48,5 +49,16 @@ public final class JsonPojoConverter {
      */
     public static <T> JsonNode toJson(T pojo) {
         return mapper.convertValue(pojo, JsonNode.class);
+    }
+
+    /**
+     * Method to get TableConfigList for a given Json.
+     *
+     * @param inputJson Input Json String
+     * @return TableConfigList.
+     * @throws IOException If an IO error occurs.
+     */
+    public static TableConfigList getTableConfigListsFromJson(String inputJson) throws IOException {
+        return mapper.readValue(inputJson, TableConfigList.class);
     }
 }
