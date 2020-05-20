@@ -131,6 +131,24 @@ public class RecActiveBundleConfigGeneratorTest {
     }
 
     /**
+     * Test to verify that malformed configuration exception is thrown when rec slot config is empty or null.
+     */
+    @Test
+    public void should_throw_malformed_exception_when_rec_slot_config_is_null_or_empty() {
+        assertThrows(MalformedConfigurationException.class, () -> recActiveBundleConfigGenerator.generateConfiguration(null, VALID_BUNDLE_CONFIG));
+        assertThrows(MalformedConfigurationException.class, () -> recActiveBundleConfigGenerator.generateConfiguration("", VALID_BUNDLE_CONFIG));
+    }
+
+    /**
+     * Test to verify that malformed configuration exception is thrown when bundle config is empty or null.
+     */
+    @Test
+    public void should_throw_malformed_exception_when_bundle_config_is_null_or_empty() {
+        assertThrows(MalformedConfigurationException.class, () -> recActiveBundleConfigGenerator.generateConfiguration(VALID_REC_SLOT_CONFIG, ""));
+        assertThrows(MalformedConfigurationException.class, () -> recActiveBundleConfigGenerator.generateConfiguration(VALID_REC_SLOT_CONFIG, null));
+    }
+
+    /**
      * Test to verify that malformed configuration exception is thrown when invalid format errors occur in configs.
      */
     @Test

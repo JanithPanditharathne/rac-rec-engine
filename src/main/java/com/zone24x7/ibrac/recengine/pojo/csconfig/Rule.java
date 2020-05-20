@@ -1,4 +1,4 @@
-package com.zone24x7.ibrac.recengine.pojo.rules;
+package com.zone24x7.ibrac.recengine.pojo.csconfig;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;

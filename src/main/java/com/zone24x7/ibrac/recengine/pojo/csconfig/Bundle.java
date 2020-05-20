@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pojo.csconfig;
 import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,6 +17,8 @@ public class Bundle {
     @NotEmpty
     private String name;
 
+    @NotEmpty
+    @Pattern(regexp = "FLAT")
     private String type;
 
     @NotNull

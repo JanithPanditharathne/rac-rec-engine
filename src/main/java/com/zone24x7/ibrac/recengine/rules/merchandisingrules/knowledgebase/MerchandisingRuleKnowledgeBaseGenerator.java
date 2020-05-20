@@ -4,8 +4,8 @@ import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.exceptions.RuleGeneratorException;
 import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.rules.MerchandisingRuleKnowledgeBaseInfo;
-import com.zone24x7.ibrac.recengine.pojo.rules.Rule;
-import com.zone24x7.ibrac.recengine.pojo.rules.RuleConfig;
+import com.zone24x7.ibrac.recengine.pojo.csconfig.Rule;
+import com.zone24x7.ibrac.recengine.pojo.csconfig.RuleConfig;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.customoperators.StringEvaluatorDefinition;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.rulegenerators.MerchandisingRuleGenerator;
 import com.zone24x7.ibrac.recengine.util.JsonPojoConverter;
@@ -58,8 +58,7 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
     @Override
     public void setConfigurations(String inputConfigurations) throws MalformedConfigurationException {
         if (StringUtils.isEmpty(inputConfigurations)) {
-            logger.warn("Rule generation skipped due to empty input rule configuration string ");
-            return;
+            throw new MalformedConfigurationException("Rule configurations cannot be empty or null.");
         }
 
         RuleConfig ruleConfig;

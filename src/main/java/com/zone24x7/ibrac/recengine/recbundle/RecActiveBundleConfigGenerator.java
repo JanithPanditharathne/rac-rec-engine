@@ -8,6 +8,7 @@ import com.zone24x7.ibrac.recengine.pojo.csconfig.RecSlotConfig;
 import com.zone24x7.ibrac.recengine.pojo.recbundle.ActiveBundleProviderConfig;
 import com.zone24x7.ibrac.recengine.util.JsonPojoConverter;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolation;
@@ -38,6 +39,14 @@ public class RecActiveBundleConfigGenerator implements ActiveBundleConfigGenerat
     public ActiveBundleProviderConfig generateConfiguration(String recSlotConfiguration, String bundleConfiguration) throws MalformedConfigurationException {
         RecSlotConfig recSlotConfig;
         BundleConfig bundleConfig;
+
+        if (StringUtils.isEmpty(recSlotConfiguration)) {
+            throw new MalformedConfigurationException("Rec slot configurations cannot be empty or null.");
+        }
+
+        if (StringUtils.isEmpty(bundleConfiguration)) {
+            throw new MalformedConfigurationException("Bundle configurations cannot be empty or null.");
+        }
 
         try {
             recSlotConfig = JsonPojoConverter.toPojo(recSlotConfiguration, RecSlotConfig.class);

@@ -23,7 +23,6 @@ import static org.mockito.Mockito.*;
 public class MerchandisingRuleKnowledgeBaseGeneratorTest {
     private MerchandisingRuleKnowledgeBaseGenerator knowledgeBaseGenerator;
 
-    private static final String EMPTY_RULE_CONFIG = "";
     private static final String RULE_CONFIG_WITH_ZERO_RULES = "{\"rules\":[]}";
     private static final String MALFORMED_JSON_RULE_CONFIG = "\"id\":\"123\",\"name\":\"Test Rule 1\",\"type\":\"BOOST\",\"isGlobal\":false,\"matchingCondition\":\"(department == \\\"Shoes\\\" || (department == \\\"Clothing\\\" && brand == \\\"Tommy\\\"))\",\"actionCondition\":\"(brand == \\\"Nike\\\")\"}";
     private static final String MALFORMED_JSON_RULE_CONFIG_WITH_CONDITION_ERROR = "{\"rules\":[{\"id\":\"111\",\"name\":\"Test Rule 1\",\"type\":\"BOOST\",\"isGlobal\":false,\"matchingCondition\":\"(department ==\",\"actionCondition\":\"(brand == \\\"Nike\\\")\"}]}";
@@ -54,13 +53,11 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
 
     /**
      * Test to verify that knowledge base info is not created when rule config is empty.
-     *
-     * @throws MalformedConfigurationException if an error occurs in rule generation
      */
     @Test
-    public void should_not_create_knowledge_base_if_rule_config_is_empty() throws MalformedConfigurationException {
-        knowledgeBaseGenerator.setConfigurations(EMPTY_RULE_CONFIG);
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+    public void should_throw_exception_when_rule_config_is_empty_or_null() {
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(""));
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(null));
     }
 
     /**

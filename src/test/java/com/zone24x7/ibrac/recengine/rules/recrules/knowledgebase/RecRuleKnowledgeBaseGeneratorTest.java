@@ -73,12 +73,12 @@ class RecRuleKnowledgeBaseGeneratorTest {
     }
 
     /**
-     * log and return on empty configuration
+     * Test to verify that knowledge base info is not created when rule config is empty.
      */
     @Test
-    void log_and_return_on_empty_configuration() throws MalformedConfigurationException {
-        recRuleKnowledgeBaseGenerator.setConfigurations("");
-        verify(logger, times(1)).warn("Rule generation skipped due to empty input rec slot configuration string ");
+    public void should_throw_exception_when_rec_rule_config_is_empty_or_null() {
+        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.setConfigurations(""));
+        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.setConfigurations(null));
     }
 
     /**

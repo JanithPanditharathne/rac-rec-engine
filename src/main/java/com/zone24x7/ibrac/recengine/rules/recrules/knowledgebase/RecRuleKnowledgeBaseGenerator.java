@@ -61,10 +61,8 @@ public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<Str
      */
     @Override
     public void setConfigurations(String inputConfigurations) throws MalformedConfigurationException {
-
         if (StringUtils.isEmpty(inputConfigurations)) {
-            logger.warn("Rule generation skipped due to empty input rec slot configuration string ");
-            return;
+            throw new MalformedConfigurationException("Rec configurations cannot be empty or null.");
         }
 
         RecConfig recConfig;
