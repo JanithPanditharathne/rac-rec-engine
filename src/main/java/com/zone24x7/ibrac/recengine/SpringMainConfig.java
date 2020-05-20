@@ -1,6 +1,7 @@
 package com.zone24x7.ibrac.recengine;
 
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationsFetchApiCallStrategy;
+import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationsFetchLocalConfigStrategy;
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationsFetchStrategy;
 import com.zone24x7.ibrac.recengine.configuration.sync.CsConfiguration;
 import com.zone24x7.ibrac.recengine.configuration.sync.RecConfiguration;
@@ -35,6 +36,9 @@ public class SpringMainConfig {
 
     @Value(AppConfigStringConstants.CONFIG_RESOURCE_CLASSPATH_ALGO_PARAMS)
     private Resource algoParamsResourceFile;
+
+    @Value(AppConfigStringConstants.CONFIG_SYNC_STRATEGY)
+    private String configSyncStrategy;
 
     @Bean
     @Qualifier("cachedThreadPoolTaskExecutor")
@@ -71,8 +75,14 @@ public class SpringMainConfig {
     }
 
     @Bean
-    public CsConfigurationsFetchStrategy getCsConfigurationsReadStrategy() {
-        return new CsConfigurationsFetchApiCallStrategy();
+    public CsConfigurationsFetchStrategy getCsConfigurationsReadStrategy() throws MalformedConfigurationException {
+        if ("api".equals(configSyncStrategy)) {
+            return new CsConfigurationsFetchApiCallStrategy();
+        } else if ("localconfig".equals(configSyncStrategy)) {
+            return new CsConfigurationsFetchLocalConfigStrategy();
+        }
+
+        throw new MalformedConfigurationException("Unknown config syncup strategy in application.properties");
     }
 
     /**

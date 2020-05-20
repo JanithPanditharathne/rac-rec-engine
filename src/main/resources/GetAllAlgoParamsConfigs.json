@@ -1,6 +1,24 @@
 {
   "algorithmParams": [
     {
+      "algoId": "100",
+      "algoName": "TopTrending",
+      "optionalCombEnabled": false,
+      "localization": false,
+      "localizationParams": [
+
+      ],
+      "mandatoryParams": [
+
+      ],
+      "conditionalMandatoryParams": [
+
+      ],
+      "optionalParams": [
+
+      ]
+    },
+    {
       "algoId": "142",
       "algoName": "SeasonalViewTopTrendingByAttribute",
       "optionalCombEnabled": true,

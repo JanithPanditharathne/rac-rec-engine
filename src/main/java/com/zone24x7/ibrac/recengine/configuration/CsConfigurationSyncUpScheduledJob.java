@@ -49,7 +49,7 @@ public class CsConfigurationSyncUpScheduledJob {
             return;
         }
 
-        List<CsConfiguration> configurations = new LinkedList(configurationMap.values());
+        List<CsConfiguration> configurations = new LinkedList<>(configurationMap.values());
 
         if (!loadConfigurations(configurations)) {
             // Loading failed
