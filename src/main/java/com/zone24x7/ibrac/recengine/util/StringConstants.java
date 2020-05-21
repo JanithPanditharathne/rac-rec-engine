@@ -8,4 +8,9 @@ public class StringConstants {
     public static final String DROOLS_KNOWLEDGE_BASE_NULL_MSG = "Knowledge base is null.";
 
     public static final String RECSLOT_GENERATED_ID_SEPARATOR = "_";
+    public static final String REC_BUNDLE_PARAMS = "REC-BUNDLE_PARAMS";
+
+    // Private constructor
+    private StringConstants() {
+    }
 }
