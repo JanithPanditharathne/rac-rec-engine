@@ -1,9 +1,6 @@
 package com.zone24x7.ibrac.recengine.dao;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Utility class to get the row key
@@ -13,10 +10,6 @@ public class HBaseKeyMaker {
     //Constants
     private static final String ALGORITHM_ID_KEY = "algorithmId";
     private static final String CONSTANT_ALGO_ID = "99";
-
-    //TODO get the values SHIP_NODE, SHIP_NODE from config file.
-    //Params to ignore
-    private static final Set<String> IGNORED_PARAMS = new HashSet<>(Arrays.asList("shipNode", "shipNodes"));
 
     /**
      * Private constructor to avoid instantiating instances of this final class
@@ -40,11 +33,8 @@ public class HBaseKeyMaker {
 
         //Now set the other CCPs
         for (Map.Entry<String, String> map : params.entrySet()) {
-            if (!IGNORED_PARAMS.contains(map.getKey())) {
-                recommendationKey.setParameter(map.getKey(), map.getValue());
-            }
+            recommendationKey.setParameter(map.getKey(), map.getValue());
         }
-
         return recommendationKey.hash();
     }
 
