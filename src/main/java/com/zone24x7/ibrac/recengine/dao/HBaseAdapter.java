@@ -37,7 +37,7 @@ public class HBaseAdapter implements DatasourceAdapter {
         String key = HBaseKeyMaker.generateRowKey(ccp);
 
         // Get the tableConfig info by algorithm id.
-        TableConfigInfo tableConfigInfo = tableConfigReaderService.getTableConfigInfoByAlgorithmName(algorithmId);
+        TableConfigInfo tableConfigInfo = tableConfigReaderService.getTableConfigInfoByAlgorithmId(algorithmId);
 
         // Throw HBaseAdapterException if the table config info is null.
         if (tableConfigInfo == null) {

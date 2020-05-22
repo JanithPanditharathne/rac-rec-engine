@@ -1,14 +1,10 @@
 package com.zone24x7.ibrac.recengine.service;
 
-import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.pojo.tableconfigs.TableConfigInfo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +45,7 @@ public class TableConfigReaderServiceTest {
     @Test
     public void should_get_table_config_info_object_for_given_algorithm() {
 
-        TableConfigInfo tableConfigInfo = tableConfigReaderService.getTableConfigInfoByAlgorithmName("141");
+        TableConfigInfo tableConfigInfo = tableConfigReaderService.getTableConfigInfoByAlgorithmId("141");
         assertEquals(this.tableConfigInfo,tableConfigInfo);
 
     }

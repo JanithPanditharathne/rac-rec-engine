@@ -13,15 +13,8 @@ import java.util.stream.Collectors;
  */
 public class RecommendationKey {
 
-    // TODO move PRODUCT_NUMBERS, PERMUTED_PRODUCT_NUMBERS , SKU_NUMBERS to the config file.
-    private static final String PRODUCT_NUMBERS = "productNumbers";
-    private static final String PERMUTED_PRODUCT_NUMBERS = "permutedProductNumbers";
-    private static final String SKU_NUMBERS = "skuNumbers";
     private static final int PRODUCT_SEED = -889275714;
     private static final int STRING_SEED = -137723950;
-
-    //These keys have multiple values comma separated.
-    private List<String> sortedKeys = Arrays.asList(PRODUCT_NUMBERS, SKU_NUMBERS, PERMUTED_PRODUCT_NUMBERS);
 
     //TreeMap guarantees the alphabetical ordering of the keys
     private Map<String, String> ccpParameters = new TreeMap<>();
@@ -38,13 +31,7 @@ public class RecommendationKey {
      */
     public void setParameter(String key, String value) {
         String tempVal = value;
-
-        if (sortedKeys.contains(key)) {
-            List<String> splitList = Arrays.asList(value.split(","));
-            Collections.sort(splitList);
-            tempVal = splitList.stream().collect(Collectors.joining(","));
-        }
-
+        // TODO Handle ccp parameters with multiple comma separated values.
         ccpParameters.put(key, cleansValue(tempVal));
     }
 

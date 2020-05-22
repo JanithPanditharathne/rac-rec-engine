@@ -23,7 +23,7 @@ public class TableConfigReaderService {
      *
      * @return the TableConfigInfo
      */
-    public TableConfigInfo getTableConfigInfoByAlgorithmName(String algorithmName) {
+    public TableConfigInfo getTableConfigInfoByAlgorithmId(String algorithmName) {
         return tableConfigurationMap.get(algorithmName);
     }
 
