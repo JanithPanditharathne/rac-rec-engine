@@ -21,6 +21,10 @@ public class AppConfigStringConstants {
     public static final String CONFIG_RESOURCE_CLASSPATH_ALGO_PARAMS = "${resource.file.classpath.algoParams}";
     public static final String RULE_TRANSLATOR_ATTRIBUTE_MAPPING = "#{${ruleTranslator.attributeMapping}}";
 
+    public static final String CONFIG_REC_RESPONSE_CURRENCY = "${recController.response.currency}";
+    public static final String CONFIG_REC_RESPONSE_IMAGE_WIDTH = "${recController.response.image.width}";
+    public static final String CONFIG_REC_RESPONSE_IMAGE_HEIGHT= "${recController.response.image.height}";
+
     /**
      * Private constructor to stop initiation
      */

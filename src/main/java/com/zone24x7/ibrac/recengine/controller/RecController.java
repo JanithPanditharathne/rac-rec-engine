@@ -1,8 +1,14 @@
 package com.zone24x7.ibrac.recengine.controller;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zone24x7.ibrac.recengine.exception.ErrorCode;
 import com.zone24x7.ibrac.recengine.exception.InputValidationException;
-import com.zone24x7.ibrac.recengine.pojo.*;
+import com.zone24x7.ibrac.recengine.pojo.PlaceholderId;
+import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
+import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
+import com.zone24x7.ibrac.recengine.pojo.RecResult;
+import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
+import com.zone24x7.ibrac.recengine.util.RecResponseFormatter;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTask;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTaskFactory;
 import com.zone24x7.ibrac.recengine.util.*;
@@ -12,8 +18,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -43,6 +52,16 @@ public class RecController {
     @Autowired
     @Qualifier("inputParamValidationPatternExtraChars")
     private Pattern inputParamValidationPatternExtraChars;
+
+    @Value(AppConfigStringConstants.CONFIG_REC_RESPONSE_CURRENCY)
+    private String currency;
+
+    @Value(AppConfigStringConstants.CONFIG_REC_RESPONSE_IMAGE_WIDTH)
+    private String imageWidth;
+
+    @Value(AppConfigStringConstants.CONFIG_REC_RESPONSE_IMAGE_HEIGHT)
+    private String imageHeight;
+
 
     private static final Logger logger = LoggerFactory.getLogger(RecController.class);
 
@@ -162,18 +181,18 @@ public class RecController {
 
         RecResult recResult = getRecResultForPlaceholder(channelId, pageId, placeholderIds.get(0), channelContextParamsMap, requestId);
 
-        if (recResult != null) {
-            RecResponsePayload recResponsePayload = new RecResponsePayload();
-            recResponsePayload.setCid(channelId);
-            recResponsePayload.setPgId(pageId);
-            recResponsePayload.setRecommendations(Collections.singletonList(recResult));
+        List<RecResult> recResultList = new LinkedList<>();
 
-            return ResponseEntity.ok()
-                                 .header(StringConstants.REC_BUNDLE_PARAMS, "REC_BUNDLE_PARAMS") //todo: modify header as per the format
-                                 .body(new RecResponse(recResponsePayload));
+        if (recResult != null) {
+            recResultList.add(recResult);
         }
 
-        return null;
+        ObjectNode node = RecResponseFormatter.format(channelId, pageId, recResultList, new ResponseFormatterConfig(currency, imageWidth, imageHeight));
+
+        return ResponseEntity.ok()
+                // TODO: modify header as per the format
+                .header(StringConstants.REC_BUNDLE_PARAMS, "REC_BUNDLE_PARAMS")
+                .body(node);
     }
 
     /**
@@ -202,11 +221,11 @@ public class RecController {
             return cachedTaskExecutorService.submit(placementTask).get();
         } catch (InterruptedException | ExecutionException e) {
             logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
-                         requestId,
-                         channelId,
-                         pageId,
-                         placeholderId,
-                         e);
+                    requestId,
+                    channelId,
+                    pageId,
+                    placeholderId,
+                    e);
         }
 
         return null;
