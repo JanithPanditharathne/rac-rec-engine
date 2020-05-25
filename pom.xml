@@ -19,6 +19,13 @@
 	</properties>
 
 	<dependencies>
+        <dependency>
+            <groupId>com.zone24x7.ibrac</groupId>
+            <artifactId>reconlib</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/src/main/lib/reconlib-0.0.1-SNAPSHOT.jar</systemPath>
+        </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

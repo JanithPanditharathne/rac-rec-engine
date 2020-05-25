@@ -2,12 +2,14 @@ package com.zone24x7.ibrac.recengine.util;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Utility class for handling Json Pojo conversions
@@ -48,5 +50,16 @@ public final class JsonPojoConverter {
      */
     public static <T> JsonNode toJson(T pojo) {
         return mapper.convertValue(pojo, JsonNode.class);
+    }
+
+    /**
+     * Method to convert a pojo to a map.
+     *
+     * @param pojo the pojo object to convert
+     * @param <T>  <T>  the class type
+     * @return the pojo
+     */
+    public static <T> Map<String, String> toMap(T pojo) {
+        return mapper.convertValue(pojo, new TypeReference<Map<String, String>>() {});
     }
 }

@@ -25,6 +25,9 @@ public class AppConfigStringConstants {
     public static final String CONFIG_REC_RESPONSE_IMAGE_WIDTH = "${recController.response.image.width}";
     public static final String CONFIG_REC_RESPONSE_IMAGE_HEIGHT= "${recController.response.image.height}";
 
+    public static final String PRODUCT_CURATE_INVENTORY_FILTERING_ENABLED = "${prodCurator.enableInventoryFiltering}";
+    public static final String PRODUCT_CURATE_PRICE_FILTERING_ENABLED = "${prodCurator.enablePriceFiltering}";
+
     /**
      * Private constructor to stop initiation
      */

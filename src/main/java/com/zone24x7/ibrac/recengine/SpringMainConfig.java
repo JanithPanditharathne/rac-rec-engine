@@ -16,6 +16,8 @@ import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import com.zone24x7.ibrac.recengine.util.ConfigDataTransformUtil;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
+import com.zone24x7.ibrac.reconlib.api.ProductApi;
+import com.zone24x7.ibrac.reconlib.api.ReconLibProductApi;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -174,5 +176,16 @@ public class SpringMainConfig {
             whiteListedCcpKeys.addAll(Arrays.asList(whiteListedCcpKeysString.split(",")));
         }
         return whiteListedCcpKeys;
+    }
+
+    /**
+     * Provides the {@link ProductApi} instance.
+     *
+     * @return {@link ReconLibProductApi} instance.
+     */
+    @Bean
+    @Qualifier("productApi")
+    public ProductApi getReconLibProductApi() {
+        return new ReconLibProductApi();
     }
 }

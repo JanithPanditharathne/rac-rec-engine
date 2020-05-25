@@ -1,7 +1,7 @@
 package com.zone24x7.ibrac.recengine.exceptions;
 
 /**
- * This exception will be thrown when any component of RTIS detects that it has not been properly setup to provide
+ * This exception will be thrown when any component of rec engine detects that it has not been properly setup to provide
  * it's correct functionality
  */
 public class SetupException extends Exception {
