@@ -2,6 +2,7 @@ package com.zone24x7.ibrac.recengine.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.zone24x7.ibrac.recengine.logging.Log;
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.codec.binary.Base64OutputStream;
 import org.apache.commons.codec.net.URLCodec;
@@ -20,7 +21,8 @@ import java.util.Map;
  */
 @Component
 public class ChannelContextParamsDecoder {
-    private static final Logger logger = LoggerFactory.getLogger(ChannelContextParamsDecoder.class);
+    @Log
+    private Logger logger;
 
     //URL encoding and decoding codec instance
     private static final URLCodec URLCODEC = new URLCodec();
@@ -33,22 +35,12 @@ public class ChannelContextParamsDecoder {
      */
     public String serializeMapToBase64String(Map<String, String> map) {
         ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-        Base64OutputStream base64Out = null;
 
         if (map != null) {
-            try {
-                base64Out = new Base64OutputStream(bytesOut);
+            try (Base64OutputStream base64Out = new Base64OutputStream(bytesOut)){
                 base64Out.write(new Gson().toJson(map).getBytes(StandardCharsets.UTF_8.name()));
             } catch (Exception ex) {
                 logger.error("Error in serializing Map to Base64", ex);
-            } finally {
-                if (base64Out != null) {
-                    try {
-                        base64Out.close();
-                    } catch (Exception ex) {
-                        logger.error("Error in closing the Base64 stream", ex);
-                    }
-                }
             }
         }
 
@@ -63,13 +55,10 @@ public class ChannelContextParamsDecoder {
      */
     public Map<String, String> deserializeFromBase64StringToMap(String base64String) {
         ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
-        Base64InputStream base64In = null;
         Map<String, String> ccpParams = null;
 
         if (StringUtils.isNotEmpty(base64String)) {
-            try {
-                base64In = new Base64InputStream(new ByteArrayInputStream(base64String.getBytes(StandardCharsets.UTF_8.name())));
-
+            try (Base64InputStream base64In = new Base64InputStream(new ByteArrayInputStream(base64String.getBytes(StandardCharsets.UTF_8.name())));) {
                 for (int data; (data = base64In.read()) > -1; ) {
                     bytesOut.write(data);
                 }
@@ -78,14 +67,6 @@ public class ChannelContextParamsDecoder {
                 }.getType());
             } catch (Exception ex) {
                 logger.error("Error in deserializing from Base64 to Map", ex);
-            } finally {
-                if (base64In != null) {
-                    try {
-                        base64In.close();
-                    } catch (Exception ex) {
-                        logger.error("Error in closing the Base64 stream", ex);
-                    }
-                }
             }
         }
 

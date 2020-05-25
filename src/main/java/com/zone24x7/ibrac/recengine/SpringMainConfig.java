@@ -35,22 +35,35 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Pattern;
 
+/**
+ * Class to represent the spring main configurations and bindings.
+ */
 @Configuration
 @EnableScheduling
 public class SpringMainConfig {
-
     @Value(AppConfigStringConstants.CONFIG_RESOURCE_CLASSPATH_ALGO_PARAMS)
     private Resource algoParamsResourceFile;
 
     @Value(AppConfigStringConstants.CONFIG_SYNC_STRATEGY)
     private String configSyncStrategy;
 
+    /**
+     * Method to provide the executor service.
+     *
+     * @return the executor service
+     */
     @Bean
     @Qualifier("cachedThreadPoolTaskExecutor")
     public ExecutorService getTaskExecutor() {
         return Executors.newCachedThreadPool();
     }
 
+    /**
+     * Provider method for strategy executors chain
+     *
+     * @param flatRecStrategy the flat rec strategy to include.
+     * @return the strategy executor chain
+     */
     @Bean
     @Qualifier("strategyExecutors")
     public StrategyExecutor provideStrategyExecutors(FlatRecStrategy flatRecStrategy) {
@@ -58,12 +71,24 @@ public class SpringMainConfig {
         return flatRecStrategy;
     }
 
+    /**
+     * Method to provide the data source adapter.
+     *
+     * @return the data source adapter
+     */
     @Bean
     public DatasourceAdapter getDataSource() {
         //TODO: if else according to data store initiate the bean
         return new HBaseAdapter();
     }
 
+    /**
+     * Method to provide the configuration service related configurations map.
+     *
+     * @param RecConfiguration  the recommendation configurations
+     * @param ruleConfiguration the rule configurations
+     * @return the configurations map
+     */
     @Bean
     @Qualifier("CsConfigurations")
     public Map<String, CsConfiguration> getCsConfigurations(RecConfiguration RecConfiguration, RuleConfiguration ruleConfiguration) {
@@ -73,12 +98,23 @@ public class SpringMainConfig {
         return csConfigurationHashMap;
     }
 
+    /**
+     * Method to provide the configuration sync lock.
+     *
+     * @return the configuration sync lock
+     */
     @Bean
     @Qualifier("ConfigSyncLock")
     public ReentrantReadWriteLock getConfigSyncLock() {
         return new ReentrantReadWriteLock();
     }
 
+    /**
+     * Method to provide the configuration fetch strategy.
+     *
+     * @return the configuration fetch strategy
+     * @throws MalformedConfigurationException if the configuration is malformed
+     */
     @Bean
     public CsConfigurationsFetchStrategy getCsConfigurationsReadStrategy() throws MalformedConfigurationException {
         if ("api".equals(configSyncStrategy)) {

@@ -1,4 +1,4 @@
-package com.zone24x7.ibrac.recengine.exception;
+package com.zone24x7.ibrac.recengine.exceptions;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;

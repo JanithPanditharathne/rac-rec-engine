@@ -1,4 +1,4 @@
-package com.zone24x7.ibrac.recengine.exception;
+package com.zone24x7.ibrac.recengine.exceptions;
 
 /**
  * Enum containing error codes in Rec Engine

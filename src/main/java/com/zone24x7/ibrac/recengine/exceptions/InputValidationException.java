@@ -1,4 +1,4 @@
-package com.zone24x7.ibrac.recengine.exception;
+package com.zone24x7.ibrac.recengine.exceptions;
 
 /**
  * Class to handle exceptions related to input validations.

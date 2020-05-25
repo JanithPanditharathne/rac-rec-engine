@@ -1,4 +1,4 @@
-package com.zone24x7.ibrac.recengine.exception;
+package com.zone24x7.ibrac.recengine.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

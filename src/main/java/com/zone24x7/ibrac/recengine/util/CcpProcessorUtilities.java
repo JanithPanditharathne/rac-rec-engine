@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
  * Utility class providing CCP parameter processing functions
  *
  */
-@Component
 public final class CcpProcessorUtilities {
 
     private static List<String> whitelistedCcpKeys;

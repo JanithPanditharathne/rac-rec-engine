@@ -1,7 +1,7 @@
 package com.zone24x7.ibrac.recengine.exceptions;
 
 /**
- * This exception will be thrown when any configuration referred to by RTIS is malformed
+ * This exception will be thrown when any configuration referred to by Rec Engine is malformed
  */
 public class MalformedConfigurationException extends Exception {
     /**

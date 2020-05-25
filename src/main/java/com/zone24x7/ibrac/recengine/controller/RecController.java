@@ -1,21 +1,20 @@
 package com.zone24x7.ibrac.recengine.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.zone24x7.ibrac.recengine.exception.ErrorCode;
-import com.zone24x7.ibrac.recengine.exception.InputValidationException;
+import com.zone24x7.ibrac.recengine.exceptions.ErrorCode;
+import com.zone24x7.ibrac.recengine.exceptions.InputValidationException;
+import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.PlaceholderId;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
 import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
-import com.zone24x7.ibrac.recengine.util.RecResponseFormatter;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTask;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTaskFactory;
 import com.zone24x7.ibrac.recengine.util.*;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +27,8 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
+
+import static java.util.UUID.randomUUID;
 
 /**
  * Rest Controller class for serving recommendations.
@@ -62,8 +63,8 @@ public class RecController {
     @Value(AppConfigStringConstants.CONFIG_REC_RESPONSE_IMAGE_HEIGHT)
     private String imageHeight;
 
-
-    private static final Logger logger = LoggerFactory.getLogger(RecController.class);
+    @Log
+    private Logger logger;
 
     /**
      * Controller method to get recommendations.
@@ -80,8 +81,8 @@ public class RecController {
                                                     @RequestParam(value = "plids", required = false) String placeholderIds,
                                                     @RequestParam(value = "ccp", required = false) String channelContextParameters) {
 
-        //todo: get request id
-        String requestId = "REQUEST_ID";
+        //TODO: This is temporary. Set the request id in a way it is accessible for access logs also.
+        String requestId = randomUUID().toString();
 
         //validate mandatory input parameters
         validateInputParameters(channelId, pageId, placeholderIds, requestId);
@@ -112,7 +113,7 @@ public class RecController {
     private void validateInputParameters(String channelId, String pageId, String placeholderIds, String requestId) {
         //Check if the required parameters are all provided
         if (channelId == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter cid: {}", requestId, channelId);
+            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter cid.", requestId);
             throw new InputValidationException(ErrorCode.RE1000.toString());
         }
 
@@ -122,7 +123,7 @@ public class RecController {
         }
 
         if (pageId == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter pgid: {}", requestId, pageId);
+            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter pgid.", requestId);
             throw new InputValidationException(ErrorCode.RE1001.toString());
         }
 
@@ -132,7 +133,7 @@ public class RecController {
         }
 
         if (placeholderIds == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter plids: {}", requestId, placeholderIds);
+            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter plids.", requestId);
             throw new InputValidationException(ErrorCode.RE1002.toString());
         }
 
@@ -178,13 +179,14 @@ public class RecController {
      */
     private ResponseEntity<Object> getRecommendationResult(String channelId, String pageId, List<PlaceholderId> placeholderIds, Map<String, String> channelContextParamsMap, String requestId) {
         logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Received ccp: {}", requestId, channelContextParamsMap);
-
-        RecResult recResult = getRecResultForPlaceholder(channelId, pageId, placeholderIds.get(0), channelContextParamsMap, requestId);
-
         List<RecResult> recResultList = new LinkedList<>();
 
-        if (recResult != null) {
-            recResultList.add(recResult);
+        for (PlaceholderId placeholderId : placeholderIds) {
+            RecResult recResult = getRecResultForPlaceholder(channelId, pageId, placeholderId, channelContextParamsMap, requestId);
+
+            if (recResult != null) {
+                recResultList.add(recResult);
+            }
         }
 
         ObjectNode node = RecResponseFormatter.format(channelId, pageId, recResultList, new ResponseFormatterConfig(currency, imageWidth, imageHeight));
