@@ -274,7 +274,9 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
      */
     private Map<String, String> getProductPriceAttributesMap(String productId, Price validPrice, String requestId) {
         Map<String, String> priceAttributesMap = new HashMap<>();
-        priceAttributesMap.put(StringConstants.PRODUCT_PRICE_REGULAR_PRICE, String.valueOf(validPrice.getRegularPrice()));
+        //format the regular price to have two digits after decimal point. Eg.: 100.00
+        String regularPrice = (validPrice.getRegularPrice() != null) ? String.format("%.2f", validPrice.getRegularPrice()) : null;
+        priceAttributesMap.put(StringConstants.PRODUCT_PRICE_REGULAR_PRICE, regularPrice);
 
         try {
             priceAttributesMap.put(StringConstants.PRODUCT_PRICE_VALID_START_DATE, getFormattedDate(validPrice.getValidStartDate()));
