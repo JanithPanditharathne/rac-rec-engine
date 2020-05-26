@@ -1,12 +1,13 @@
 package com.zone24x7.ibrac.recengine.service;
 
 import com.zone24x7.ibrac.recengine.dao.DatasourceAdapter;
-import com.zone24x7.ibrac.recengine.exceptions.HBaseAdapterException;
+import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
+import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,9 +39,9 @@ public class RecAlgorithmService implements AlgorithmService {
         Map<String, String> map = new HashMap<>();
         AlgorithmResult result = null;
         try {
-            result = datasourceAdapter.getResult("100", map);
-        } catch (HBaseAdapterException e) {
-            logger.error("Error found while calling Hbase adapter", e);
+            result = datasourceAdapter.getResult("100", map,recCycleStatus);
+        } catch (BaseConnectionException e) {
+            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + " Error found while calling Hbase adapter", recCycleStatus.getRequestId(), e);
         }
         return result;
     }

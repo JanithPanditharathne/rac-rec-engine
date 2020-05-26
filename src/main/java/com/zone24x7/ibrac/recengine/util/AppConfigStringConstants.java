@@ -12,4 +12,7 @@ public class AppConfigStringConstants {
     public static final String CONFIG_SYNC_API_CALL_READ_TIMEOUT = "${config.sync.api.call.read.timeout}";
     public static final String CONFIG_SYNC_API_CALL_CONNECTION_TIMEOUT = "${config.sync.api.call.connection.timeout}";
     public static final String TABLE_CONFIG_FILE_NAME = "classpath:GetAllEdeTableConfigs.json";
+    public static final String HBASE_CONNECTION_TIMEOUT = "${hbase.connection.timeout}";
+    public static final String HBASE_CONNECTION_SKIP_COUNT = "${hbase.connection.skipcount}";
+    public static final String KEYMAKER_IGNORED_PARAMETERS = "#{'${hbase.keymaker.ignoredParameters}'.split(',')}";
 }

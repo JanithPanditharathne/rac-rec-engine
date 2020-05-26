@@ -1,21 +1,40 @@
 package com.zone24x7.ibrac.recengine.dao;
 
-import java.util.Map;
+import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.util.*;
 
 /**
  * Utility class to get the row key
  */
+@Component
 public class HBaseKeyMaker {
 
     //Constants
     private static final String ALGORITHM_ID_KEY = "algorithmId";
     private static final String CONSTANT_ALGO_ID = "99";
+    //TODO remove this variable.
+    private static List<String> staticIgnoredParameters;
+    //Params to ignore
+    private static final List<String> IGNORED_PARAMS = staticIgnoredParameters;
 
     /**
      * Private constructor to avoid instantiating instances of this final class
      */
     private HBaseKeyMaker() {
 
+    }
+
+    /**
+     * Set ignored parameters
+     *
+     * @param ignoredParameters ignored parameters
+     */
+    @Value(AppConfigStringConstants.KEYMAKER_IGNORED_PARAMETERS)
+    public void setIgnoredParameters(List<String> ignoredParameters) {
+        this.staticIgnoredParameters = ignoredParameters;
     }
 
     /**
@@ -33,7 +52,9 @@ public class HBaseKeyMaker {
 
         //Now set the other CCPs
         for (Map.Entry<String, String> map : params.entrySet()) {
-            recommendationKey.setParameter(map.getKey(), map.getValue());
+            if (!IGNORED_PARAMS.contains(map.getKey())) {
+                recommendationKey.setParameter(map.getKey(), map.getValue());
+            }
         }
         return recommendationKey.hash();
     }

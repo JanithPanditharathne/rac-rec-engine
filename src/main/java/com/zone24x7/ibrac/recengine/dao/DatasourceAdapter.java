@@ -1,7 +1,8 @@
 package com.zone24x7.ibrac.recengine.dao;
 
-import com.zone24x7.ibrac.recengine.exceptions.HBaseAdapterException;
+import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
+import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public interface DatasourceAdapter {
      * @param algorithmId the algorithm id
      * @param ccp         the channel context parameters
      * @return the generated algorithm result
-     * @throws HBaseAdapterException hbase adapter exception
+     * @throws BaseConnectionException base connection exception
      */
-    AlgorithmResult getResult(String algorithmId, Map<String, String> ccp) throws HBaseAdapterException;
+    AlgorithmResult getResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus) throws BaseConnectionException;
 }

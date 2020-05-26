@@ -33,7 +33,7 @@ public class TableConfigJsonToTableConfigMapConverter {
         }
 
         try {
-            tableConfigList = JsonPojoConverter.getTableConfigListsFromJson(tableConfigJson);
+            tableConfigList = JsonPojoConverter.toPojo(tableConfigJson,TableConfigList.class);
         } catch (IOException e) {
             throw new MalformedConfigurationException("Error decoding table configuration json: " + tableConfigJson, e);
         }
