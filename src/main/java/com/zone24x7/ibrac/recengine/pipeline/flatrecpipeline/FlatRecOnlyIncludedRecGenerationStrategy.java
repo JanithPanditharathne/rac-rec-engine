@@ -2,9 +2,6 @@ package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline;
 
 import com.zone24x7.ibrac.recengine.pipeline.RecGenerationStrategy;
 import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers.RecUnitHandler;
-import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
-import com.zone24x7.ibrac.recengine.pojo.FlatRecMetaInfo;
-import com.zone24x7.ibrac.recengine.pojo.RecStatusParams;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -32,7 +29,7 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
      * @return the generated experience.
      */
     @Override
-    public RecResult<FlatRecPayload, FlatRecMetaInfo> getRecommendations(ActiveBundle activeBundle, RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
+    public RecResult<FlatRecPayload> getRecommendations(ActiveBundle activeBundle, RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
         //Creates a status object. Initialize the with the recommendation limit provided by the channel.
         RecStatusParams recStatusParams = new RecStatusParams();
         recStatusParams.setRecCycleStatus(recCycleStatus);
@@ -48,7 +45,7 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
         //that means an result has been generated. So it will be returned
         for (RecUnitHandler handler : handlers) {
             handler.handleTask(recInputParams, recStatusParams, activeBundle);
-            RecResult<FlatRecPayload, FlatRecMetaInfo> recResult = recStatusParams.getRecResult();
+            RecResult<FlatRecPayload> recResult = recStatusParams.getRecResult();
             if (recResult != null) {
                 return recResult;
             }

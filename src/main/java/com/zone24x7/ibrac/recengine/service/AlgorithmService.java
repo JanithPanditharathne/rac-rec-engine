@@ -1,22 +1,22 @@
 package com.zone24x7.ibrac.recengine.service;
 
 
-import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
-import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
+
+import java.util.Map;
 
 /**
  * Responsible for executing a single algorithm.
  */
 public interface AlgorithmService {
     /**
-     * Calls the relevant dao class and will retrieve the recommendations.
+     * Calls ccp iterators and with the given ccp calls relevant dao class and retrieves the recommendations
      *
-     * @param recInputParams input parameters received.
-     * @param activeBundle   active bundle object containing details for algo execution.
+     * @param algorithmId    algorithm Id
+     * @param ccp            channel context parameter
      * @param recCycleStatus recCycle status.
      * @return result generated from algorithm.
      */
-    AlgorithmResult getAlgorithmResult(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus);
+    AlgorithmResult getAlgorithmResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus);
 }

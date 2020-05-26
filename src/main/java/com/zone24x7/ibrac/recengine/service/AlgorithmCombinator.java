@@ -1,7 +1,7 @@
 package com.zone24x7.ibrac.recengine.service;
 
 import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
-import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
+import com.zone24x7.ibrac.recengine.pojo.MultipleAlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
 
@@ -17,5 +17,5 @@ public interface AlgorithmCombinator {
      * @param recCycleStatus recCycle status.
      * @return a combined algorithm Result.
      */
-    AlgorithmResult getCombinedAlgoResult(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus);
+    MultipleAlgorithmResult getCombinedAlgoResult(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus);
 }

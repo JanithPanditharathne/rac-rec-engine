@@ -26,5 +26,5 @@ public abstract class StrategyExecutor {
      * @param recInputParams  wrapper object for inputs
      * @return Experience generation strategy.
      */
-    public abstract RecResult<?,?> execute(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus);
+    public abstract RecResult<?> execute(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus);
 }

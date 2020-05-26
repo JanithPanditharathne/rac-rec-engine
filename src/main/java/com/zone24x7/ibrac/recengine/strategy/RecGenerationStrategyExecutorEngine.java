@@ -38,7 +38,7 @@ public class RecGenerationStrategyExecutorEngine implements RecGenerationEngine 
      * @param recCycleStatus recCycle status.
      * @return result returned from the strategy.
      */
-    public RecResult<?, ?> getResult(RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
+    public RecResult<?> getResult(RecInputParams recInputParams, RecCycleStatus recCycleStatus) {
         Optional<ActiveBundle> activeBundle = Optional.empty();
 
         try {

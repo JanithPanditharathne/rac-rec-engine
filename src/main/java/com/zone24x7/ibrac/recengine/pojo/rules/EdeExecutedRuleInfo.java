@@ -87,4 +87,17 @@ public class EdeExecutedRuleInfo {
         result = HASH_CONSTANT * result + (ruleType != null ? ruleType.hashCode() : 0);
         return result;
     }
+
+    /**
+     * Overridden toString method
+     *
+     * @return the toSting output
+     */
+    @Override
+    public String toString() {
+        return "{" +
+                "ruleId='" + ruleId + '\'' +
+                ", ruleType=" + ruleType +
+                '}';
+    }
 }

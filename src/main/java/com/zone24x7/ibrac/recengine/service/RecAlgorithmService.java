@@ -1,14 +1,11 @@
 package com.zone24x7.ibrac.recengine.service;
 
 import com.zone24x7.ibrac.recengine.dao.DatasourceAdapter;
-import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
-import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,17 +16,19 @@ public class RecAlgorithmService implements AlgorithmService {
 
     @Autowired
     private DatasourceAdapter datasourceAdapter;
+
     /**
-     * Calls the relevant dao class and will retrieve the recommendations.
+     * Calls ccp iterators and with the given ccp calls relevant dao class and retrieves the recommendations
      *
-     * @param recInputParams input parameters received.
-     * @param activeBundle   active bundle object containing details for algo execution.
+     * @param algorithmId    algorithm Id
+     * @param ccp            channel context parameter
      * @param recCycleStatus recCycle status.
      * @return result generated from algorithm.
      */
-public AlgorithmResult getAlgorithmResult(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
-    Map<String, String> map = new HashMap<>();
-    AlgorithmResult result = datasourceAdapter.getResult("100", map);
-    return result;
-}
+    public AlgorithmResult getAlgorithmResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus) {
+        //TODO: Call algorithm combination iterator
+        //TODO: Support multiple other ways
+        AlgorithmResult result = datasourceAdapter.getResult(algorithmId, ccp);
+        return result;
+    }
 }

@@ -6,7 +6,8 @@ package com.zone24x7.ibrac.recengine.pojo;
 public class RecStatusParams {
     private int limit;
     private RecCycleStatus recCycleStatus;
-    private RecResult<FlatRecPayload, FlatRecMetaInfo> recResult;
+    private MultipleAlgorithmResult multipleAlgorithmResult;
+    private RecResult<FlatRecPayload> recResult;
 
     /**
      * Method to get the limit.
@@ -49,7 +50,7 @@ public class RecStatusParams {
      *
      * @return the recommendation result
      */
-    public RecResult<FlatRecPayload, FlatRecMetaInfo> getRecResult() {
+    public RecResult<FlatRecPayload> getRecResult() {
         return recResult;
     }
 
@@ -58,7 +59,25 @@ public class RecStatusParams {
      *
      * @param recResult the recommendation result
      */
-    public void setRecResult(RecResult<FlatRecPayload, FlatRecMetaInfo> recResult) {
+    public void setRecResult(RecResult<FlatRecPayload> recResult) {
         this.recResult = recResult;
+    }
+
+    /**
+     * Method to return MultipleAlgorithmResult
+     *
+     * @return MultipleAlgorithmResult object
+     */
+    public MultipleAlgorithmResult getMultipleAlgorithmResult() {
+        return multipleAlgorithmResult;
+    }
+
+    /**
+     * Method to set multipleAlgorithmResult
+     *
+     * @param multipleAlgorithmResult multipleAlgorithmResult object to set
+     */
+    public void setMultipleAlgorithmResult(MultipleAlgorithmResult multipleAlgorithmResult) {
+        this.multipleAlgorithmResult = multipleAlgorithmResult;
     }
 }

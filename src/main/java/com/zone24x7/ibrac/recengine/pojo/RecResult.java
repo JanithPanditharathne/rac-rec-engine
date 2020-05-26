@@ -4,13 +4,12 @@ package com.zone24x7.ibrac.recengine.pojo;
  * Class to represent the recommendation result.
  *
  * @param <P> the payload object type
- * @param <M> the meta info object type
  */
-public class RecResult<P, M> {
+public class RecResult<P> {
     // Recommendation payload
     private P recPayload;
     // Object containing meta information related to recommendation generation
-    private M recMetaInfo;
+    private RecMetaInfo recMetaInfo;
 
     /**
      * Method to get the recommendation payload.
@@ -31,20 +30,20 @@ public class RecResult<P, M> {
     }
 
     /**
-     * Method to get the recommendation meta information.
+     * Method to return the meta info
      *
-     * @return the recommendation meta information
+     * @return rec meta info
      */
-    public M getRecMetaInfo() {
+    public RecMetaInfo getRecMetaInfo() {
         return recMetaInfo;
     }
 
     /**
-     * Method to set the recommendation meta information.
+     * Method to set meta info
      *
-     * @param recMetaInfo the recommendation meta information to set
+     * @param recMetaInfo meta info to set
      */
-    public void setRecMetaInfo(M recMetaInfo) {
+    public void setRecMetaInfo(RecMetaInfo recMetaInfo) {
         this.recMetaInfo = recMetaInfo;
     }
 }
