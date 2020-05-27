@@ -1,8 +1,8 @@
 package com.zone24x7.ibrac.recengine.dao;
 
-import com.zone24x7.ibrac.recengine.logging.Log;
+import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import org.apache.commons.codec.digest.MurmurHash3;
-import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -19,8 +19,9 @@ public class RecommendationKey {
     //TreeMap guarantees the alphabetical ordering of the keys
     private Map<String, String> ccpParameters = new TreeMap<>();
 
-    @Log
-    private static Logger logger;
+    //These keys have multiple values comma separated.
+    @Value(AppConfigStringConstants.HBASE_RECCOMMENDATIONKEY_CCP_MULTI_VALUED_KEYS)
+    private List<String> sortedKeys;
 
     /**
      * Sets a parameter with key and value.
@@ -31,7 +32,14 @@ public class RecommendationKey {
      */
     public void setParameter(String key, String value) {
         String tempVal = value;
+
         // TODO Handle ccp parameters with multiple comma separated values.
+        if (sortedKeys.contains(key)) {
+            List<String> splitList = Arrays.asList(value.split(","));
+            Collections.sort(splitList);
+            tempVal = splitList.stream().collect(Collectors.joining(","));
+        }
+
         ccpParameters.put(key, cleansValue(tempVal));
     }
 

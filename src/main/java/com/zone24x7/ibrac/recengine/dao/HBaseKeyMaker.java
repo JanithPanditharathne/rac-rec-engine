@@ -32,7 +32,7 @@ public class HBaseKeyMaker {
      *
      * @param ignoredParameters ignored parameters
      */
-    @Value(AppConfigStringConstants.KEYMAKER_IGNORED_PARAMETERS)
+    @Value(AppConfigStringConstants.HBASE_KEYMAKER_IGNORED_PARAMETERS)
     public void setIgnoredParameters(List<String> ignoredParameters) {
         this.staticIgnoredParameters = ignoredParameters;
     }
