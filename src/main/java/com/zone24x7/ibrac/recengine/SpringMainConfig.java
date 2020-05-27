@@ -6,18 +6,21 @@ import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationsFetchStr
 import com.zone24x7.ibrac.recengine.configuration.sync.CsConfiguration;
 import com.zone24x7.ibrac.recengine.configuration.sync.RecConfiguration;
 import com.zone24x7.ibrac.recengine.configuration.sync.RuleConfiguration;
+import com.zone24x7.ibrac.recengine.converters.TableConfigJsonToTableConfigMapConverter;
 import com.zone24x7.ibrac.recengine.dao.DatasourceAdapter;
 import com.zone24x7.ibrac.recengine.dao.HBaseAdapter;
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.pojo.algoparams.AlgoParams;
+import com.zone24x7.ibrac.recengine.pojo.tableconfigs.TableConfigInfo;
 import com.zone24x7.ibrac.recengine.strategy.FlatRecStrategy;
 import com.zone24x7.ibrac.recengine.strategy.StrategyExecutor;
 import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import com.zone24x7.ibrac.recengine.util.ConfigDataTransformUtil;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
 import com.zone24x7.ibrac.reconlib.api.ProductApi;
 import com.zone24x7.ibrac.reconlib.api.ReconLibProductApi;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,9 +29,13 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.util.FileCopyUtils;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -46,6 +53,12 @@ public class SpringMainConfig {
 
     @Value(AppConfigStringConstants.CONFIG_SYNC_STRATEGY)
     private String configSyncStrategy;
+
+    @Value(AppConfigStringConstants.TABLE_CONFIG_FILE_NAME)
+    private Resource resource;
+
+    @Autowired
+    private TableConfigJsonToTableConfigMapConverter tableConfigJsonToTableConfigMapConverter;
 
     /**
      * Method to provide the executor service.
@@ -223,5 +236,16 @@ public class SpringMainConfig {
     @Qualifier("productApi")
     public ProductApi getReconLibProductApi() {
         return new ReconLibProductApi();
+    }
+
+    @Bean
+    @Qualifier("tableConfigurationMap")
+    public Map<String, TableConfigInfo> loadTableConfigs() throws IOException, MalformedConfigurationException {
+        try (Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
+            String tableConfigString = FileCopyUtils.copyToString(reader);
+
+            // Load table configs from json file and set the returning map to tableConfigReaderService for future use.
+            return tableConfigJsonToTableConfigMapConverter.convert(tableConfigString);
+        }
     }
 }

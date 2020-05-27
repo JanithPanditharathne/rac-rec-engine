@@ -1,0 +1,329 @@
+{
+    "tables": [
+        {
+            "table_name": "recommendations_trending",
+            "column_families": [
+                {
+                    "family_name": "rec",
+                    "columns": [
+                        {
+                            "column_name": "141",
+                            "description": "Trending Sesonal top K trending",
+                            "data_path": "/staged/seasonal_trending/view_trendingProductsOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "154",
+                            "description": "Trending Popular top K trending",
+                            "data_path": "/staged/trending/popular_trending/popularRecommendationPorcessed/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "114",
+                            "description": "Trending Best Seller (_sum)",
+                            "data_path": "/staged/trending/sum_trendingProductsOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "165",
+                            "description": "Trending Best Seller (_deals) - Each Attribute",
+                            "data_path": "/staged/trending/deals_trendingProductsFromEachAttributeOutputSum/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "117",
+                            "description": "Trending Best Seller (_sum) - Each Attribute",
+                            "data_path": "/staged/trending/sum_trendingProductsFromEachAttributeOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "115",
+                            "description": "Trending Best Seller (_sum) - Each Category",
+                            "data_path": "/staged/trending/sum_trendingProductsFromEachCategoryOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "100",
+                            "description": "TT new top k trending",
+                            "data_path": "/staged/trending/trendingProductsOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "103",
+                            "description": "TT new top k trending - Each Attribute",
+                            "data_path": "/staged/trending/trendingProductsFromEachAttributeOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "164",
+                            "description": "Trending top k trending (_deals) - Each Attribute",
+                            "data_path": "/staged/trending/deals_topTrendingProductsFromEachAttributeOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "101",
+                            "description": "TT new top k trending - Each Category",
+                            "data_path": "/staged/trending/trendingProductsFromEachCategoryOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "171",
+                            "description": "Trending top k trending - By Category",
+                            "data_path": "/staged/trending/trendingProductsByTopCategoryOutput/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "196",
+                            "description": "Drive To Store",
+                            "data_path": "/staged/trending/drive-to-store/consolidated_ede"
+                        },
+                        {
+                            "column_name": "199",
+                            "description": "Top Rated Recommendation",
+                            "data_path": "/staged/trending/top-rated/consolidated_ede"
+                        },
+                        {
+                            "column_name": "200",
+                            "description": "Top Rated Recommendation - By Category",
+                            "data_path": "/staged/trending/top-rated-by-category/consolidated_ede"
+                        },
+                        {
+                            "column_name": "206",
+                            "description": "Spark Best Seller",
+                            "data_path": "/staged/trending/bestsellers/consolidated_ede"
+                        },
+                        {
+                            "column_name": "207",
+                            "description": "Spark Best Seller By Category",
+                            "data_path": "/staged/trending/bestsellers_by_category/consolidated_ede"
+                        },
+                        {
+                            "column_name": "208",
+                            "description": "Spark Best Seller In New Arrivals",
+                            "data_path": "/staged/trending/bestsellers_newarrivals/consolidated_ede"
+                        },
+                        {
+                            "column_name": "209",
+                            "description": "Spark Best Seller In New Arrivals By Category",
+                            "data_path": "/staged/trending/bestsellers_newarrivals_by_category/consolidated_ede"
+                        },
+                        {
+                            "column_name": "210",
+                            "description": "Spark Best Seller Slot Recommendations",
+                            "data_path": "/staged/trending/bestsellers_slot/consolidated_ede"
+                        },
+                        {
+                            "column_name": "211",
+                            "description": "Spark Trending",
+                            "data_path": "/staged/trending/trending/consolidated_ede"
+                        },
+                        {
+                            "column_name": "212",
+                            "description": "Spark Trending By Category",
+                            "data_path": "/staged/trending/trending_by_category/consolidated_ede"
+                        },
+                        {
+                            "column_name": "213",
+                            "description": "Spark Trending In New Arrivals",
+                            "data_path": "/staged/trending/trending_newarrivals/consolidated_ede"
+                        },
+                        {
+                            "column_name": "214",
+                            "description": "Spark Trending In New Arrivals By Category",
+                            "data_path": "/staged/trending/trending_newarrivals_by_category/consolidated_ede"
+                        },
+                        {
+                            "column_name": "215",
+                            "description": "Spark Trending Slot Recommendations",
+                            "data_path": "/staged/trending/trending_slot/consolidated_ede"
+                        },
+                        {
+                            "column_name": "223",
+                            "description": "Spark BestSellers By Localization Reordered Recommendation",
+                            "data_path": "/staged/trending/bestsellers_by_localization_reordered/consolidated_ede"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "table_name": "recommendations_customer",
+            "column_families": [
+                {
+                    "family_name": "rec",
+                    "columns": [
+                        {
+                            "column_name": "135",
+                            "description": "Collaborative",
+                            "data_path": "/staged/customer/customer-collaborative-filtering-hbase-input/0/category-output/consolidated_ede"
+                        },
+                        {
+                            "column_name": "1000",
+                            "description": "Customer recent transactions",
+                            "data_path": "/staged/customer/recent_transactions/consolidated_ede"
+                        },
+                        {
+                            "column_name": "182",
+                            "description": "Slot based customer variant",
+                            "data_path": "/staged/clickstream/slotBasedRec/atgId/ede"
+                        },
+                        {
+                            "column_name": "197",
+                            "description": "ALS Customer Collaborative Filtering",
+                            "data_path": "/staged/customer/als-customer-collaborative/consolidated_ede"
+                        },
+                        {
+                            "column_name": "198",
+                            "description": "ALS Customer Collaborative Filtering - By Category",
+                            "data_path": "/staged/customer/als-customer-collaborative-by-category/consolidated_ede"
+                        },
+                        {
+                            "column_name": "202",
+                            "description": "Personalized Popular Products",
+                            "data_path": "/staged/customer/trending/popular_trending/consolidated_ede"
+                        },
+                        {
+                            "column_name": "203",
+                            "description": "Personalized Best Sellers",
+                            "data_path": "/staged/customer/trending/best_seller_trending/consolidated_ede"
+                        },
+                        {
+                            "column_name": "217",
+                            "description": "Personalized Best Seller By Category",
+                            "data_path": "/staged/customer/trending/best_seller_trending_by_category/consolidated_ede"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "table_name": "recommendations_customer_history",
+            "column_families": [
+                {
+                    "family_name": "rec",
+                    "columns": [
+                        {
+                            "column_name": "172",
+                            "description": "CustomerHistory",
+                            "data_path": "/staged/customer/customer_recommendation_clickstream_atg/atg_event_history/0/consolidated_ede/"
+                        },
+                        {
+                            "column_name": "205",
+                            "description": "Customer Purchased Products",
+                            "data_path": "/staged/customer/customer_recommendation_clickstream_atg/atg_purchased_products/0/consolidated_ede/"
+                        },
+                        {
+                            "column_name": "216",
+                            "description": "Past Search Terms",
+                            "data_path": "/staged/customer/customer_recommendation_clickstream_atg/atg_search_history_rec/0/consolidated_ede/"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "table_name": "recommendations_product",
+            "column_families": [
+                {
+                    "family_name": "rec",
+                    "columns": [
+                        {
+                            "column_name": "112",
+                            "description": "View View",
+                            "data_path": "/staged/clickstream/view-view-1-1/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "160",
+                            "description": "View View Tablet",
+                            "data_path": "/staged/clickstream/view-view-tablet/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "161",
+                            "description": "View View Mobile",
+                            "data_path": "/staged/clickstream/view-view-mobile/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "163",
+                            "description": "View View V2.0",
+                            "data_path": "/staged/clickstream/view-view-2-0/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "166",
+                            "description": "View View V2.1(Tablet)",
+                            "data_path": "/staged/clickstream/view-view-2-1/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "167",
+                            "description": "View View V2.2(Mobile)",
+                            "data_path": "/staged/clickstream/view-view-2-2/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "113",
+                            "description": "View Bought",
+                            "data_path": "/staged/clickstream/view-bought/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "126",
+                            "description": "Contextual Search",
+                            "data_path": "/staged/contextual/contextual-hbase-input/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "159",
+                            "description": "Cart based recommendations",
+                            "data_path": "/staged/cart_based/recs_consolidated_ede"
+                        },
+                        {
+                            "column_name": "177",
+                            "description": "Slot based product variant 1",
+                            "data_path": "/staged/clickstream/slotBasedRec/productId/ede"
+                        },
+                        {
+                            "column_name": "178",
+                            "description": "Slot based product variant 2",
+                            "data_path": "/staged/clickstream/slotBasedRec/productId1/ede"
+                        },
+                        {
+                            "column_name": "187",
+                            "description": "Slot based search variant",
+                            "data_path": "/staged/clickstream/slotBasedRec/searchTerm/ede"
+                        },
+                        {
+                            "column_name": "193",
+                            "description": "ALS View View",
+                            "data_path": "/staged/clickstream/view-view-3-0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "194",
+                            "description": "Word2Vec View View",
+                            "data_path": "/staged/clickstream/view-view-3-1/consolidated_ede"
+                        },
+                        {
+                            "column_name": "195",
+                            "description": "Similar Products",
+                            "data_path": "/staged/clickstream/similar-products/consolidated_ede"
+                        },
+                        {
+                            "column_name": "201",
+                            "description": "Spark Frequently Bought",
+                            "data_path": "/staged/clickstream/frequentlybought/consolidated_ede"
+                        },
+                        {
+                            "column_name": "218",
+                            "description": "Advanced View Bought",
+                            "data_path": "/staged/clickstream/advanced-view-bought/0/consolidated_ede"
+                        },
+                        {
+                            "column_name": "219",
+                            "description": "Searched Based Recommendation",
+                            "data_path": "/staged/search/top-searched/consolidated_ede"
+                        },
+                        {
+                            "column_name": "220",
+                            "description": "Searched Based Recommendation By Category",
+                            "data_path": "/staged/search/top-searched-by-category/consolidated_ede"
+                        },
+                        {
+                            "column_name": "221",
+                            "description": "Searched Recommendation Based on Spark Best Seller By Category",
+                            "data_path": "/staged/search/top-searched-by-bestseller/consolidated_ede"
+                        },
+                        {
+                            "column_name": "222",
+                            "description": "Searched Recommendation Based on Spark Trending By Category",
+                            "data_path": "/staged/search/top-searched-by-trending/consolidated_ede"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
