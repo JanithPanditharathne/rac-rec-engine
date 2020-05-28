@@ -11,6 +11,9 @@ public class RecResult<P> {
     // Object containing meta information related to recommendation generation
     private RecMetaInfo recMetaInfo;
 
+    private String placeHolder;
+    private RecCycleStatus recCycleStatus;
+
     /**
      * Method to get the recommendation payload.
      *
@@ -45,5 +48,41 @@ public class RecResult<P> {
      */
     public void setRecMetaInfo(RecMetaInfo recMetaInfo) {
         this.recMetaInfo = recMetaInfo;
+    }
+
+    /**
+     * Method to get the placeholder
+     *
+     * @return the placeholder
+     */
+    public String getPlaceHolder() {
+        return placeHolder;
+    }
+
+    /**
+     * Method to set the placeholder
+     *
+     * @param placeHolder placeholder
+     */
+    public void setPlaceHolder(String placeHolder) {
+        this.placeHolder = placeHolder;
+    }
+
+    /**
+     * Method to get the rec cycle status
+     *
+     * @return rec cycle status
+     */
+    public RecCycleStatus getRecCycleStatus() {
+        return recCycleStatus;
+    }
+
+    /**
+     * Method to set recCycleStatus
+     *
+     * @param recCycleStatus recCycleStatus to check
+     */
+    public void setRecCycleStatus(RecCycleStatus recCycleStatus) {
+        this.recCycleStatus = recCycleStatus;
     }
 }

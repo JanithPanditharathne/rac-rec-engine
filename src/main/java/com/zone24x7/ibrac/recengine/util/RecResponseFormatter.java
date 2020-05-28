@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.util;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zone24x7.ibrac.recengine.pojo.FlatRecPayload;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
@@ -74,7 +75,8 @@ public final class RecResponseFormatter {
 
         ArrayNode productArrayNode = JsonNodeFactory.instance.arrayNode();
 
-        List<Product> productList = new LinkedList<>(); //TODO : recResult.getRecPayload().getProducts();
+        FlatRecPayload recPayload = (FlatRecPayload) recResult.getRecPayload();
+        List<Product> productList = recPayload.getProducts(); //TODO : recResult.getRecPayload().getProducts();
 
         int i = 1;
 
@@ -83,6 +85,8 @@ public final class RecResponseFormatter {
             productArrayNode.add(productNode);
             i++;
         }
+
+        recPayloadNode.put("products", productArrayNode);
 
         recNode.set("recPayload", recPayloadNode);
 

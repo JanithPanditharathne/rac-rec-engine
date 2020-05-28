@@ -1,40 +1,31 @@
 package com.zone24x7.ibrac.recengine.dao;
 
-import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Utility class to get the row key
  */
-@Component
 public class HBaseKeyMaker {
 
     //Constants
     private static final String ALGORITHM_ID_KEY = "algorithmId";
     private static final String CONSTANT_ALGO_ID = "99";
-    //TODO remove this variable.
-    private static List<String> staticIgnoredParameters;
+
     //Params to ignore
-    private static final List<String> IGNORED_PARAMS = staticIgnoredParameters;
+    private static List<String> ignoredKeys;
+    private static List<String> sortedKeys;
 
     /**
      * Private constructor to avoid instantiating instances of this final class
      */
     private HBaseKeyMaker() {
 
-    }
-
-    /**
-     * Set ignored parameters
-     *
-     * @param ignoredParameters ignored parameters
-     */
-    @Value(AppConfigStringConstants.HBASE_KEYMAKER_IGNORED_PARAMETERS)
-    public void setIgnoredParameters(List<String> ignoredParameters) {
-        this.staticIgnoredParameters = ignoredParameters;
     }
 
     /**
@@ -52,11 +43,28 @@ public class HBaseKeyMaker {
 
         //Now set the other CCPs
         for (Map.Entry<String, String> map : params.entrySet()) {
-            if (!IGNORED_PARAMS.contains(map.getKey())) {
-                recommendationKey.setParameter(map.getKey(), map.getValue());
+            String key = map.getKey();
+            String value = map.getValue();
+            if (!ignoredKeys.contains(key)) {
+                if (sortedKeys.contains(key) && StringUtils.isNotEmpty(value) && value.contains(",")) {
+                    value = getSortedValue(key);
+                }
+                recommendationKey.setParameter(key, value);
             }
         }
         return recommendationKey.hash();
+    }
+
+    /**
+     * Sort the list of comma separated strings.
+     *
+     * @param commaSeparatedString comma separated string.
+     * @return sorted comma separated string.
+     */
+    private static String getSortedValue(String commaSeparatedString) {
+        List<String> splitList = Arrays.asList(commaSeparatedString.split(","));
+        Collections.sort(splitList);
+        return splitList.stream().collect(Collectors.joining(","));
     }
 
     /**
@@ -67,5 +75,23 @@ public class HBaseKeyMaker {
      */
     public static String generateRowKey(Map<String, String> params) {
         return generateRowKey(CONSTANT_ALGO_ID, params);
+    }
+
+    /**
+     * Setter for sorted keys
+     *
+     * @param sortedKeys keys to set
+     */
+    public static void setSortedKeys(List<String> sortedKeys) {
+        HBaseKeyMaker.sortedKeys = sortedKeys;
+    }
+
+    /**
+     * Setter for ignored keys
+     *
+     * @param ignoredKeys ignored keys
+     */
+    public static void setIgnoredKeys(List<String> ignoredKeys) {
+        HBaseKeyMaker.ignoredKeys = ignoredKeys;
     }
 }

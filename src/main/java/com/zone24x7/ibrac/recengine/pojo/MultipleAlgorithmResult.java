@@ -12,6 +12,7 @@ public class MultipleAlgorithmResult {
     private List<Product> recProducts = new LinkedList<>();
     private Map<String, String> algoToProductsMap = new LinkedHashMap<>();
     private Map<String, String> algoToUsedCcp = new LinkedHashMap<>();
+    private String displayText;
 
     /**
      * Method to get the recommendation products.
@@ -65,6 +66,24 @@ public class MultipleAlgorithmResult {
      */
     public void setAlgoToUsedCcp(Map<String, String> algoToUsedCcp) {
         this.algoToUsedCcp.putAll(algoToUsedCcp);
+    }
+
+    /**
+     * Method to get the display text
+     *
+     * @return the display text
+     */
+    public String getDisplayText() {
+        return displayText;
+    }
+
+    /**
+     * Sets the display text
+     *
+     * @param displayText display text to set
+     */
+    public void setDisplayText(String displayText) {
+        this.displayText = displayText;
     }
 }
 

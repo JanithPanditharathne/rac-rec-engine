@@ -28,7 +28,5 @@ public class CoreRecommendationHandler extends RecUnitHandler {
     public void handleTask(RecInputParams recInputParams, RecStatusParams recStatusParams, ActiveBundle activeBundle) {
         MultipleAlgorithmResult multipleAlgorithmResult = algorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recStatusParams.getRecCycleStatus());
         recStatusParams.setMultipleAlgorithmResult(multipleAlgorithmResult);
-        RecResult<FlatRecPayload> recResult = new RecResult<>();
-        recStatusParams.setRecResult(recResult);
     }
 }

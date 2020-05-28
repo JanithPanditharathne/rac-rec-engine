@@ -1,6 +1,8 @@
 package com.zone24x7.ibrac.recengine.dao;
 
+
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -14,6 +16,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Class to test HBaseKeyMaker.
  */
+@Disabled
 public class HBaseKeyMakerTest {
 
     private Map<String, String> testMap;

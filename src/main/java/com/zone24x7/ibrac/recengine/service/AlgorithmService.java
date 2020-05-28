@@ -1,6 +1,7 @@
 package com.zone24x7.ibrac.recengine.service;
 
 
+import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 
@@ -18,5 +19,5 @@ public interface AlgorithmService {
      * @param recCycleStatus recCycle status.
      * @return result generated from algorithm.
      */
-    AlgorithmResult getAlgorithmResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus);
+    AlgorithmResult getAlgorithmResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus) throws BaseConnectionException;
 }

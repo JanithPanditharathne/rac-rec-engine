@@ -46,6 +46,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
      */
     @Override
     public MultipleAlgorithmResult getCombinedAlgoResult(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
+        String displayText = StringConstants.DEFAULT_DISPLAY_TEXT;
 
         AlgoCombineInfo algoCombineInfo = activeBundle.getAlgoCombineInfo();
         List<BundleAlgorithm> validAlgorithmListToExecute = activeBundle.getValidAlgorithmListToExecute();
@@ -59,11 +60,16 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         }
 
         Map<String, Future<AlgorithmResult>> futures = new LinkedHashMap<>();
+        Map<String,String> algoIdToDisplayText = new LinkedHashMap<>();
 
         //TODO: Change logic to limit HBase load by calling batch wise
         for (BundleAlgorithm bundleAlgorithm : validAlgorithmListToExecute) {
             AlgorithmTask algorithmTask = algorithmTaskFactory.create(bundleAlgorithm.getId(), recInputParams.getCcp(), recCycleStatus);
             futures.put(bundleAlgorithm.getId(), cachedTaskExecutorService.submit(algorithmTask));
+            algoIdToDisplayText.put(bundleAlgorithm.getId(),
+                                    bundleAlgorithm.getCustomDisplayText() == null ?
+                                            bundleAlgorithm.getDefaultDisplayText() :
+                                            bundleAlgorithm.getCustomDisplayText());
         }
 
         Integer limitToApply = activeBundle.getLimitToApply();
@@ -71,7 +77,12 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
 
         Map<String, String> algoToProductsMap = new LinkedHashMap<>();
 
+        //TODO: Populate used ccp
+        Map<String, String> algoToUsedCcp = new LinkedHashMap<>();
+
         if (algoCombineInfo.isEnableCombine()) {
+            //TODO: Handle single algo producing o/p scenario
+            displayText = algoCombineInfo.getCombineDisplayText();
             for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
                 Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
                 String algoId = entry.getKey();
@@ -107,6 +118,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                     if (recProducts.size() >= limitToApply) {
                         products.addAll(recProducts);
                         algoToProductsMap.put(algoId, products.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+                        displayText = algoIdToDisplayText.get(algoId);
                         break;
                     } else {
                         if (maxProductList.size() < recProducts.size()) {
@@ -126,12 +138,16 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
             if (CollectionUtils.isEmpty(products) && CollectionUtils.isNotEmpty(maxProductList)) {
                 products.addAll(maxProductList);
                 algoToProductsMap.put(maxAlgoId, maxProductList.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+                displayText = algoIdToDisplayText.get(maxAlgoId);
             }
         }
 
         MultipleAlgorithmResult multipleAlgorithmResult = new MultipleAlgorithmResult();
         multipleAlgorithmResult.setRecProducts(products);
         multipleAlgorithmResult.setAlgoToProductsMap(algoToProductsMap);
+        //TODO: set algo used ccps
+        // multipleAlgorithmResult.setAlgoToUsedCcp();
+        multipleAlgorithmResult.setDisplayText(displayText);
         return multipleAlgorithmResult;
     }
 }

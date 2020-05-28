@@ -19,6 +19,10 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
     @Qualifier("coreRecommendationHandler")
     private RecUnitHandler coreRecommendationHandler;
 
+    @Autowired
+    @Qualifier("accumulationHandler")
+    private RecUnitHandler accumulationHandler;
+
     /**
      * Method to generate recommendations
      *
@@ -65,6 +69,7 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
         //-----------Add Pre Recommendation Generations Handlers------------//
         //Adds strategy initialization handler to the chain
         handlers.add(coreRecommendationHandler);
+        handlers.add(accumulationHandler);
         //Adds the global manual rules handler to the chain
     }
 }

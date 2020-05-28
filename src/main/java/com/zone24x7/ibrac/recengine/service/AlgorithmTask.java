@@ -1,5 +1,6 @@
 package com.zone24x7.ibrac.recengine.service;
 
+import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,7 @@ public class AlgorithmTask implements Callable<AlgorithmResult> {
      * @return Returns an algorithm result.
      */
     @Override
-    public AlgorithmResult call() {
+    public AlgorithmResult call() throws Exception {
         return algorithmService.getAlgorithmResult(algorithmId, ccp, recCycleStatus);
     }
 }

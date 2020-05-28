@@ -19,10 +19,6 @@ public class RecommendationKey {
     //TreeMap guarantees the alphabetical ordering of the keys
     private Map<String, String> ccpParameters = new TreeMap<>();
 
-    //These keys have multiple values comma separated.
-    @Value(AppConfigStringConstants.HBASE_RECCOMMENDATIONKEY_CCP_MULTI_VALUED_KEYS)
-    private List<String> sortedKeys;
-
     /**
      * Sets a parameter with key and value.
      * Method does not validate the emptiness or nullity of key or value.
@@ -31,16 +27,7 @@ public class RecommendationKey {
      * @param value parameter value
      */
     public void setParameter(String key, String value) {
-        String tempVal = value;
-
-        // TODO Handle ccp parameters with multiple comma separated values.
-        if (sortedKeys.contains(key)) {
-            List<String> splitList = Arrays.asList(value.split(","));
-            Collections.sort(splitList);
-            tempVal = splitList.stream().collect(Collectors.joining(","));
-        }
-
-        ccpParameters.put(key, cleansValue(tempVal));
+        ccpParameters.put(key, cleansValue(value));
     }
 
     /**

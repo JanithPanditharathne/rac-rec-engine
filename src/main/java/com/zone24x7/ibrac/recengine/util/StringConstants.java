@@ -18,6 +18,8 @@ public class StringConstants {
     public static final String PRODUCT_PRICE_VALID_START_DATE = "validStartDate";
     public static final String PRODUCT_PRICE_VALID_END_DATE = "validEndDate";
 
+    public static final String DEFAULT_DISPLAY_TEXT = "Recommendations";
+
     // Private constructor
     private StringConstants() {
     }
