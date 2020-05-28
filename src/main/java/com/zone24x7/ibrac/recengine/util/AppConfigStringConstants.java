@@ -18,7 +18,7 @@ public class AppConfigStringConstants {
     public static final String CONFIG_SYNC_BACKUP_BUNDLES_CONFIG = "${config.backup.bundles}";
     public static final String CONFIG_SYNC_BACKUP_RULES_CONFIG = "${config.backup.rules}";
 
-    public static final String CONFIG_RESOURCE_CLASSPATH_ALGO_PARAMS = "${resource.file.classpath.algoParams}";
+    public static final String CONFIG_RESOURCE_CLASSPATH_ALGO_PARAMS = "classpath:GetAllAlgoParamsConfigs.json";
     public static final String RULE_TRANSLATOR_ATTRIBUTE_MAPPING = "#{${ruleTranslator.attributeMapping}}";
 
     public static final String CONFIG_REC_RESPONSE_CURRENCY = "${recController.response.currency}";

@@ -18,7 +18,6 @@ import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import com.zone24x7.ibrac.recengine.util.ConfigDataTransformUtil;
 import com.zone24x7.ibrac.reconlib.api.ProductApi;
 import com.zone24x7.ibrac.reconlib.api.ReconLibProductApi;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -34,7 +33,6 @@ import org.springframework.util.FileCopyUtils;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
@@ -148,15 +146,12 @@ public class SpringMainConfig {
     @Bean
     @Qualifier("algoParamsMap")
     public Map<String, AlgoParams> provideAlgoParamsMap() throws MalformedConfigurationException {
-        String algoParamsConfig;
-
-        try {
-            algoParamsConfig = FileUtils.readFileToString(algoParamsResourceFile.getFile(), Charset.defaultCharset());
+        try (Reader reader = new InputStreamReader(algoParamsResourceFile.getInputStream(), StandardCharsets.UTF_8)) {
+            String algoParamsConfig = FileCopyUtils.copyToString(reader);
+            return ConfigDataTransformUtil.convertToAlgoParamsMap(algoParamsConfig);
         } catch (IOException e) {
-            throw new MalformedConfigurationException("Error reading algor params file.", e);
+            throw new MalformedConfigurationException("Error occurred when reading algorithm parameters file.", e);
         }
-
-        return ConfigDataTransformUtil.convertToAlgoParamsMap(algoParamsConfig);
     }
 
     /**
@@ -238,14 +233,22 @@ public class SpringMainConfig {
         return new ReconLibProductApi();
     }
 
+    /**
+     * Method to load the table configurations.
+     *
+     * @return the table configs map
+     * @throws MalformedConfigurationException if an configuration error occurs
+     */
     @Bean
     @Qualifier("tableConfigurationMap")
-    public Map<String, TableConfigInfo> loadTableConfigs() throws IOException, MalformedConfigurationException {
+    public Map<String, TableConfigInfo> loadTableConfigs() throws MalformedConfigurationException {
         try (Reader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
             String tableConfigString = FileCopyUtils.copyToString(reader);
 
             // Load table configs from json file and set the returning map to tableConfigReaderService for future use.
             return tableConfigJsonToTableConfigMapConverter.convert(tableConfigString);
+        } catch (IOException e) {
+            throw new MalformedConfigurationException("Error occurred when reading table configs file.", e);
         }
     }
 }
