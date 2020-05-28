@@ -14,7 +14,6 @@ import java.util.List;
  * Class to format recommendation responses.
  */
 public final class RecResponseFormatter {
-
     /**
      * Default constructor.
      */
@@ -126,6 +125,8 @@ public final class RecResponseFormatter {
         imageNode.put("width", (config != null ? config.getImageWidth() : null));
         productNode.set("image", imageNode);
 
+        productNode.put("productUrl", product.getAttributesMap().get("productUrl"));
+
         ArrayNode pricesArrayNode = JsonNodeFactory.instance.arrayNode();
 
         String regularPrice = product.getAttributesMap().get("regularPrice");
@@ -135,9 +136,9 @@ public final class RecResponseFormatter {
         if (regularPrice != null) {
             ObjectNode priceNode = JsonNodeFactory.instance.objectNode();
             priceNode.put("currency", (config != null ? config.getCurrency() : null));
-            priceNode.put("regularPrice", regularPrice);
-            priceNode.put("validStartDate", validStartDate);
-            priceNode.put("validEndDate", validEndDate);
+            priceNode.put("regularPrice", Double.valueOf(regularPrice));
+            priceNode.put("validityStartTime", validStartDate);
+            priceNode.put("validityEndTime", validEndDate);
             pricesArrayNode.add(priceNode);
         }
 
