@@ -37,7 +37,7 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
         //Creates a status object. Initialize the with the recommendation limit provided by the channel.
         RecStatusParams recStatusParams = new RecStatusParams();
         recStatusParams.setRecCycleStatus(recCycleStatus);
-        recStatusParams.setLimit(5);
+        recStatusParams.setLimit(activeBundle.getLimitToApply());
         //List of recommendation unit handlers are initialized
         List<RecUnitHandler> handlers = new LinkedList<>();
 

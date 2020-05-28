@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Strategy to return flat type of recommendations.
+ * Strategy executor to return flat type of recommendations.
  */
 @Component
-public class FlatRecStrategy extends StrategyExecutor {
+public class FlatRecStrategyExecutor extends StrategyExecutor {
 
     @Autowired
     private FlatRecOnlyIncludedRecGenerationStrategy flatRecOnlyIncludedRecGenerationStrategy;

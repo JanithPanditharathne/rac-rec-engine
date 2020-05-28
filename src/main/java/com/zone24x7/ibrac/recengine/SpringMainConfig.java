@@ -12,8 +12,9 @@ import com.zone24x7.ibrac.recengine.dao.HBaseAdapter;
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.pojo.algoparams.AlgoParams;
 import com.zone24x7.ibrac.recengine.pojo.tableconfigs.TableConfigInfo;
-import com.zone24x7.ibrac.recengine.strategy.FlatRecStrategy;
+import com.zone24x7.ibrac.recengine.strategy.FlatRecStrategyExecutor;
 import com.zone24x7.ibrac.recengine.strategy.StrategyExecutor;
+import com.zone24x7.ibrac.recengine.strategy.UnknownStrategyExecutor;
 import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import com.zone24x7.ibrac.recengine.util.ConfigDataTransformUtil;
 import com.zone24x7.ibrac.reconlib.api.ProductApi;
@@ -72,14 +73,15 @@ public class SpringMainConfig {
     /**
      * Provider method for strategy executors chain
      *
-     * @param flatRecStrategy the flat rec strategy to include.
+     * @param flatRecStrategyExecutor the flat rec strategy to include.
      * @return the strategy executor chain
      */
     @Bean
     @Qualifier("strategyExecutors")
-    public StrategyExecutor provideStrategyExecutors(FlatRecStrategy flatRecStrategy) {
-        flatRecStrategy.setNextExecutor(null);
-        return flatRecStrategy;
+    public StrategyExecutor provideStrategyExecutors(FlatRecStrategyExecutor flatRecStrategyExecutor,
+                                                     UnknownStrategyExecutor unknownStrategyExecutor) {
+        flatRecStrategyExecutor.setNextExecutor(unknownStrategyExecutor);
+        return flatRecStrategyExecutor;
     }
 
     /**
