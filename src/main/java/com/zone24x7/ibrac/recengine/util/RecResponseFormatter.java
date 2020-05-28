@@ -8,7 +8,6 @@ import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -61,22 +60,38 @@ public final class RecResponseFormatter {
      */
     private static ObjectNode formatRecResult(RecResult recResult, ResponseFormatterConfig config) {
         ObjectNode recNode = JsonNodeFactory.instance.objectNode();
-        //TODO: Add placement.
-        recNode.put("plid", "TODO: ADD PLACEMENT");
+        recNode.put("plid", recResult.getPlaceHolder());
 
-        //TODO: Populate rec meta from metadata in rec result.
         ObjectNode recMetaNode = JsonNodeFactory.instance.objectNode();
-        recMetaNode.put("type", "TODO : ADD TYPE => FlatRec");
+        String recType = recResult.getRecMetaInfo().getType();
+        recMetaNode.put("type", recType);
         recNode.set("recMeta", recMetaNode);
 
-        //TODO: Populate rec payload from metadata in rec result.
+        ObjectNode payloadNode = null;
+
+        // NOTE : In future if more types are added, the processing should be moved to difference processors according to type.
+        if ("FlatRec".equalsIgnoreCase(recType) && recResult.getRecPayload() != null) {
+            payloadNode = processFlatPayload((FlatRecPayload) recResult.getRecPayload(), config);
+        }
+
+        recNode.set("recPayload", payloadNode);
+
+        return recNode;
+    }
+
+    /**
+     * Method to process flat rec payload.
+     *
+     * @param flatRecPayload the flat rec payload
+     * @param config the configuration object
+     * @return the formatted payload node
+     */
+    private static ObjectNode processFlatPayload(FlatRecPayload flatRecPayload, ResponseFormatterConfig config) {
         ObjectNode recPayloadNode = JsonNodeFactory.instance.objectNode();
-        recPayloadNode.put("displayText", "TODO: ADD DISPLAY TEXT");
+        recPayloadNode.put("displayText", flatRecPayload.getDisplayText());
 
         ArrayNode productArrayNode = JsonNodeFactory.instance.arrayNode();
-
-        FlatRecPayload recPayload = (FlatRecPayload) recResult.getRecPayload();
-        List<Product> productList = recPayload.getProducts(); //TODO : recResult.getRecPayload().getProducts();
+        List<Product> productList = flatRecPayload.getProducts();
 
         int i = 1;
 
@@ -86,11 +101,8 @@ public final class RecResponseFormatter {
             i++;
         }
 
-        recPayloadNode.put("products", productArrayNode);
-
-        recNode.set("recPayload", recPayloadNode);
-
-        return recNode;
+        recPayloadNode.set("products", productArrayNode);
+        return recPayloadNode;
     }
 
     /**
