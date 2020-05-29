@@ -1,5 +1,6 @@
 package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers;
 
+import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -50,7 +51,7 @@ public class AccumulationHandler extends RecUnitHandler {
             recMetaInfo.setAlgoToProductsMap(multipleAlgorithmResult.getAlgoToProductsMap());
             recMetaInfo.setAlgoToUsedCcp(multipleAlgorithmResult.getAlgoToUsedCcp());
             recMetaInfo.setBundleId(activeBundle.getId());
-            recMetaInfo.setType("FlatRec");
+            recMetaInfo.setType(RecommendationType.FLAT_RECOMMENDATION);
         }
 
         //TODO: add executed rule set once completed

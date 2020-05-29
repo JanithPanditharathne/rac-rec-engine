@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.util;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.FlatRecPayload;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecResult;
@@ -62,14 +63,14 @@ public final class RecResponseFormatter {
         recNode.put("plid", recResult.getPlaceHolder());
 
         ObjectNode recMetaNode = JsonNodeFactory.instance.objectNode();
-        String recType = recResult.getRecMetaInfo().getType();
-        recMetaNode.put("type", recType);
+        RecommendationType recType = recResult.getRecMetaInfo().getType();
+        recMetaNode.put("type", recType.getRecTypeName());
         recNode.set("recMeta", recMetaNode);
 
         ObjectNode payloadNode = null;
 
         // NOTE : In future if more types are added, the processing should be moved to difference processors according to type.
-        if ("FlatRec".equalsIgnoreCase(recType) && recResult.getRecPayload() != null) {
+        if (recType == RecommendationType.FLAT_RECOMMENDATION && recResult.getRecPayload() != null) {
             payloadNode = processFlatPayload((FlatRecPayload) recResult.getRecPayload(), config);
         }
 
@@ -82,7 +83,7 @@ public final class RecResponseFormatter {
      * Method to process flat rec payload.
      *
      * @param flatRecPayload the flat rec payload
-     * @param config the configuration object
+     * @param config         the configuration object
      * @return the formatted payload node
      */
     private static ObjectNode processFlatPayload(FlatRecPayload flatRecPayload, ResponseFormatterConfig config) {

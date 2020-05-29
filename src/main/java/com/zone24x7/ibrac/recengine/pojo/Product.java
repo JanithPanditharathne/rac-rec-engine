@@ -11,12 +11,6 @@ public class Product {
     private Map<String, String> attributesMap = new LinkedHashMap<>();
 
     /**
-     * Default constructor.
-     */
-    public Product() {
-    }
-
-    /**
      * Method to get id.
      *
      * @return id of the product.

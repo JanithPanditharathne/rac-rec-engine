@@ -1,5 +1,6 @@
 package com.zone24x7.ibrac.recengine.pojo;
 
+import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.rules.EdeExecutedRuleInfo;
 
 import java.util.Map;
@@ -9,7 +10,7 @@ import java.util.Set;
  * Class to represent meta information of flat recommendations.
  */
 public class RecMetaInfo {
-    private String type;
+    private RecommendationType type;
     private String bundleId;
     private Map<String, String> algoToProductsMap;
     private Map<String, String> algoToUsedCcp;
@@ -20,16 +21,16 @@ public class RecMetaInfo {
      *
      * @return type of recommendation
      */
-    public String getType() {
+    public RecommendationType getType() {
         return type;
     }
 
     /**
-     * Sets the type of recommedation
+     * Sets the type of recommendation
      *
      * @param type type to set
      */
-    public void setType(String type) {
+    public void setType(RecommendationType type) {
         this.type = type;
     }
 
