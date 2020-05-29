@@ -1,1 +1,0 @@
-ps -ef | grep recengine | grep -v grep | awk '{print $2}' | xargs kill
