@@ -1,6 +1,7 @@
 package com.zone24x7.ibrac.recengine.util;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +32,7 @@ public class RecResponseFormatterTest {
 
         RecMetaInfo recMetaInfo = new RecMetaInfo();
         recMetaInfo.setBundleId("1");
-        recMetaInfo.setType("FlatRec");
+        recMetaInfo.setType(RecommendationType.FLAT_RECOMMENDATION);
         recMetaInfo.setAlgoToProductsMap(new HashMap<>());
         recMetaInfo.setAlgoToUsedCcp(new HashMap<>());
         recMetaInfo.setExecutedFilteringRuleInfoList(new HashSet<>());
