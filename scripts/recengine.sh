@@ -3,9 +3,9 @@
 # Script arguments (start, stop, restart, status, forcekill)
 COMMAND=$1
 
-JAR_NAME=recengine-0.0.1-SNAPSHOT.jar
+JAR_NAME=bin/recengine.jar
 PORT=8082
-APP_PROPERTIES_FILE_PATH=""
+APP_PROPERTIES_FILE_PATH="conf/application.properties"
 APP_DIR="."
 ADDITIONAL_ARGS=""
 
@@ -19,7 +19,7 @@ then
       ADDITIONAL_ARGS="--spring.config.location=${APP_PROPERTIES_FILE_PATH} ${ADDITIONAL_ARGS}"
 fi
 
-APP_ARGS="-Dserver.port=${PORT} ${ADDITIONAL_ARGS}"
+APP_ARGS="${ADDITIONAL_ARGS}"
 
 PID_FILE=$APP_DIR/RUNNING_PID
 
@@ -262,7 +262,7 @@ case "${COMMAND}" in
 
                 # * * * Run the Spring boot application * * *
                 TMP_LOG=$(mktemp)
-                PID=$(java -jar $APP_DIR/$JAR_NAME $APP_ARGS> /dev/null 2>"$TMP_LOG" & echo $!)
+                PID=$(java -jar -Dserver.port=${PORT} $APP_DIR/$JAR_NAME $APP_ARGS> /dev/null 2>"$TMP_LOG" & echo $!)
 
                 # Check if successfully started
                 if [ $? != 0 ]
