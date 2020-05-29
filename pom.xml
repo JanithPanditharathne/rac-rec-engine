@@ -82,16 +82,14 @@
 						<configuration>
 							<target>
 								<exec executable="scripts/package.sh">
-								<!--Following are the args to the script. Order SHOULD NOT be changed -->
-									<!-- ARG 1 - Target directory -->
-									<!-- ARG 2 - Artifact id -->
-									<!-- ARG 3 - Artifact version -->
-									<!-- ARG 4 - Package name" -->
-									<!-- ARG 5 - Package type - values should be "zip" or "tar.gz" -->
+									<!-- Following are the args to the script. Order SHOULD NOT be changed
+									 ARG 1 - Target directory
+									 ARG 2 - Artifact id
+									 ARG 3 - Artifact version
+									 ARG 4 - Package type - values should be "zip" or "tar.gz" -->
 									<arg value="${project.build.directory}" />
 									<arg value="${project.artifactId}" />
 									<arg value="${project.version}" />
-									<arg value="recengine-package" />
 									<arg value="zip" />
 								</exec>
 							</target>
