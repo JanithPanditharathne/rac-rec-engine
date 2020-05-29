@@ -5,8 +5,19 @@ COMMAND=$1
 
 JAR_NAME=recengine-0.0.1-SNAPSHOT.jar
 PORT=8082
+APP_PROPERTIES_FILE_PATH=""
 APP_DIR="."
 ADDITIONAL_ARGS=""
+
+
+# =======================
+# Processing starts
+# =======================
+
+if [ ! -z "$APP_PROPERTIES_FILE_PATH" ]
+then
+      ADDITIONAL_ARGS="--spring.config.location=${APP_PROPERTIES_FILE_PATH} ${ADDITIONAL_ARGS}"
+fi
 
 APP_ARGS="-Dserver.port=${PORT} ${ADDITIONAL_ARGS}"
 
@@ -51,7 +62,7 @@ echoOK()
     resetColor
     return 0
 }
- 
+
 checkResult()
 {
     if [ "$1" -ne 0 ]
@@ -100,7 +111,7 @@ checkPidFile()
                     # The file exists and the process is running
                     #return 1
             else
-                    
+
                     SAFE_CHECK=$(ps "$(cat $PID_FILE)" | grep "$JAR_NAME")
 
                     if [ -z "$SAFE_CHECK" ]
@@ -186,6 +197,15 @@ checkArgs()
             return 1
     fi
 
+    if [ ! -z "$APP_PROPERTIES_FILE_PATH" ]
+    then
+        if [ ! -f $APP_PROPERTIES_FILE_PATH ]
+        then
+            echoError "Application properties file not found!"
+            return 1
+        fi
+    fi
+
     # Check port
     case "$COMMAND" in
             start | restart)
@@ -240,10 +260,9 @@ case "${COMMAND}" in
 
                 esac
 
-                # * * * Run the Play application * * *
+                # * * * Run the Spring boot application * * *
                 TMP_LOG=$(mktemp)
-                PID=$(java -Dserver.port=8082 -jar recengine-0.0.1-SNAPSHOT.jar > /dev/null 2>"$TMP_LOG" & echo $!)
-                echo $PID > $PID_FILE
+                PID=$(java -jar $APP_DIR/$JAR_NAME $APP_ARGS> /dev/null 2>"$TMP_LOG" & echo $!)
 
                 # Check if successfully started
                 if [ $? != 0 ]
@@ -251,6 +270,7 @@ case "${COMMAND}" in
                         echoError
                         exit 1
                 else
+                        echo $PID > $PID_FILE
                         checkAppStarted
                         echoOK "PID=$PID"
                 fi
