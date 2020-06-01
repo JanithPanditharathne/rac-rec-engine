@@ -73,6 +73,8 @@ public class HBaseAdapter implements DatasourceAdapter {
                 String[] split = str.split(",");
                 List<Product> products = recommendedProductsCurator.getProducts(Arrays.asList(split), ZonedDateTime.now(), recCycleStatus);
                 algorithmResult.setRecProducts(products);
+                algorithmResult.setUsedCcp(ccp);
+                algorithmResult.setAlgorithmId(algorithmId);
             }
         }
         return algorithmResult;

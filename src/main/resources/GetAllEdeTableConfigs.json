@@ -217,7 +217,7 @@
                     "family_name": "rec",
                     "columns": [
                         {
-                            "column_name": "112",
+                            "column_name": "231",
                             "description": "View View",
                             "data_path": "/staged/clickstream/view-view-1-1/0/consolidated_ede"
                         },

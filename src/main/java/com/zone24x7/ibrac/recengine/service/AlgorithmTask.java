@@ -1,6 +1,5 @@
 package com.zone24x7.ibrac.recengine.service;
 
-import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import org.springframework.beans.factory.annotation.Autowired;

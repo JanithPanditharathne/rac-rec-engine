@@ -60,7 +60,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         }
 
         Map<String, Future<AlgorithmResult>> futures = new LinkedHashMap<>();
-        Map<String,String> algoIdToDisplayText = new LinkedHashMap<>();
+        Map<String, String> algoIdToDisplayText = new LinkedHashMap<>();
 
         //TODO: Change logic to limit HBase load by calling batch wise
         for (BundleAlgorithm bundleAlgorithm : validAlgorithmListToExecute) {
@@ -81,7 +81,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         Map<String, String> algoToUsedCcp = new LinkedHashMap<>();
 
         if (algoCombineInfo.isEnableCombine()) {
-            //TODO: Handle single algo producing o/p scenario
+            //TODO: Change display text to algo text when single algo producing o/p scenario at combine
             displayText = algoCombineInfo.getCombineDisplayText();
             for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
                 Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
@@ -92,6 +92,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                     if (CollectionUtils.isNotEmpty(recProducts)) {
                         products.addAll(recProducts);
                         algoToProductsMap.put(algoId, recProducts.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+                        algoToUsedCcp.put(algoId, algorithmResult.getUsedCcp().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
                     }
                     if (products.size() >= limitToApply) {
                         break;
@@ -106,6 +107,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
             }
         } else {
             List<Product> maxProductList = new LinkedList<>();
+            Map<String, String> maxAlgoUsedCcp = new LinkedHashMap<>();
             String maxAlgoId = null;
 
             for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
@@ -118,12 +120,14 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                     if (recProducts.size() >= limitToApply) {
                         products.addAll(recProducts);
                         algoToProductsMap.put(algoId, products.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+                        algoToUsedCcp.put(algoId, algorithmResult.getUsedCcp().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
                         displayText = algoIdToDisplayText.get(algoId);
                         break;
                     } else {
                         if (maxProductList.size() < recProducts.size()) {
-                            maxProductList = recProducts;
                             maxAlgoId = algoId;
+                            maxProductList = recProducts;
+                            maxAlgoUsedCcp = algorithmResult.getUsedCcp();
                         }
                     }
                 } catch (InterruptedException | ExecutionException e) {
@@ -138,6 +142,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
             if (CollectionUtils.isEmpty(products) && CollectionUtils.isNotEmpty(maxProductList)) {
                 products.addAll(maxProductList);
                 algoToProductsMap.put(maxAlgoId, maxProductList.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+                algoToUsedCcp.put(maxAlgoId, maxAlgoUsedCcp.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
                 displayText = algoIdToDisplayText.get(maxAlgoId);
             }
         }
@@ -145,8 +150,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         MultipleAlgorithmResult multipleAlgorithmResult = new MultipleAlgorithmResult();
         multipleAlgorithmResult.setRecProducts(products);
         multipleAlgorithmResult.setAlgoToProductsMap(algoToProductsMap);
-        //TODO: set algo used ccps
-        // multipleAlgorithmResult.setAlgoToUsedCcp();
+        multipleAlgorithmResult.setAlgoToUsedCcp(algoToUsedCcp);
         multipleAlgorithmResult.setDisplayText(displayText);
         return multipleAlgorithmResult;
     }
