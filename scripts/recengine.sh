@@ -1,5 +1,18 @@
 #!/bin/bash
 
+# ----------------------------------------------
+# Package structure required to run the script.
+#
+#   Rec engine package folder
+#       |- recengine.sh
+#       |- bin
+#       |   |- recengine.jar
+#       |- conf
+#           |- application.properties
+#           |- logback.xml
+#
+# ---------------------------------------------
+
 # Script arguments (start, stop, restart, status, forcekill)
 COMMAND=$1
 
@@ -104,12 +117,10 @@ checkPidFile()
                             # Process ID doesn't belong to expected application!
                             return 3
                     else
+                            # The file exists and the process is running
                             return 1
                     fi
 
-
-                    # The file exists and the process is running
-                    #return 1
             else
 
                     SAFE_CHECK=$(ps "$(cat $PID_FILE)" | grep "$JAR_NAME")
@@ -119,11 +130,9 @@ checkPidFile()
                             # Process ID doesn't belong to expected application!
                             return 3
                     else
+                            # The file exists, but the process is dead
                             return 2
                     fi
-
-                    # The file exists, but the process is dead
-                    #return 2
             fi
     fi
 
@@ -229,6 +238,13 @@ checkAppStarted()
     then
             echoError
             cat "$TMP_LOG" 1>&2
+
+            # If the app is not started correctly, remove the PID file.
+            if [ -f $PID_FILE ]
+            then
+              rm $PID_FILE
+            fi
+
             exit 1
     fi
 

@@ -50,7 +50,9 @@ echoOK()
     return 0
 }
 
+# ------------------------------
 # Create the directory structure
+# ------------------------------
 echoProgress "Creating package directory structure"
 
 mkdir -p "$PACKAGE_DIR"
@@ -59,18 +61,28 @@ mkdir -p "$PACKAGE_DIR/conf"
 
 echoOK "Package directory structure"
 
+# --------------------------------------------
+# Copy the contents to the package directories
+# --------------------------------------------
 echoProgress "Copying contents to package directory structure"
 
-# Copy the contents to the package directories
 cp "${TARGET_FOLDER}/${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar" "$PACKAGE_DIR/bin/recengine.jar"
 cp scripts/recengine.sh "$PACKAGE_DIR/."
 cp src/main/resources/application.properties "$PACKAGE_DIR/conf/."
+cp src/main/resources/logback.xml "$PACKAGE_DIR/conf/."
 
 echoOK "Content copy"
 
+# --------------------------------------------------------
+# Add logback.xml reference to application.properties file
+# --------------------------------------------------------
+printf "\nlogging.config=conf/logback.xml\n" >> "$PACKAGE_DIR/conf/application.properties"
+
 echoProgress "Creating final package"
 
+# -----------------------------------
 # Generate the zip or tar.gz packages
+# -----------------------------------
 if [ $PACKAGE_TYPE = "tar.gz" ]; then
   cd $TARGET_FOLDER && tar -zcvf "$PACKAGE_NAME.tar.gz" "$PACKAGE_NAME"
 else
