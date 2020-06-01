@@ -17,7 +17,6 @@
 COMMAND=$1
 
 JAR_NAME=bin/recengine.jar
-PORT=8082
 APP_PROPERTIES_FILE_PATH="conf/application.properties"
 APP_DIR="."
 ADDITIONAL_ARGS=""
@@ -31,6 +30,9 @@ if [ ! -z "$APP_PROPERTIES_FILE_PATH" ]
 then
       ADDITIONAL_ARGS="--spring.config.location=${APP_PROPERTIES_FILE_PATH} ${ADDITIONAL_ARGS}"
 fi
+
+PORT=$(cat "$APP_PROPERTIES_FILE_PATH" | grep "server.port" | grep -o "[0-9].*")
+echo "Port set to $PORT in $APP_PROPERTIES_FILE_PATH"
 
 APP_ARGS="${ADDITIONAL_ARGS}"
 
@@ -278,7 +280,7 @@ case "${COMMAND}" in
 
                 # * * * Run the Spring boot application * * *
                 TMP_LOG=$(mktemp)
-                PID=$(java -jar -Dserver.port=${PORT} $APP_DIR/$JAR_NAME $APP_ARGS> /dev/null 2>"$TMP_LOG" & echo $!)
+                PID=$(java -jar $APP_DIR/$JAR_NAME $APP_ARGS> /dev/null 2>"$TMP_LOG" & echo $!)
 
                 # Check if successfully started
                 if [ $? != 0 ]
