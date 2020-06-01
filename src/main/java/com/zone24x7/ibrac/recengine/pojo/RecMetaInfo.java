@@ -12,6 +12,7 @@ import java.util.Set;
 public class RecMetaInfo {
     private RecommendationType type;
     private String bundleId;
+    private int limitToApply;
     private Map<String, String> algoToProductsMap;
     private Map<String, String> algoToUsedCcp;
     private Set<EdeExecutedRuleInfo> executedFilteringRuleInfoList;
@@ -104,5 +105,23 @@ public class RecMetaInfo {
      */
     public void setExecutedFilteringRuleInfoList(Set<EdeExecutedRuleInfo> executedFilteringRuleInfoList) {
         this.executedFilteringRuleInfoList = executedFilteringRuleInfoList;
+    }
+
+    /**
+     * Returns the limit to apply
+     *
+     * @return the limit to apply
+     */
+    public int getLimitToApply() {
+        return limitToApply;
+    }
+
+    /**
+     * Sets the limit to apply
+     *
+     * @param limitToApply limit to apply
+     */
+    public void setLimitToApply(int limitToApply) {
+        this.limitToApply = limitToApply;
     }
 }

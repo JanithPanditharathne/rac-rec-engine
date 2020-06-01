@@ -52,6 +52,7 @@ public class AccumulationHandler extends RecUnitHandler {
             recMetaInfo.setAlgoToUsedCcp(multipleAlgorithmResult.getAlgoToUsedCcp());
             recMetaInfo.setBundleId(activeBundle.getId());
             recMetaInfo.setType(RecommendationType.FLAT_RECOMMENDATION);
+            recMetaInfo.setLimitToApply(activeBundle.getLimitToApply());
         }
 
         //TODO: add executed rule set once completed
