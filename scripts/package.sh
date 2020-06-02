@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# ----------------------------------------------
+# Package structure
+#
+# recengine-[VERSION]-[ENVIRONMENT].zip/tar.gz
+#     |- recengine-[VERSION]-[ENVIRONMENT]
+#           |- recengine.sh
+#           |- bin
+#           |   |- recengine.jar
+#           |- conf
+#               |- application.properties
+#               |- logback.xml
+#               |- override.properties
+#               |- version
+#
+# ---------------------------------------------
+
 # ----------------
 # Script arguments
 # ----------------
@@ -12,9 +28,10 @@ TARGET_FOLDER=$1
 ARTIFACT_ID=$2
 ARTIFACT_VERSION=$3
 PACKAGE_TYPE=$4
+PROFILE=$5
 
 # Package name to be created
-PACKAGE_NAME=${ARTIFACT_ID}-${ARTIFACT_VERSION}
+PACKAGE_NAME=${ARTIFACT_ID}-${ARTIFACT_VERSION}-${PROFILE}
 # Package directory
 PACKAGE_DIR="${TARGET_FOLDER}/${PACKAGE_NAME}"
 
@@ -70,6 +87,10 @@ cp "${TARGET_FOLDER}/${ARTIFACT_ID}-${ARTIFACT_VERSION}.jar" "$PACKAGE_DIR/bin/r
 cp scripts/recengine.sh "$PACKAGE_DIR/."
 cp src/main/resources/application.properties "$PACKAGE_DIR/conf/."
 cp src/main/resources/logback.xml "$PACKAGE_DIR/conf/."
+cp "src/main/environmentConfigs/override-${PROFILE}.properties" "$PACKAGE_DIR/conf/override.properties"
+
+# Write a file to keep the artifact version
+echo $ARTIFACT_VERSION > "$PACKAGE_DIR/conf/version"
 
 echoOK "Content copy"
 

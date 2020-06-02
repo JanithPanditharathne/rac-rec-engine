@@ -3,13 +3,15 @@
 # ----------------------------------------------
 # Package structure required to run the script.
 #
-#   Rec engine package folder
-#       |- recengine.sh
-#       |- bin
-#       |   |- recengine.jar
-#       |- conf
-#           |- application.properties
-#           |- logback.xml
+#   recengine package folder
+#           |- recengine.sh
+#           |- bin
+#           |   |- recengine.jar
+#           |- conf
+#               |- application.properties
+#               |- logback.xml
+#               |- override.properties
+#               |- version
 #
 # ---------------------------------------------
 
@@ -18,26 +20,9 @@ COMMAND=$1
 
 JAR_NAME=bin/recengine.jar
 APP_PROPERTIES_FILE_PATH="conf/application.properties"
+OVERRIDE_PROPERTIES_FILE_PATH="conf/override.properties"
 APP_DIR="."
 ADDITIONAL_ARGS=""
-
-
-# =======================
-# Processing starts
-# =======================
-
-if [ ! -z "$APP_PROPERTIES_FILE_PATH" ]
-then
-      ADDITIONAL_ARGS="--spring.config.location=${APP_PROPERTIES_FILE_PATH} ${ADDITIONAL_ARGS}"
-fi
-
-PORT=$(cat "$APP_PROPERTIES_FILE_PATH" | grep "server.port" | grep -o "[0-9].*")
-echo "Port set to $PORT in $APP_PROPERTIES_FILE_PATH"
-
-APP_ARGS="${ADDITIONAL_ARGS}"
-
-PID_FILE=$APP_DIR/RUNNING_PID
-
 
 # =======================
 # Helper functions begins
@@ -208,15 +193,6 @@ checkArgs()
             return 1
     fi
 
-    if [ ! -z "$APP_PROPERTIES_FILE_PATH" ]
-    then
-        if [ ! -f $APP_PROPERTIES_FILE_PATH ]
-        then
-            echoError "Application properties file not found!"
-            return 1
-        fi
-    fi
-
     # Check port
     case "$COMMAND" in
             start | restart)
@@ -227,6 +203,33 @@ checkArgs()
                     fi
             ;;
     esac
+}
+
+# Check property files path and existence
+checkPropertyFiles() {
+  if [ ! -z "$APP_PROPERTIES_FILE_PATH" ]
+    then
+        if [ ! -f $APP_PROPERTIES_FILE_PATH ]
+        then
+            echoError "Application properties file not found!"
+            return 1
+        fi
+    else
+        echoError "Application properties file path not mentioned in script."
+        return 1
+    fi
+
+    if [ ! -z "$OVERRIDE_PROPERTIES_FILE_PATH" ]
+    then
+        if [ ! -f $OVERRIDE_PROPERTIES_FILE_PATH ]
+        then
+            echoError "Override properties file not found!"
+            return 1
+        fi
+    else
+        echoError "Override properties file path not mentioned in script."
+        return 1
+    fi
 }
 
 checkAppStarted()
@@ -255,6 +258,23 @@ checkAppStarted()
 # ==================
 # Main script begins
 # ==================
+
+# Check property files
+checkPropertyFiles
+if [ $? != 0 ]
+then
+    exit 1
+fi
+
+# Prepare additonal arguments related to properties and port
+ADDITIONAL_ARGS="--spring.config.location=${APP_PROPERTIES_FILE_PATH},${OVERRIDE_PROPERTIES_FILE_PATH} ${ADDITIONAL_ARGS}"
+
+PORT=$(cat "$OVERRIDE_PROPERTIES_FILE_PATH" | grep "server.port" | grep -o "[0-9].*")
+echo "Port set to $PORT in $OVERRIDE_PROPERTIES_FILE_PATH"
+
+APP_ARGS="${ADDITIONAL_ARGS}"
+PID_FILE=$APP_DIR/RUNNING_PID
+
 # Check input arguments
 checkArgs
 if [ $? != 0 ]

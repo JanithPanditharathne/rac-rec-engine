@@ -18,6 +18,24 @@
 		<java.version>1.8</java.version>
 	</properties>
 
+	<profiles>
+		<profile>
+			<id>local</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<currentProfile>local</currentProfile>
+			</properties>
+		</profile>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<currentProfile>dev</currentProfile>
+			</properties>
+		</profile>
+	</profiles>
+
 	<dependencies>
         <dependency>
             <groupId>com.zone24x7.ibrac</groupId>
@@ -91,6 +109,7 @@
 									<arg value="${project.artifactId}" />
 									<arg value="${project.version}" />
 									<arg value="zip" />
+									<arg value="${currentProfile}" />
 								</exec>
 							</target>
 						</configuration>
