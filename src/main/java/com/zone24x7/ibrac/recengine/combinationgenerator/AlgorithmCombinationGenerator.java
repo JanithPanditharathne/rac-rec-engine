@@ -44,9 +44,9 @@ public class AlgorithmCombinationGenerator {
             return Collections.emptyList();
         }
 
-        // if the algorithm is a generic algo which doesnt required ccp,  return.
+        // if the algorithm is a generic algo which doesnt required ccp, return a list of empty list.
         if (isGenericAlgorithm(algoParams)) {
-            return new LinkedList<>(Collections.emptyList());
+            return Collections.singletonList(Collections.emptyList());
         }
 
         if (MapUtils.isEmpty(ccp)) {

@@ -109,15 +109,4 @@ public class AlgorithmCombinationIterator implements CombinationIterator<Algorit
 
         return new AlgorithmCombination(combinationMap);
     }
-
-    /**
-     * Clears the current combination list.
-     */
-    @Override
-    public void dispose() {
-        if (CollectionUtils.isNotEmpty(combinationLists)) {
-            combinationLists.clear();
-            nextCombination = null;
-        }
-    }
 }

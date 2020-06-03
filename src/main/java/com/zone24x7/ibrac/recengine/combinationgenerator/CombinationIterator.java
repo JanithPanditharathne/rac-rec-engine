@@ -23,9 +23,4 @@ public interface CombinationIterator<T> {
      * @return Combination map
      */
     T getNextCombination();
-
-    /**
-     * Disposes iterator
-     */
-    void dispose();
 }
