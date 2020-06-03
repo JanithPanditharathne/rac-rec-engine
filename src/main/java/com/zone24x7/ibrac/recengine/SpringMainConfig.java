@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -254,5 +255,17 @@ public class SpringMainConfig {
         } catch (IOException e) {
             throw new MalformedConfigurationException("Error occurred when reading table configs file.", e);
         }
+    }
+
+    /**
+     * Method to get the timezone id of the recengine
+     *
+     * @param timezoneName configured timezone name
+     * @return Zone id
+     */
+    @Bean
+    @Qualifier("timeZoneId")
+    public ZoneId getTimeZoneId(@Value("${recengine.timezone}") String timezoneName) {
+        return ZoneId.of(timezoneName);
     }
 }

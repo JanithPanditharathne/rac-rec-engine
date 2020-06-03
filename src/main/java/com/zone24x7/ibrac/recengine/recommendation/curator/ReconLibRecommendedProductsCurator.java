@@ -190,6 +190,10 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
                                                                 curatedProducts.size(),
                                                                 curatedProductIds);
 
+        if(CollectionUtils.isEmpty(curatedProducts) && CollectionUtils.isNotEmpty(productIds)){
+            recCycleStatus.indicateCurationRemovedAllProducts();
+        }
+
         return curatedProducts;
     }
 

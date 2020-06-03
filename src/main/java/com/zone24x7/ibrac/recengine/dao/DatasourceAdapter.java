@@ -4,6 +4,7 @@ import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -12,12 +13,12 @@ import java.util.Map;
 public interface DatasourceAdapter {
 
     /**
-     * Method to get the an algorithm result for a given algorithm id and channel context parameters.
+     * Method to get the an list of product Ids for a given algorithm id and channel context parameters.
      *
      * @param algorithmId the algorithm id
      * @param ccp         the channel context parameters
-     * @return the generated algorithm result
+     * @return the generated list of productIds
      * @throws BaseConnectionException base connection exception
      */
-    AlgorithmResult getResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus) throws BaseConnectionException;
+    List<String> getResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus) throws BaseConnectionException;
 }

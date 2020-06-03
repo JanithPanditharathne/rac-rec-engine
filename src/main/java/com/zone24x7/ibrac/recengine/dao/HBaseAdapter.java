@@ -2,11 +2,8 @@ package com.zone24x7.ibrac.recengine.dao;
 
 import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.logging.Log;
-import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
-import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.tableconfigs.TableConfigInfo;
-import com.zone24x7.ibrac.recengine.recommendation.curator.RecommendedProductsCurator;
 import com.zone24x7.ibrac.recengine.service.TableConfigReaderService;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.lang3.StringUtils;
@@ -15,10 +12,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.StandardCharsets;
-import java.time.ZonedDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Class to represent the HBase adapter implementation of the data source adapter.
@@ -31,9 +25,6 @@ public class HBaseAdapter implements DatasourceAdapter {
     @Autowired
     private TableConfigReaderService tableConfigReaderService;
 
-    @Autowired
-    private RecommendedProductsCurator recommendedProductsCurator;
-
     @Log
     private static Logger logger;
 
@@ -44,39 +35,52 @@ public class HBaseAdapter implements DatasourceAdapter {
      *
      * @param algorithmId the algorithm id
      * @param ccp         the channel context parameters
-     * @return the generated algorithm result
+     * @return the generated list of productIds
+     * @throws BaseConnectionException base connection exception
+     * @throws UnsupportedOperationException if entries to the specified algorithm id is not configured
      */
     @Override
-    public AlgorithmResult getResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus) throws BaseConnectionException {
+    public List<String> getResult(String algorithmId, Map<String, String> ccp, RecCycleStatus recCycleStatus) throws BaseConnectionException {
+        // Get the tableConfig info by algorithm id.
+        TableConfigInfo tableConfigInfo = tableConfigReaderService.getTableConfigInfoByAlgorithmId(algorithmId);
 
         // Generate the key
         String key = HBaseKeyMaker.generateRowKey(ccp);
 
-        // Get the tableConfig info by algorithm id.
-        TableConfigInfo tableConfigInfo = tableConfigReaderService.getTableConfigInfoByAlgorithmId(algorithmId);
-
-        // Throw BaseConnectionException if the table config info is null.
         if (tableConfigInfo == null || tableConfigInfo.getTableName() == null || tableConfigInfo.getColumnFamily() == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + " Table info not found for algo Id : {}", recCycleStatus.getRequestId(), algorithmId);
-            throw new BaseConnectionException(INVALID_ALGORITHM_ID_MSG);
+            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Table info not found for algo Id : {}", recCycleStatus.getRequestId(), algorithmId);
+            throw new UnsupportedOperationException(INVALID_ALGORITHM_ID_MSG);
         }
 
-        // call
         Result result = hBaseDao.getResult(key, tableConfigInfo.getTableName(), tableConfigInfo.getColumnFamily(), algorithmId, recCycleStatus);
         byte[] value = result.getValue(tableConfigInfo.getColumnFamily().getBytes(), algorithmId.getBytes());
 
-        AlgorithmResult algorithmResult = new AlgorithmResult();
-        if (value != null) {
-            String str = new String(value, StandardCharsets.UTF_8);
-            if (StringUtils.isNotEmpty(str)) {
-                //TODO: Cleanse and check. Move to Private method
-                String[] split = str.split(",");
-                List<Product> products = recommendedProductsCurator.getProducts(Arrays.asList(split), ZonedDateTime.now(), recCycleStatus);
-                algorithmResult.setRecProducts(products);
-                algorithmResult.setUsedCcp(ccp);
-                algorithmResult.setAlgorithmId(algorithmId);
-            }
+        return generateListOfStrings(value, recCycleStatus);
+    }
+
+    /**
+     * Generates list of strings of productIds
+     *
+     * @param value byte value
+     * @param recCycleStatus recCycleStatus
+     * @return list of product strings trimmed
+     */
+    private List<String> generateListOfStrings(byte[] value, RecCycleStatus recCycleStatus) {
+        if (value == null) {
+            return Collections.emptyList();
         }
-        return algorithmResult;
+
+        String resultString = new String(value, StandardCharsets.UTF_8);
+
+        if (StringUtils.isNotEmpty(resultString)) {
+            String[] productIds = resultString.split(",");
+            List<String> productIdsCleansed = new LinkedList<>();
+            for (String productId : productIds) {
+                productIdsCleansed.add(productId.trim());
+            }
+            recCycleStatus.indicateHBaseReturnedRecs();
+            return productIdsCleansed;
+        }
+        return Collections.emptyList();
     }
 }

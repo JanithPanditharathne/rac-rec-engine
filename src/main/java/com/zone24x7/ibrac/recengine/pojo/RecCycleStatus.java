@@ -46,7 +46,7 @@ public class RecCycleStatus {
     }
 
     /**
-     * Method to indicate that HBase returned recommendations
+     * Method to indicate that HBase returned recommendations for at least one HBase call
      */
     public void indicateHBaseReturnedRecs() {
         this.cycleMask.set(BIT_2);
@@ -78,6 +78,13 @@ public class RecCycleStatus {
      */
     public void indicateNoRecsGeneratedForAlgos() {
         this.cycleMask.set(BIT_6);
+    }
+
+ /**
+     * Method to indicate that there was at lease one exception happened with HBase.
+     */
+    public void indicateExceptionInCallingHBase() {
+        this.cycleMask.set(BIT_7);
     }
 
     /**

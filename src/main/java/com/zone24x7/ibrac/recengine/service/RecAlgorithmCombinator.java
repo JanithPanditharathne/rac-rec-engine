@@ -62,7 +62,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         Map<String, Future<AlgorithmResult>> futures = new LinkedHashMap<>();
         Map<String, String> algoIdToDisplayText = new LinkedHashMap<>();
 
-        //TODO: Change logic to limit HBase load by calling batch wise
+        //TODO: Change logic to limit HBase load by calling batch wise as a optimization
         for (BundleAlgorithm bundleAlgorithm : validAlgorithmListToExecute) {
             AlgorithmTask algorithmTask = algorithmTaskFactory.create(bundleAlgorithm.getId(), recInputParams.getCcp(), recCycleStatus);
             futures.put(bundleAlgorithm.getId(), cachedTaskExecutorService.submit(algorithmTask));
