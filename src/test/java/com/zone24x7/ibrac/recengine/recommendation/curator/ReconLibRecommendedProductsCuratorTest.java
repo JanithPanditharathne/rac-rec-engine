@@ -1,6 +1,5 @@
 package com.zone24x7.ibrac.recengine.recommendation.curator;
 
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.Matchers.*;
@@ -10,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.zone24x7.ibrac.recengine.exceptions.DateTimeException;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
+import com.zone24x7.ibrac.recengine.util.JsonPojoConverter;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import com.zone24x7.ibrac.reconlib.api.ProductApi;
 import com.zone24x7.ibrac.reconlib.dto.ErrorState;
@@ -17,6 +17,7 @@ import com.zone24x7.ibrac.reconlib.dto.Price;
 import com.zone24x7.ibrac.reconlib.dto.ReconLibProduct;
 import com.zone24x7.ibrac.reconlib.dto.ReconLibProductContainer;
 import com.zone24x7.ibrac.reconlib.error.ReconLibException;
+import com.zone24x7.ibrac.reconlib.util.ApplicationConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.collection.IsMapContaining;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,7 @@ import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.io.IOException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -41,8 +43,9 @@ class ReconLibRecommendedProductsCuratorTest {
 
     @Mock
     private Logger logger;
-    @Mock
+
     private ProductApi productApi;
+
     @Mock
     private RecCycleStatus recCycleStatus;
     @Mock
@@ -67,6 +70,8 @@ class ReconLibRecommendedProductsCuratorTest {
     private static final String PRODUCT_RATING = "3";
     private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss XX");
 
+    private static final String configString = "{\"reconlib.redis.cluster.commandTimeoutInMillis\":\"100\",\"reconlib.redis.standalone.commandTimeoutInMillis\":\"100\",\"reconlib.redis.cluster.topologyRefreshIntervalInMins\":\"1\",\"reconlib.redis.standalone.hostname\":\"localhost\",\"reconlib.redis.cluster.database\":\"0\",\"reconlib.redis.mode\":\"standalone\",\"reconlib.redis.cluster.hostname\":\"localhost\",\"reconlib.redis.cluster.password\":\"Zone1234\",\"reconlib.redis.cluster.seedNodes\":\"127.0.0.1:7000, 127.0.0.1:7001, 127.0.0.1:7002\",\"reconlib.redis.standalone.port\":\"6379\",\"reconlib.timezone\":\"Asia/Colombo\",\"reconlib.redis.standalone.password\":\"Zone1234\",\"reconlib.redis.standalone.database\":\"0\"}";
+
     //Error Messages
     private static final String PROD_ID_NULL_OR_EMPTY_ERR_MSG = "ProductId is null or empty";
     private static final String PROD_ID_LIST_NULL_OR_EMPTY_ERR_MSG = "ProductId list null or empty";
@@ -83,8 +88,14 @@ class ReconLibRecommendedProductsCuratorTest {
      * Setup method to prepare the mocked objects before running the tests.
      */
     @BeforeEach
-    void setup() throws DateTimeException {
+    void setup() throws DateTimeException, IOException {
         MockitoAnnotations.initMocks(this);
+
+        // NOTE: The configurations has to be set for the reconlib APIs. In case new configs are added, add them to the configString.
+        HashMap configMap = JsonPojoConverter.toPojo(configString, HashMap.class);
+        ApplicationConfig.getInstance().initializePropertiesConfiguration(configMap);
+        productApi = mock(ProductApi.class);
+
         when(recCycleStatus.getRequestId()).thenReturn(REQUEST_ID);
 
         ReflectionTestUtils.setField(reconLibRecommendedProductsCurator, "logger", logger);
