@@ -8,7 +8,7 @@ public class StringConstants {
     public static final String DROOLS_KNOWLEDGE_BASE_NULL_MSG = "Knowledge base is null.";
 
     public static final String RECSLOT_GENERATED_ID_SEPARATOR = "_";
-    public static final String REC_BUNDLE_PARAMS = "REC-BUNDLE_PARAMS";
+    public static final String REC_META = "REC-META";
 
     public static final String PRODUCT_IMG_URL = "imageUrl";
     public static final String PRODUCT_IN_INVENTORY = "inInventory";

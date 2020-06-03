@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.FlatRecPayload;
 import com.zone24x7.ibrac.recengine.pojo.Product;
+import com.zone24x7.ibrac.recengine.pojo.RecMetaInfo;
 import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
 
@@ -49,6 +50,82 @@ public final class RecResponseFormatter {
 
         payloadNode.set("recommendations", recArrayNode);
         return rootNode;
+    }
+
+    /**
+     * Method for format the response header.
+     *
+     * @param channelId     the channel
+     * @param pageId        the page
+     * @param requestId     the request id
+     * @param recResultList the result set
+     * @return ObjectNode       ObjectNode
+     */
+    public static ObjectNode formatHeader(String channelId, String pageId, String requestId, List<RecResult> recResultList) {
+
+        ObjectNode rootNode = JsonNodeFactory.instance.objectNode();
+
+        // Populate the root level keys.
+        rootNode.put("channel", channelId);
+        rootNode.put("page", pageId);
+        rootNode.put("requestId", requestId);
+
+        // Create the array node object to add the executedInfo objects.
+        ArrayNode recArrayNode = JsonNodeFactory.instance.arrayNode();
+
+        for (RecResult recResult : recResultList) {
+            if (recResult != null) {
+                ObjectNode executedInfoNode = formatRecResultForHeader(recResult);
+                recArrayNode.add(executedInfoNode);
+            }
+        }
+
+        // Add the array node to the root node.
+        rootNode.set("executedInfoList", recArrayNode);
+        return rootNode;
+    }
+
+    /**
+     * Method to format the an individual rec result for header.
+     *
+     * @param recResult recommendation result
+     * @return ObjectNode
+     */
+    private static ObjectNode formatRecResultForHeader(RecResult recResult) {
+
+        ObjectNode recNode = JsonNodeFactory.instance.objectNode();
+
+        recNode.put("placeholder", recResult.getPlaceHolder());
+
+        RecMetaInfo recMetaInfo = recResult.getRecMetaInfo();
+
+        // do not fill the recNode if the MetaInfo object is null
+        if (recMetaInfo != null) {
+            recNode.put("bundleId", recMetaInfo.getBundleId());
+
+            // Check whether the type is null or not. If its null do not fill the type to the node.
+            if (recMetaInfo.getType() != null) {
+                recNode.put("type", recMetaInfo.getType().getRecTypeName());
+            }
+
+            // do the assignment if product map is not null
+            if (recMetaInfo.getAlgoToProductsMap() != null) {
+                recNode.put("algoToProductsMap", recMetaInfo.getAlgoToProductsMap().toString());
+            }
+
+            // do the assignment if product map is not null
+            if (recMetaInfo.getAlgoToUsedCcp() != null) {
+                recNode.put("algoToUsedCcp", recResult.getRecMetaInfo().getAlgoToUsedCcp().toString());
+            }
+
+            // do the assignment if filtering rule info list is not null
+            if (recMetaInfo.getExecutedFilteringRuleInfoList() != null) {
+                recNode.put("executedRuleInfoList", recMetaInfo.getExecutedFilteringRuleInfoList().toString());
+            }
+
+            recNode.put("recGenerationCycleMask", recResult.getRecCycleStatus().getRecGenerationCycleMask());
+        }
+        return recNode;
     }
 
     /**

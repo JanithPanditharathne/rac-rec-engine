@@ -1,14 +1,13 @@
 package com.zone24x7.ibrac.recengine.controller;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.exceptions.ErrorCode;
 import com.zone24x7.ibrac.recengine.exceptions.InputValidationException;
 import com.zone24x7.ibrac.recengine.logging.Log;
-import com.zone24x7.ibrac.recengine.pojo.PlaceholderId;
-import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
-import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
-import com.zone24x7.ibrac.recengine.pojo.RecResult;
+import com.zone24x7.ibrac.recengine.pojo.*;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
+import com.zone24x7.ibrac.recengine.service.RecLimitingRecommendationGeneratorService;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTask;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTaskFactory;
 import com.zone24x7.ibrac.recengine.util.*;
@@ -53,6 +52,9 @@ public class RecController {
     @Autowired
     @Qualifier("inputParamValidationPatternExtraChars")
     private Pattern inputParamValidationPatternExtraChars;
+
+    @Autowired
+    private RecLimitingRecommendationGeneratorService recLimitingRecommendationGeneratorService;
 
     @Value(AppConfigStringConstants.CONFIG_REC_RESPONSE_CURRENCY)
     private String currency;
@@ -185,17 +187,53 @@ public class RecController {
             RecResult recResult = getRecResultForPlaceholder(channelId, pageId, placeholderId, channelContextParamsMap, requestId);
 
             if (recResult != null) {
+
+                // Call the private method to get the limited results.
+                limitTheRecResult(recResult);
+
                 recResultList.add(recResult);
             }
         }
 
         ObjectNode node = RecResponseFormatter.format(channelId, pageId, recResultList, new ResponseFormatterConfig(currency, imageWidth, imageHeight));
 
+        ObjectNode headerNode = RecResponseFormatter.formatHeader(channelId, pageId, requestId, recResultList);
+
         return ResponseEntity.ok()
-                // TODO: modify header as per the format
-                .header(StringConstants.REC_BUNDLE_PARAMS, "REC_BUNDLE_PARAMS")
+                .header(StringConstants.REC_META, headerNode.toString())
                 .body(node);
     }
+
+
+    /**
+     * Method to limit the products for the given limit
+     *
+     * @param recResult recommendation result object
+     */
+    private void limitTheRecResult(RecResult recResult) {
+        FlatRecPayload flatRecPayload = null;
+
+        // check the recommendation type and cast te recResult to relevant type.
+        if (recResult.getRecPayload() != null && recResult.getRecMetaInfo() != null &&
+                (recResult.getRecMetaInfo().getType() == RecommendationType.FLAT_RECOMMENDATION)) {
+
+            //Get the resulted payload and cast it to flatRecPayload
+            flatRecPayload = (FlatRecPayload) recResult.getRecPayload();
+
+            // if the limit is null then set it to zero
+            int limit = recResult.getRecMetaInfo().getLimitToApply();
+
+            List<Product> productList = recLimitingRecommendationGeneratorService.generateUniqueRecsForGivenLimit
+                    (flatRecPayload.getProducts(), limit);
+
+            // Set the limited products to the flatRecPayload
+            flatRecPayload.setProducts(productList);
+
+            // Assign the flatRecPayload to the payload object
+            recResult.setRecPayload(flatRecPayload);
+        }
+    }
+
 
     /**
      * Method to get placeholder based rec result.

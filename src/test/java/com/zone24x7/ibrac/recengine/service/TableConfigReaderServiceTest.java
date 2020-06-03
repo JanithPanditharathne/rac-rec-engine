@@ -10,6 +10,9 @@ import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Class to test the TableConfigReaderService.
+ */
 public class TableConfigReaderServiceTest {
 
     private TableConfigReaderService tableConfigReaderService;
