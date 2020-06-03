@@ -56,7 +56,7 @@ public class RecAlgorithmService implements AlgorithmService {
                 break;
             }
         }
-        algorithmCombinationIterator.dispose();
+
         return algorithmResult;
     }
 }
