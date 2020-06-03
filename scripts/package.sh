@@ -23,6 +23,7 @@
 # ARG 2 - Artifact id
 # ARG 3 - Artifact version
 # ARG 4 - Package type - values should be "zip" or "tar.gz"
+# ARG 5 - The profile
 
 TARGET_FOLDER=$1
 ARTIFACT_ID=$2

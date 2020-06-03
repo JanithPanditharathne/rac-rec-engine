@@ -19,6 +19,7 @@ import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import com.zone24x7.ibrac.recengine.util.ConfigDataTransformUtil;
 import com.zone24x7.ibrac.reconlib.api.ProductApi;
 import com.zone24x7.ibrac.reconlib.api.ReconLibProductApi;
+import com.zone24x7.ibrac.reconlib.util.ApplicationConfig;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -231,7 +232,8 @@ public class SpringMainConfig {
      */
     @Bean
     @Qualifier("productApi")
-    public ProductApi getReconLibProductApi() {
+    public ProductApi getReconLibProductApi(ReconLibConfig reconLibConfig) {
+        ApplicationConfig.getInstance().initializePropertiesConfiguration(reconLibConfig.getConfigurations());
         return new ReconLibProductApi();
     }
 

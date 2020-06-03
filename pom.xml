@@ -109,7 +109,8 @@
 									 ARG 1 - Target directory
 									 ARG 2 - Artifact id
 									 ARG 3 - Artifact version
-									 ARG 4 - Package type - values should be "zip" or "tar.gz" -->
+									 ARG 4 - Package type - values should be "zip" or "tar.gz"
+									 ARG 5 - Profile -->
 									<arg value="${project.build.directory}" />
 									<arg value="${project.artifactId}" />
 									<arg value="${project.version}" />

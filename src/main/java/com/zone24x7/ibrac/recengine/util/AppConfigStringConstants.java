@@ -34,6 +34,8 @@ public class AppConfigStringConstants {
     public static final String HBASE_KEYMAKER_IGNORED_PARAMETERS = "#{'${hbase.keymaker.ignoredParameters}'.split(',')}";
     public static final String HBASE_RECCOMMENDATIONKEY_CCP_MULTI_VALUED_KEYS = "#{'${hbase.recommendationKey.ccp.multipleValued.keys}'.split(',')}";
 
+    public static final String CONFIG_RECONLIB_PREFIX = "reconlib";
+
     /**
      * Private constructor to stop initiation
      */
