@@ -79,6 +79,11 @@
 			<artifactId>drools-compiler</artifactId>
 			<version>7.35.0.Final</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-math3</artifactId>
+			<version>3.6.1</version>
+		</dependency>
     </dependencies>
 	<build>
 		<plugins>

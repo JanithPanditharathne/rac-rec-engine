@@ -5,6 +5,7 @@ import com.zone24x7.ibrac.recengine.pojo.algoparams.AlgoParams;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
+import org.apache.commons.math3.util.CombinatoricsUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -105,16 +106,16 @@ public class AlgorithmCombinationGenerator {
     private List<List<String>> getOptionalCombinations(List<String> optionalParams, boolean optionalCombinationEnabled) {
         // if combinations are enabled, combine param lists.
         if (optionalCombinationEnabled) {
-            return getOptionalParamSubsets(optionalParams);
+            return getOptionalParamSubSets(optionalParams);
         } else {
-            List<List<String>> returnList = new LinkedList<>();
+            List<List<String>> finalCombinationList = new LinkedList<>();
             optionalParams.forEach(optionalParam -> {
                 List<String> params = new LinkedList<>();
                 params.add(optionalParam);
-                returnList.add(params);
+                finalCombinationList.add(params);
             });
 
-            return returnList;
+            return finalCombinationList;
         }
     }
 
@@ -158,18 +159,10 @@ public class AlgorithmCombinationGenerator {
     private List<List<String>> getMandatoryAndOptionalCombinations(List<String> mandatoryParams, List<String> optionalParams, boolean optionalCombEnabled) {
         // if combinations are enabled, combine param lists.
         if (optionalCombEnabled) {
-            List<List<String>> optionalParamSubset = getOptionalParamSubsets(optionalParams);
+            List<List<String>> optionalParamSubset = getOptionalParamSubSets(optionalParams);
             return generateOptionalParamsBasedCombinations(Collections.singletonList(mandatoryParams), optionalParamSubset);
         } else {
-            // if combinations are disabled, return original lists.
-            List<List<String>> returnList = new LinkedList<>();
-            optionalParams.forEach(optionalParam -> {
-                List<String> params = new LinkedList<>(mandatoryParams);
-                params.add(optionalParam);
-                returnList.add(params);
-            });
-
-            return returnList;
+            return getCombinationsDisabledOptionalParams(mandatoryParams, optionalParams);
         }
     }
 
@@ -185,19 +178,15 @@ public class AlgorithmCombinationGenerator {
     private List<List<String>> getConditionalMandatoryAndOptionalParams(List<List<String>> conMandatoryParams, List<String> optionalParams, boolean optionalCombinationEnabled) {
         // if combinations are enabled, combine param lists.
         if (optionalCombinationEnabled) {
-            List<List<String>> optionalParamSubset = getOptionalParamSubsets(optionalParams);
+            List<List<String>> optionalParamSubset = getOptionalParamSubSets(optionalParams);
             return generateOptionalParamsBasedCombinations(conMandatoryParams, optionalParamSubset);
         } else {
-            List<List<String>> returnList = new LinkedList<>();
+            List<List<String>> mandatoryAndOptionalParams = new LinkedList<>();
             for (List<String> conditionalMandatoryList : conMandatoryParams) {
-                optionalParams.forEach(optionalParam -> {
-                    List<String> params = new LinkedList<>(conditionalMandatoryList);
-                    params.add(optionalParam);
-                    returnList.add(params);
-                });
+                mandatoryAndOptionalParams.addAll(getCombinationsDisabledOptionalParams(conditionalMandatoryList, optionalParams));
             }
 
-            return returnList;
+            return mandatoryAndOptionalParams;
         }
     }
 
@@ -211,61 +200,64 @@ public class AlgorithmCombinationGenerator {
     private List<List<String>> generateOptionalParamsBasedCombinations(List<List<String>> listToCombineWith, List<List<String>> optionalParams) {
         List<List<String>> finalList = new LinkedList<>();
         // for each mandatory/conditional mandatory params, combine with optional params.
-        for (List<String> mainList : listToCombineWith) {
-            // iterate optional params and combine with each main list.
+        for (List<String> list : listToCombineWith) {
+            // iterate optional params and combine with each list.
             for (List<String> optionalList : optionalParams) {
-                List<String> combinedList = new LinkedList<>(mainList);
+                List<String> combinedList = new LinkedList<>(list);
                 combinedList.addAll(optionalList);
                 finalList.add(combinedList);
             }
-
-            finalList.add(mainList);
+            //add the list as the final combination.
+            finalList.add(list);
         }
 
         return finalList;
     }
 
     /**
-     * Method to get subsets of a given list.
+     * Method to generate subsets of a given list.
      *
-     * @param list list to generate subsets from.
-     * @return List generated subsets.
+     * @param optionalParamsList list to generate subsets.
+     * @return List of generated subsets.
      */
-    private List<List<String>> getOptionalParamSubsets(List<String> list) {
-        List<List<String>> finalList = new LinkedList<>();
-        //create subsets for each optional param
-        for (int i = list.size(); i > 0; i--) {
-            List<List<String>> listOfSubSets = generateSubSets(list, i);
-            finalList.addAll(listOfSubSets);
-        }
+    private List<List<String>> getOptionalParamSubSets(List<String> optionalParamsList) {
+        List<List<String>> optionalParamSubSets = new LinkedList<>();
+        int size = optionalParamsList.size();
+        for (int i = size; i > 0; i--) {
+            Iterator<int[]> iterator = CombinatoricsUtils.combinationsIterator(size, i);
+            while (iterator.hasNext()) {
+                final int[] combination = iterator.next();
+                List<String> paramSubSetList = new LinkedList<>();
 
-        return finalList;
-    }
-
-    /**
-     * Method to get subsets of a list.
-     *
-     * @param list of params.
-     * @param size index to get the subsets from.
-     * @return subsets.
-     */
-    private List<List<String>> generateSubSets(List<String> list, int size) {
-        List<List<String>> out = new ArrayList<>();
-        for (int i = 0; i < list.size() - size + 1; i++) {
-            List<String> subset = new ArrayList<>();
-            for (int j = i; j < i + size - 1; j++) {
-                subset.add(list.get(j));
-            }
-
-            if (!(size == 1 && i > 0)) {
-                for (int j = i + size - 1; j < list.size(); j++) {
-                    List<String> sub = new ArrayList<>(subset);
-                    sub.add(list.get(j));
-                    out.add(sub);
+                for (int c : combination) {
+                    paramSubSetList.add(optionalParamsList.get(c));
                 }
+
+                optionalParamSubSets.add(paramSubSetList);
             }
         }
-        return out;
+
+        return optionalParamSubSets;
+    }
+
+    /**
+     * Method to generate optional params when optional param combination is disabled.
+     *
+     * @param params         list of params to combine with.
+     * @param optionalParams list of optional params.
+     * @return list of combined params.
+     */
+    private List<List<String>> getCombinationsDisabledOptionalParams(List<String> params, List<String> optionalParams) {
+        List<List<String>> finalCombinationList = new LinkedList<>();
+        optionalParams.forEach(optionalParam -> {
+            List<String> combinedParams = new LinkedList<>(params);
+            combinedParams.add(optionalParam);
+            finalCombinationList.add(combinedParams);
+        });
+
+        finalCombinationList.add(params);
+
+        return finalCombinationList;
     }
 
     /**
