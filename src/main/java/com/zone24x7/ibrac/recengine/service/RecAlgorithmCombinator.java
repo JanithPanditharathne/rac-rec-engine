@@ -11,10 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
@@ -36,6 +33,8 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
     @Log
     private Logger logger;
 
+
+
     /**
      * Combines results from multiple algorithms according to the provided strategy.
      *
@@ -46,8 +45,6 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
      */
     @Override
     public MultipleAlgorithmResult getCombinedAlgoResult(RecInputParams recInputParams, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
-        String displayText = StringConstants.DEFAULT_DISPLAY_TEXT;
-
         AlgoCombineInfo algoCombineInfo = activeBundle.getAlgoCombineInfo();
         List<BundleAlgorithm> validAlgorithmListToExecute = activeBundle.getValidAlgorithmListToExecute();
 
@@ -72,83 +69,116 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                                             bundleAlgorithm.getCustomDisplayText());
         }
 
-        Integer limitToApply = activeBundle.getLimitToApply();
-        List<Product> products = new LinkedList<>();
+        if (algoCombineInfo.isEnableCombine()) {
+            return getMultipleResultWhenCombinedEnabled(futures, activeBundle, recCycleStatus);
+        } else {
+            return getMultipleResultWhenNonCombined(futures, activeBundle, algoIdToDisplayText, recCycleStatus);
+        }
+    }
 
+    /**
+     * Get output from algorithms when combine enabled
+     *
+     * @param futures        futures to execute
+     * @param activeBundle   active bundle
+     * @param recCycleStatus rec cycle status
+     * @return combine algorithm result
+     */
+    private MultipleAlgorithmResult getMultipleResultWhenCombinedEnabled(Map<String, Future<AlgorithmResult>> futures, ActiveBundle activeBundle, RecCycleStatus recCycleStatus) {
+        String displayText = activeBundle.getAlgoCombineInfo().getCombineDisplayText();
+        Set<Product> products = new LinkedHashSet<>();
         Map<String, String> algoToProductsMap = new LinkedHashMap<>();
-
-        //TODO: Populate used ccp
         Map<String, String> algoToUsedCcp = new LinkedHashMap<>();
 
-        if (algoCombineInfo.isEnableCombine()) {
-            //TODO: Change display text to algo text when single algo producing o/p scenario at combine
-            displayText = algoCombineInfo.getCombineDisplayText();
-            for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
-                Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
-                String algoId = entry.getKey();
-                try {
-                    AlgorithmResult algorithmResult = algorithmResultFuture.get();
-                    List<Product> recProducts = algorithmResult.getRecProducts();
-                    if (CollectionUtils.isNotEmpty(recProducts)) {
-                        products.addAll(recProducts);
-                        algoToProductsMap.put(algoId, recProducts.stream().map(Product::getProductId).collect(Collectors.joining(",")));
-                        algoToUsedCcp.put(algoId, algorithmResult.getUsedCcp().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
-                    }
-                    if (products.size() >= limitToApply) {
-                        break;
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
-                                 recCycleStatus.getRequestId(),
-                                 algoId,
-                                 activeBundle.getId(),
-                                 e);
+        for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
+            Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
+            String algoId = entry.getKey();
+            try {
+                AlgorithmResult algorithmResult = algorithmResultFuture.get();
+                List<Product> recProducts = algorithmResult.getRecProducts();
+                if (CollectionUtils.isNotEmpty(recProducts)) {
+                    products.addAll(recProducts);
+                    algoToProductsMap.put(algoId, recProducts.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+                    algoToUsedCcp.put(algoId, algorithmResult.getUsedCcp().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
                 }
-            }
-        } else {
-            List<Product> maxProductList = new LinkedList<>();
-            Map<String, String> maxAlgoUsedCcp = new LinkedHashMap<>();
-            String maxAlgoId = null;
-
-            for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
-                Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
-                String algoId = entry.getKey();
-                try {
-                    AlgorithmResult algorithmResult = algorithmResultFuture.get();
-                    List<Product> recProducts = algorithmResult.getRecProducts();
-
-                    if (recProducts.size() >= limitToApply) {
-                        products.addAll(recProducts);
-                        algoToProductsMap.put(algoId, products.stream().map(Product::getProductId).collect(Collectors.joining(",")));
-                        algoToUsedCcp.put(algoId, algorithmResult.getUsedCcp().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
-                        displayText = algoIdToDisplayText.get(algoId);
-                        break;
-                    } else {
-                        if (maxProductList.size() < recProducts.size()) {
-                            maxAlgoId = algoId;
-                            maxProductList = recProducts;
-                            maxAlgoUsedCcp = algorithmResult.getUsedCcp();
-                        }
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
-                                 recCycleStatus.getRequestId(),
-                                 algoId,
-                                 activeBundle.getId(),
-                                 e);
+                if (products.size() >= activeBundle.getLimitToApply()) {
+                    break;
                 }
-            }
-
-            if (CollectionUtils.isEmpty(products) && CollectionUtils.isNotEmpty(maxProductList)) {
-                products.addAll(maxProductList);
-                algoToProductsMap.put(maxAlgoId, maxProductList.stream().map(Product::getProductId).collect(Collectors.joining(",")));
-                algoToUsedCcp.put(maxAlgoId, maxAlgoUsedCcp.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
-                displayText = algoIdToDisplayText.get(maxAlgoId);
+            } catch (InterruptedException | ExecutionException e) {
+                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
+                             recCycleStatus.getRequestId(),
+                             algoId,
+                             activeBundle.getId(),
+                             e);
             }
         }
 
         MultipleAlgorithmResult multipleAlgorithmResult = new MultipleAlgorithmResult();
-        multipleAlgorithmResult.setRecProducts(products);
+        multipleAlgorithmResult.setRecProducts(new LinkedList<>(products));
+        multipleAlgorithmResult.setAlgoToProductsMap(algoToProductsMap);
+        multipleAlgorithmResult.setAlgoToUsedCcp(algoToUsedCcp);
+        multipleAlgorithmResult.setDisplayText(displayText);
+        return multipleAlgorithmResult;
+    }
+
+    /**
+     * Get output from algorithms when combine is disabled
+     *
+     * @param futures             futures to execute
+     * @param activeBundle        active bundle
+     * @param algoIdToDisplayText algo to display text map
+     * @param recCycleStatus      rec cycle status
+     * @return combine algorithm result
+     */
+    private MultipleAlgorithmResult getMultipleResultWhenNonCombined(Map<String, Future<AlgorithmResult>> futures, ActiveBundle activeBundle, Map<String, String> algoIdToDisplayText, RecCycleStatus recCycleStatus) {
+        String displayText = StringConstants.DEFAULT_DISPLAY_TEXT;
+
+        Set<Product> products = new LinkedHashSet<>();
+        Map<String, String> algoToProductsMap = new LinkedHashMap<>();
+        Map<String, String> algoToUsedCcp = new LinkedHashMap<>();
+
+        List<Product> maxProductList = new LinkedList<>();
+        Map<String, String> maxAlgoUsedCcp = new LinkedHashMap<>();
+        String maxAlgoId = null;
+
+        for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
+            Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
+            String algoId = entry.getKey();
+            try {
+                AlgorithmResult algorithmResult = algorithmResultFuture.get();
+                List<Product> recProducts = algorithmResult.getRecProducts();
+
+                if (recProducts.size() >= activeBundle.getLimitToApply()) {
+                    products.addAll(recProducts);
+                    algoToProductsMap.put(algoId, products.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+                    algoToUsedCcp.put(algoId, algorithmResult.getUsedCcp().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
+                    displayText = algoIdToDisplayText.get(algoId);
+                    break;
+                } else {
+                    if (maxProductList.size() < recProducts.size()) {
+                        maxAlgoId = algoId;
+                        maxProductList = recProducts;
+                        maxAlgoUsedCcp = algorithmResult.getUsedCcp();
+                    }
+                }
+            } catch (InterruptedException | ExecutionException e) {
+                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
+                             recCycleStatus.getRequestId(),
+                             algoId,
+                             activeBundle.getId(),
+                             e);
+            }
+        }
+
+        if (CollectionUtils.isEmpty(products) && CollectionUtils.isNotEmpty(maxProductList)) {
+            products.addAll(maxProductList);
+            algoToProductsMap.put(maxAlgoId, maxProductList.stream().map(Product::getProductId).collect(Collectors.joining(",")));
+            algoToUsedCcp.put(maxAlgoId, maxAlgoUsedCcp.entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
+            displayText = algoIdToDisplayText.get(maxAlgoId);
+        }
+
+        MultipleAlgorithmResult multipleAlgorithmResult = new MultipleAlgorithmResult();
+        multipleAlgorithmResult.setRecProducts(new LinkedList<>(products));
         multipleAlgorithmResult.setAlgoToProductsMap(algoToProductsMap);
         multipleAlgorithmResult.setAlgoToUsedCcp(algoToUsedCcp);
         multipleAlgorithmResult.setDisplayText(displayText);

@@ -15,10 +15,14 @@ import java.util.concurrent.Future;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+/**
+ * Test class of RecAlgorithmCombinator
+ */
 class RecAlgorithmCombinatorTest {
 
     private RecAlgorithmCombinator recAlgorithmCombinator;
@@ -63,10 +67,14 @@ class RecAlgorithmCombinatorTest {
 
         algorithm1 = new BundleAlgorithm();
         algorithm1.setId("100");
+        algorithm1.setCustomDisplayText("algo1DisplayText");
+
         bundleAlgorithms.add(algorithm1);
 
         algorithm2 = new BundleAlgorithm();
         algorithm2.setId("101");
+        algorithm2.setCustomDisplayText("algo2DisplayText");
+
         bundleAlgorithms.add(algorithm2);
 
         product1 = new Product();
@@ -83,6 +91,9 @@ class RecAlgorithmCombinatorTest {
 
         outputProducts1.add(product1);
         algorithmResult1.setRecProducts(outputProducts1);
+        Map<String, String> map = new LinkedHashMap<>();
+        map.put("productNumbers", "2213222");
+        algorithmResult1.setUsedCcp(map);
 
         outputProducts2.add(product2);
         outputProducts2.add(product3);
@@ -127,7 +138,9 @@ class RecAlgorithmCombinatorTest {
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(2)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("101"), is("2,3"));
-
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("101"), is(""));
+        assertThat(combinedAlgoResult.getDisplayText(), is("algo2DisplayText"));
     }
 
     /**
@@ -148,6 +161,9 @@ class RecAlgorithmCombinatorTest {
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(1)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("100"), is("1"));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("100"), is("productNumbers:2213222"));
+        assertThat(combinedAlgoResult.getDisplayText(), is("algo1DisplayText"));
     }
 
     /**
@@ -160,6 +176,7 @@ class RecAlgorithmCombinatorTest {
 
         algoCombineInfo = new AlgoCombineInfo();
         algoCombineInfo.setEnableCombine(true);
+        algoCombineInfo.setCombineDisplayText("CombinedDisplayText");
 
         int limit = 1; // algo 100 satisfies
 
@@ -168,6 +185,9 @@ class RecAlgorithmCombinatorTest {
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(1)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("100"), is("1"));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("100"), is("productNumbers:2213222"));
+        assertThat(combinedAlgoResult.getDisplayText(), is("CombinedDisplayText"));
     }
 
     /**
@@ -181,6 +201,8 @@ class RecAlgorithmCombinatorTest {
 
         algoCombineInfo = new AlgoCombineInfo();
         algoCombineInfo.setEnableCombine(true);
+        algoCombineInfo.setCombineDisplayText("CombinedDisplayText");
+
         int limit = 2; // 1 product from algo 100 and one product from algo 101 satisfies limit=2
 
         ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
@@ -190,5 +212,41 @@ class RecAlgorithmCombinatorTest {
         assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(2)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("100"), is("1"));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("101"), is("2,3"));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(2));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("100"), is("productNumbers:2213222"));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("101"), is(""));
+        assertThat(combinedAlgoResult.getDisplayText(), is("CombinedDisplayText"));
     }
+
+    /**
+     * Should return a not null MultipleAlgoResult_ when algoCombine info is null
+     */
+    @Test
+    void should_return_not_null_MultipleAlgoResult_object_when_AlgoCombineInfo_is_null() {
+        int limit = 3;
+        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, null, rules);
+        MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
+        assertThat(combinedAlgoResult, is(notNullValue()));
+        assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(0)));
+        assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(0)));
+    }
+
+    /**
+     * Should return a not null MultipleAlgoResult_ when validAlgorithmListToExecute info is null
+     */
+    @Test
+    void should_return_not_null_MultipleAlgoResult_object_when_validAlgorithmListToExecute_is_null() {
+        algoCombineInfo = new AlgoCombineInfo();
+        algoCombineInfo.setEnableCombine(true);
+        algoCombineInfo.setCombineDisplayText("CombinedDisplayText");
+
+        int limit = 3;
+        //Seeting null to valid algos to execute
+        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, null, algoCombineInfo, rules);
+        MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
+        assertThat(combinedAlgoResult, is(notNullValue()));
+        assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(0)));
+        assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(0)));
+    }
+
 }
