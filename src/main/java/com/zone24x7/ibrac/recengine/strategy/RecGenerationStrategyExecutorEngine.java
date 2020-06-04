@@ -44,7 +44,7 @@ public class RecGenerationStrategyExecutorEngine implements RecGenerationEngine 
         try {
             activeBundle = activeBundleProvider.getActiveBundle(recInputParams, recCycleStatus);
         } catch (SetupException e) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error occurred when trying to retrieve active bundle.", recCycleStatus.getRequestId());
+            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error occurred when trying to retrieve active bundle.", recCycleStatus.getRequestId(), e);
         }
 
         if (!activeBundle.isPresent()) {
