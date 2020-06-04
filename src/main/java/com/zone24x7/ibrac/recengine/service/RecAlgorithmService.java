@@ -42,7 +42,6 @@ public class RecAlgorithmService implements AlgorithmService {
 
         CombinationIterator<AlgorithmCombination> algorithmCombinationIterator = algoCombinationIteratorProvider.getCombinationIterator(algorithmId, ccp, recCycleStatus);
 
-        algorithmCombinationIterator.initialize();
         while (algorithmCombinationIterator.hasMoreCombinations()) {
             //Get the next algorithm combination
             AlgorithmCombination currentAlgorithmCombination = algorithmCombinationIterator.getNextCombination();
