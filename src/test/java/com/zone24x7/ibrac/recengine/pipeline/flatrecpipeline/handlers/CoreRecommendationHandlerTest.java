@@ -4,6 +4,7 @@ import com.zone24x7.ibrac.recengine.pojo.*;
 import com.zone24x7.ibrac.recengine.service.AlgorithmCombinator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -23,6 +24,7 @@ public class CoreRecommendationHandlerTest {
     private ActiveBundle activeBundle;
     private RecCycleStatus recCycleStatus;
     private MultipleAlgorithmResult algorithmResult;
+    private Logger logger;
 
     /**
      * Setup method.
@@ -35,12 +37,14 @@ public class CoreRecommendationHandlerTest {
         recCycleStatus = mock(RecCycleStatus.class);
         algorithmResult = mock(MultipleAlgorithmResult.class);
         algorithmCombinator = mock(AlgorithmCombinator.class);
+        logger = mock(Logger.class);
 
         recStatusParams.setRecCycleStatus(recCycleStatus);
         when(algorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus)).thenReturn(algorithmResult);
 
         coreRecommendationHandler = new CoreRecommendationHandler();
         ReflectionTestUtils.setField(coreRecommendationHandler, "algorithmCombinator", algorithmCombinator);
+        ReflectionTestUtils.setField(coreRecommendationHandler, "logger", logger);
     }
 
     /**
