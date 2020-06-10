@@ -91,9 +91,12 @@ public class RecHBaseDao implements HBaseDao {
                 isHBaseOnline.set(true);
                 return result;
 
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException e) {
                 isHBaseOnline.set(false);
                 Thread.currentThread().interrupt();
+                throw new BaseConnectionException(HBASE_CONNECTION_FAILURE_MSG, e);
+            } catch (ExecutionException e) {
+                isHBaseOnline.set(false);
                 throw new BaseConnectionException(HBASE_CONNECTION_FAILURE_MSG, e);
             } catch (TimeoutException te) {
                 isHBaseOnline.set(false);

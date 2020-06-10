@@ -276,7 +276,7 @@ public class RecController {
 
         try {
             return cachedTaskExecutorService.submit(placementTask).get();
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException e) {
             logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
                          requestId,
                          channelId,
@@ -285,6 +285,13 @@ public class RecController {
                          e);
 
             Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
+                    requestId,
+                    channelId,
+                    pageId,
+                    placeholderId,
+                    e);
         }
 
         return null;

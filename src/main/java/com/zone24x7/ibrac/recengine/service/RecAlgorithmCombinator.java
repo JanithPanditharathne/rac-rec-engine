@@ -102,7 +102,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                 if (products.size() >= activeBundle.getLimitToApply()) {
                     break;
                 }
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException e) {
                 logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
                              recCycleStatus.getRequestId(),
                              algoId,
@@ -110,6 +110,12 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                              e);
 
                 Thread.currentThread().interrupt();
+            } catch (ExecutionException e) {
+                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
+                             recCycleStatus.getRequestId(),
+                             algoId,
+                             activeBundle.getId(),
+                             e);
             }
         }
 
@@ -148,7 +154,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
 
             try {
                 algorithmResult = algorithmResultFuture.get();
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (InterruptedException e) {
                 logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
                              recCycleStatus.getRequestId(),
                              algoId,
@@ -156,6 +162,12 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                              e);
 
                 Thread.currentThread().interrupt();
+            } catch (ExecutionException e) {
+                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
+                             recCycleStatus.getRequestId(),
+                             algoId,
+                             activeBundle.getId(),
+                             e);
             }
 
             if (algorithmResult != null) {
