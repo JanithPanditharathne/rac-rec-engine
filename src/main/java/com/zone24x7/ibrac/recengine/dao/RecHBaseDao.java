@@ -77,7 +77,6 @@ public class RecHBaseDao implements HBaseDao {
             Future<Result> future = null;
 
             try {
-
                 future = cachedTaskExecutorService.submit(() -> {
                     Get get = new Get(key.getBytes());
                     get.addColumn(columnFamily.getBytes(), qualifier.getBytes());

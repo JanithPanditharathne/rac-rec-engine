@@ -8,6 +8,7 @@ import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -41,6 +42,7 @@ public class RecAlgorithmService implements AlgorithmService {
         AlgorithmResult algorithmResult = new AlgorithmResult();
 
         CombinationIterator<AlgorithmCombination> algorithmCombinationIterator = algoCombinationIteratorProvider.getCombinationIterator(algorithmId, ccp, recCycleStatus);
+        StringBuilder logMessageBuilder = new StringBuilder();
 
         while (algorithmCombinationIterator.hasMoreCombinations()) {
             //Get the next algorithm combination
@@ -53,7 +55,15 @@ public class RecAlgorithmService implements AlgorithmService {
                 logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Results produced for. AlgoId: {}, ccp: {}",
                             recCycleStatus.getRequestId(), algorithmId, currentCcp);
                 break;
+            } else {
+                logMessageBuilder.append(currentCcp.toString()).append(",");
             }
+        }
+
+        String noResultCcps = logMessageBuilder.toString();
+        if (StringUtils.isNotEmpty(noResultCcps)) {
+            logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "No Results produced for. AlgoId: {}, ccps: {}",
+                        recCycleStatus.getRequestId(), algorithmId, noResultCcps);
         }
 
         return algorithmResult;

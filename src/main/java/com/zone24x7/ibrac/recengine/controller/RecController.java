@@ -26,6 +26,7 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.util.UUID.randomUUID;
 
@@ -85,6 +86,12 @@ public class RecController {
 
         //TODO: This is temporary. Set the request id in a way it is accessible for access logs also.
         String requestId = randomUUID().toString();
+        logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Received cid: {}, pgid: {}, plids: {}, ccp: {}",
+                    requestId,
+                    channelId,
+                    pageId,
+                    placeholderIds,
+                    channelContextParameters);
 
         //validate mandatory input parameters
         validateInputParameters(channelId, pageId, placeholderIds, requestId);
@@ -96,6 +103,7 @@ public class RecController {
         }
 
         Map<String, String> channelContextParamsMap = generateFilteredChannelContextParamsMapFromBase64String(channelContextParameters, requestId);
+        logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Filtered ccp: {}", requestId, channelContextParamsMap);
 
         if (channelContextParamsMap == null) {
             throw new InputValidationException(ErrorCode.RE1007.toString());
@@ -180,7 +188,6 @@ public class RecController {
      * @return generated recommendation result
      */
     private ResponseEntity<Object> getRecommendationResult(String channelId, String pageId, List<PlaceholderId> placeholderIds, Map<String, String> channelContextParamsMap, String requestId) {
-        logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Received ccp: {}", requestId, channelContextParamsMap);
         List<RecResult> recResultList = new LinkedList<>();
 
         for (PlaceholderId placeholderId : placeholderIds) {
@@ -190,10 +197,20 @@ public class RecController {
 
                 // Call the private method to get the limited results.
                 limitTheRecResult(recResult);
-
                 recResultList.add(recResult);
+
+                if (recResult.getRecPayload() != null && recResult.getRecMetaInfo() != null &&
+                        (recResult.getRecMetaInfo().getType() == RecommendationType.FLAT_RECOMMENDATION)) {
+                    FlatRecPayload recPayload = (FlatRecPayload) recResult.getRecPayload();
+                    String productIds = recPayload != null ? recPayload.getProducts().stream().map(Product::getProductId).collect(Collectors.joining(",")) : "";
+                    logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Final Result for placeholder: {}, productIds: {}",
+                                requestId,
+                                placeholderId,
+                                productIds);
+                }
             }
         }
+
 
         ObjectNode node = RecResponseFormatter.format(channelId, pageId, recResultList, new ResponseFormatterConfig(currency, imageWidth, imageHeight));
 
@@ -261,11 +278,11 @@ public class RecController {
             return cachedTaskExecutorService.submit(placementTask).get();
         } catch (InterruptedException | ExecutionException e) {
             logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
-                    requestId,
-                    channelId,
-                    pageId,
-                    placeholderId,
-                    e);
+                         requestId,
+                         channelId,
+                         pageId,
+                         placeholderId,
+                         e);
 
             Thread.currentThread().interrupt();
         }

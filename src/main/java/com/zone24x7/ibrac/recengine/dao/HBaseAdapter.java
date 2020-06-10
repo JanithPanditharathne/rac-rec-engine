@@ -5,6 +5,7 @@ import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.tableconfigs.TableConfigInfo;
 import com.zone24x7.ibrac.recengine.service.TableConfigReaderService;
+import com.zone24x7.ibrac.recengine.util.ListUtilities;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hbase.client.Result;
@@ -79,7 +80,7 @@ public class HBaseAdapter implements DatasourceAdapter {
                 productIdsCleansed.add(productId.trim());
             }
             recCycleStatus.indicateHBaseReturnedRecs();
-            return productIdsCleansed;
+            return ListUtilities.removeDuplicates(productIdsCleansed);
         }
         return Collections.emptyList();
     }

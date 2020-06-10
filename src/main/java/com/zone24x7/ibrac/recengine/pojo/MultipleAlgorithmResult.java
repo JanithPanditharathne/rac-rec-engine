@@ -29,7 +29,7 @@ public class MultipleAlgorithmResult {
      * @param recProducts the recommendation products to set
      */
     public void setRecProducts(List<Product> recProducts) {
-        this.recProducts = recProducts;
+        this.recProducts.addAll(recProducts);
     }
 
     /**

@@ -54,6 +54,13 @@ public class RecGenerationStrategyExecutorEngine implements RecGenerationEngine 
                     recInputParams.getPage(),
                     recInputParams.getPlaceholder());
             return null;
+        } else {
+            logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Active bundle found for : Channel:{}, Page: {}, Placeholder: {}, BundleId: {}",
+                        recCycleStatus.getRequestId(),
+                        recInputParams.getChannel(),
+                        recInputParams.getPage(),
+                        recInputParams.getPlaceholder(),
+                        activeBundle.get().getId());
         }
 
         return strategyExecutor.execute(recInputParams, activeBundle.get(), recCycleStatus);
