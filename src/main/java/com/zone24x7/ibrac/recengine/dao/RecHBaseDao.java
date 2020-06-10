@@ -73,7 +73,7 @@ public class RecHBaseDao implements HBaseDao {
     public Result getResult(String key, String tableName, String columnFamily, String qualifier, RecCycleStatus recCycleStatus) throws BaseConnectionException {
         Connection connection = hBaseConnection.getConnection();
 
-        if (connection != null && (isHBaseOnline.get() || (!isHBaseOnline.get() && currentHBaseConnectionSkipCount.updateAndGet(x -> x <= 0 ? hBaseConnectionSkipCount : (x - 1)) == hBaseConnectionSkipCount))) {
+        if (connection != null && (isHBaseOnline.get() || isHBaseSkipCountReached())) {
             Future<Result> future = null;
 
             try {
@@ -104,6 +104,15 @@ public class RecHBaseDao implements HBaseDao {
         } else {
             throw new BaseConnectionException(HBASE_CONNECTION_RETRY_SKIPPED);
         }
+    }
+
+    /**
+     * Method to check whether HBase skip count is reached.
+     *
+     * @return true if skip count reached, else false
+     */
+    private boolean isHBaseSkipCountReached() {
+        return (!isHBaseOnline.get() && currentHBaseConnectionSkipCount.updateAndGet(x -> x <= 0 ? hBaseConnectionSkipCount : (x - 1)) == hBaseConnectionSkipCount);
     }
 
     /**

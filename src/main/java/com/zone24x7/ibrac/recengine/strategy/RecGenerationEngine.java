@@ -15,5 +15,5 @@ public interface RecGenerationEngine {
      * @param recCycleStatus recCycle status.
      * @return result returned from the strategy.
      */
-    RecResult<?> getResult(RecInputParams recInputParams, RecCycleStatus recCycleStatus);
+    RecResult getResult(RecInputParams recInputParams, RecCycleStatus recCycleStatus);
 }

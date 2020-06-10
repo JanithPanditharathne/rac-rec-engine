@@ -64,7 +64,8 @@ public class RecAlgorithmResultGenerator implements AlgorithmResultGenerator {
             logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "HBase call failed. Algo:{}, ccp:{}",
                          recCycleStatus.getRequestId(),
                          algorithmId,
-                         ccp);
+                         ccp,
+                         e);
             algorithmResult.setAlgorithmId(BACKUP_ALGO_ID);
             recCycleStatus.indicateExceptionInCallingHBase();
             return algorithmResult;

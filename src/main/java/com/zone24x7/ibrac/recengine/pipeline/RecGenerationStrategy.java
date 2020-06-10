@@ -17,6 +17,6 @@ public interface RecGenerationStrategy<T> {
      * @param recCycleStatus  the object to track the status of recommendation generation
      * @return the generated experience.
      */
-    RecResult<?> getRecommendations(ActiveBundle activeBundle, T inputParams, RecCycleStatus recCycleStatus);
+    RecResult getRecommendations(ActiveBundle activeBundle, T inputParams, RecCycleStatus recCycleStatus);
 }
 

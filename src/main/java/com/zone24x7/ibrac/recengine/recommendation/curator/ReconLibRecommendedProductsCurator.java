@@ -156,25 +156,7 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
             }
         }
 
-        StringBuilder curationStatusBuilder = new StringBuilder();
-
-        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getErrorOccurredProducts())) {
-            curationStatusBuilder.append("Error occurred products: ").append(recProductCurationStatus.getErrorOccurredProducts()).append("\n");
-        }
-
-        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getProductInfoNonExistenceProducts())) {
-            curationStatusBuilder.append("Product info unavailable products: ").append(recProductCurationStatus.getProductInfoNonExistenceProducts()).append("\n");
-        }
-
-        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getProductInventoryNonExistenceProducts())) {
-            curationStatusBuilder.append("Out of inventory products: ").append(recProductCurationStatus.getProductInventoryNonExistenceProducts()).append("\n");
-        }
-
-        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getProductPriceNonExistenceProducts())) {
-            curationStatusBuilder.append("Stale price products: ").append(recProductCurationStatus.getProductPriceNonExistenceProducts()).append("\n");
-        }
-
-        String curationStatus = curationStatusBuilder.toString();
+        String curationStatus = generateCurationStatusMessage(recProductCurationStatus);
 
         if (StringUtils.isNotEmpty(curationStatus)) {
             logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Product curation Status: {}", recCycleStatus.getRequestId(), curationStatus);
@@ -195,6 +177,38 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
         }
 
         return curatedProducts;
+    }
+
+    /**
+     * Method to generate the curation status message.
+     *
+     * @param recProductCurationStatus the curation status object
+     * @return the curation status message
+     */
+    private String generateCurationStatusMessage(RecProductCurationStatus recProductCurationStatus) {
+        if (recProductCurationStatus == null) {
+            return "";
+        }
+
+        StringBuilder curationStatusBuilder = new StringBuilder();
+
+        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getErrorOccurredProducts())) {
+            curationStatusBuilder.append("Error occurred products: ").append(recProductCurationStatus.getErrorOccurredProducts()).append("\n");
+        }
+
+        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getProductInfoNonExistenceProducts())) {
+            curationStatusBuilder.append("Product info unavailable products: ").append(recProductCurationStatus.getProductInfoNonExistenceProducts()).append("\n");
+        }
+
+        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getProductInventoryNonExistenceProducts())) {
+            curationStatusBuilder.append("Out of inventory products: ").append(recProductCurationStatus.getProductInventoryNonExistenceProducts()).append("\n");
+        }
+
+        if (CollectionUtils.isNotEmpty(recProductCurationStatus.getProductPriceNonExistenceProducts())) {
+            curationStatusBuilder.append("Stale price products: ").append(recProductCurationStatus.getProductPriceNonExistenceProducts()).append("\n");
+        }
+
+        return curationStatusBuilder.toString();
     }
 
     /**

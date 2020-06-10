@@ -13,6 +13,7 @@ import java.util.Map;
 @Configuration
 @ConfigurationProperties(prefix = AppConfigStringConstants.CONFIG_RECONLIB_PREFIX)
 public class ReconLibConfig extends HashMap<String, String> {
+    private static final long serialVersionUID = 862498820763181979L;
 
     /**
      * Method to generate the recon lib configurations map by adding the missing prefixes.

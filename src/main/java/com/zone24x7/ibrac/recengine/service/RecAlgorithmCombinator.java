@@ -33,8 +33,6 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
     @Log
     private Logger logger;
 
-
-
     /**
      * Combines results from multiple algorithms according to the provided strategy.
      *
@@ -146,8 +144,21 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
             Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
             String algoId = entry.getKey();
+            AlgorithmResult algorithmResult = null;
+
             try {
-                AlgorithmResult algorithmResult = algorithmResultFuture.get();
+                algorithmResult = algorithmResultFuture.get();
+            } catch (InterruptedException | ExecutionException e) {
+                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
+                             recCycleStatus.getRequestId(),
+                             algoId,
+                             activeBundle.getId(),
+                             e);
+
+                Thread.currentThread().interrupt();
+            }
+
+            if (algorithmResult != null) {
                 List<Product> recProducts = algorithmResult.getRecProducts();
 
                 if (recProducts.size() >= activeBundle.getLimitToApply()) {
@@ -163,14 +174,6 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                         maxAlgoUsedCcp = algorithmResult.getUsedCcp();
                     }
                 }
-            } catch (InterruptedException | ExecutionException e) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
-                             recCycleStatus.getRequestId(),
-                             algoId,
-                             activeBundle.getId(),
-                             e);
-
-                Thread.currentThread().interrupt();
             }
         }
 
