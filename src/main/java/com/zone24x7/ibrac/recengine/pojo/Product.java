@@ -66,11 +66,11 @@ public class Product {
 
         Product product = (Product) o;
 
-        if (productId != null ? !productId.equals(product.productId) : product.productId != null) {
+        if (productId != null ? !productId.equals(product.productId) : (product.productId != null)) {
             return false;
         }
 
-        return attributesMap != null ? attributesMap.equals(product.attributesMap) : product.attributesMap == null;
+        return attributesMap != null ? attributesMap.equals(product.attributesMap) : (product.attributesMap == null);
     }
 
     /**

@@ -58,24 +58,6 @@ public class BundleAlgorithm {
     }
 
     /**
-     * Method to get the type.
-     *
-     * @return the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Method to set the type.
-     *
-     * @param type the type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
      * Method to get the default display text.
      *
      * @return the default display text
@@ -91,6 +73,24 @@ public class BundleAlgorithm {
      */
     public void setDefaultDisplayText(String defaultDisplayText) {
         this.defaultDisplayText = defaultDisplayText;
+    }
+
+    /**
+     * Method to get the type.
+     *
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Method to set the type.
+     *
+     * @param type the type
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -129,23 +129,23 @@ public class BundleAlgorithm {
 
         BundleAlgorithm that = (BundleAlgorithm) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) {
+        if (id != null ? !id.equals(that.id) : (that.id != null)) {
             return false;
         }
 
-        if (name != null ? !name.equals(that.name) : that.name != null) {
+        if (name != null ? !name.equals(that.name) : (that.name != null)) {
             return false;
         }
 
-        if (type != null ? !type.equals(that.type) : that.type != null) {
+        if (type != null ? !type.equals(that.type) : (that.type != null)) {
             return false;
         }
 
-        if (defaultDisplayText != null ? !defaultDisplayText.equals(that.defaultDisplayText) : that.defaultDisplayText != null) {
+        if (defaultDisplayText != null ? !defaultDisplayText.equals(that.defaultDisplayText) : (that.defaultDisplayText != null)) {
             return false;
         }
 
-        return customDisplayText != null ? customDisplayText.equals(that.customDisplayText) : that.customDisplayText == null;
+        return customDisplayText != null ? customDisplayText.equals(that.customDisplayText) : (that.customDisplayText == null);
     }
 
     /**

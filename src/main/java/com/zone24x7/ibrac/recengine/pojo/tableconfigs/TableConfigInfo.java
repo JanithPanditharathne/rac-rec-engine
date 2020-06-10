@@ -90,22 +90,23 @@ public class TableConfigInfo {
         if (this == o) {
             return true;
         }
+
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
 
         TableConfigInfo that = (TableConfigInfo) o;
 
-        if (tableName != null ? !tableName.equals(that.tableName) : that.tableName != null) {
+        if (tableName != null ? !tableName.equals(that.tableName) : (that.tableName != null)) {
             return false;
         }
-        if (columnFamily != null ? !columnFamily.equals(that.columnFamily) : that.columnFamily != null) {
+        if (columnFamily != null ? !columnFamily.equals(that.columnFamily) : (that.columnFamily != null)) {
             return false;
         }
-        if (qualifier != null ? !qualifier.equals(that.qualifier) : that.qualifier != null) {
+        if (qualifier != null ? !qualifier.equals(that.qualifier) : (that.qualifier != null)) {
             return false;
         }
-        return description != null ? description.equals(that.description) : that.description == null;
+        return description != null ? description.equals(that.description) : (that.description == null);
     }
 
     @Override

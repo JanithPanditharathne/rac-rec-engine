@@ -36,7 +36,7 @@ public final class ConfigDataTransformUtil {
             try {
                 algoParamInfo = JsonPojoConverter.toPojo(algoParamsConfig, AlgoParamInfo.class);
             } catch (IOException e) {
-                throw new MalformedConfigurationException("Algo params configuration is malformed.");
+                throw new MalformedConfigurationException("Algo params configuration is malformed.", e);
             }
         }
 

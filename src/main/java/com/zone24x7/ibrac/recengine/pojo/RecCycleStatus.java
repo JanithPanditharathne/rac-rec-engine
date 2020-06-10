@@ -18,8 +18,6 @@ public class RecCycleStatus {
     private static final int BIT_5 = 5;
     private static final int BIT_6 = 6;
     private static final int BIT_7 = 7;
-    private static final int BIT_8 = 8;
-    private static final int BIT_9 = 9;
 
     /**
      * Constructor to instantiate RecCycleStatus.
@@ -96,7 +94,7 @@ public class RecCycleStatus {
         long value = 0L;
 
         for (int i = 0; i < this.cycleMask.length(); ++i) {
-            value += this.cycleMask.get(i) ? 1L << i : 0L;
+            value += this.cycleMask.get(i) ? (1L << i) : 0L;
         }
 
         return value;

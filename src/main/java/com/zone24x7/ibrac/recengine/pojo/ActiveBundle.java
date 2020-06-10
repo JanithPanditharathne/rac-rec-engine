@@ -141,33 +141,33 @@ public class ActiveBundle {
 
         ActiveBundle that = (ActiveBundle) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) {
+        if (id != null ? !id.equals(that.id) : (that.id != null)) {
             return false;
         }
 
-        if (name != null ? !name.equals(that.name) : that.name != null) {
+        if (name != null ? !name.equals(that.name) : (that.name != null)) {
             return false;
         }
 
-        if (type != null ? !type.equals(that.type) : that.type != null) {
+        if (type != null ? !type.equals(that.type) : (that.type != null)) {
             return false;
         }
 
-        if (recId != null ? !recId.equals(that.recId) : that.recId != null) {
+        if (recId != null ? !recId.equals(that.recId) : (that.recId != null)) {
             return false;
         }
 
-        if (limitToApply != null ? !limitToApply.equals(that.limitToApply) : that.limitToApply != null) {
+        if (limitToApply != null ? !limitToApply.equals(that.limitToApply) : (that.limitToApply != null)) {
             return false;
         }
 
-        if (validAlgorithmListToExecute != null ? !validAlgorithmListToExecute.equals(that.validAlgorithmListToExecute) : that.validAlgorithmListToExecute != null) {
+        if (validAlgorithmListToExecute != null ? !validAlgorithmListToExecute.equals(that.validAlgorithmListToExecute) : (that.validAlgorithmListToExecute != null)) {
             return false;
         }
-        if (algoCombineInfo != null ? !algoCombineInfo.equals(that.algoCombineInfo) : that.algoCombineInfo != null) {
+        if (algoCombineInfo != null ? !algoCombineInfo.equals(that.algoCombineInfo) : (that.algoCombineInfo != null)) {
             return false;
         }
-        return placementFilteringRuleIds != null ? placementFilteringRuleIds.equals(that.placementFilteringRuleIds) : that.placementFilteringRuleIds == null;
+        return placementFilteringRuleIds != null ? placementFilteringRuleIds.equals(that.placementFilteringRuleIds) : (that.placementFilteringRuleIds == null);
     }
 
     /**

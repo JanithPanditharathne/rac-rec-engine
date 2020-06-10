@@ -60,24 +60,6 @@ public class Rule {
     }
 
     /**
-     * Method to get the type.
-     *
-     * @return the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Method to set the type.
-     *
-     * @param type the type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
      * Method to check whether the rule is a global rule
      *
      * @return true if a global rule, else if not
@@ -93,6 +75,24 @@ public class Rule {
      */
     public void setGlobal(boolean global) {
         isGlobal = global;
+    }
+
+    /**
+     * Method to get the type.
+     *
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Method to set the type.
+     *
+     * @param type the type
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**

@@ -5,7 +5,15 @@ import java.util.regex.Pattern;
 /**
  * Validation utilities
  */
-public class ValidationUtilities {
+public final class ValidationUtilities {
+
+    /**
+     * Default constructor
+     */
+    private ValidationUtilities() {
+        // private constructor
+    }
+
     /**
      * Return whether the input matches the pattern
      *

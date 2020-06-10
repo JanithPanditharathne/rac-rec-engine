@@ -44,24 +44,6 @@ public class Rec {
     }
 
     /**
-     * Method to get the name.
-     *
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Method to set the name.
-     *
-     * @param name the name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Method to get the type.
      *
      * @return the type
@@ -77,6 +59,24 @@ public class Rec {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    /**
+     * Method to get the name.
+     *
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Method to set the name.
+     *
+     * @param name the name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -151,27 +151,27 @@ public class Rec {
 
         Rec rec = (Rec) o;
 
-        if (id != null ? !id.equals(rec.id) : rec.id != null) {
+        if (id != null ? !id.equals(rec.id) : (rec.id != null)) {
             return false;
         }
 
-        if (name != null ? !name.equals(rec.name) : rec.name != null) {
+        if (name != null ? !name.equals(rec.name) : (rec.name != null)) {
             return false;
         }
 
-        if (type != null ? !type.equals(rec.type) : rec.type != null) {
+        if (type != null ? !type.equals(rec.type) : (rec.type != null)) {
             return false;
         }
 
-        if (matchingCondition != null ? !matchingCondition.equals(rec.matchingCondition) : rec.matchingCondition != null) {
+        if (matchingCondition != null ? !matchingCondition.equals(rec.matchingCondition) : (rec.matchingCondition != null)) {
             return false;
         }
 
-        if (regularConfig != null ? !regularConfig.equals(rec.regularConfig) : rec.regularConfig != null) {
+        if (regularConfig != null ? !regularConfig.equals(rec.regularConfig) : (rec.regularConfig != null)) {
             return false;
         }
 
-        return testConfig != null ? testConfig.equals(rec.testConfig) : rec.testConfig == null;
+        return testConfig != null ? testConfig.equals(rec.testConfig) : (rec.testConfig == null);
     }
 
     /**

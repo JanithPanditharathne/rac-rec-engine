@@ -45,7 +45,7 @@ public class RegularConfig {
 
         RegularConfig that = (RegularConfig) o;
 
-        return bundleId != null ? bundleId.equals(that.bundleId) : that.bundleId == null;
+        return bundleId != null ? bundleId.equals(that.bundleId) : (that.bundleId == null);
     }
 
     /**

@@ -91,7 +91,7 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
         }
 
         String newRuleString = joinTokensToRuleString(tokenList).trim();
-        newRuleString = StringUtils.isEmpty(newRuleString) ? "" : MATCHING_CONDITION_START + newRuleString.trim() + MATCHING_CONDITION_END;
+        newRuleString = StringUtils.isEmpty(newRuleString) ? "" : (MATCHING_CONDITION_START + newRuleString.trim() + MATCHING_CONDITION_END);
         return newRuleString;
     }
 
@@ -124,7 +124,7 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
         }
 
         String newRuleString = joinTokensToRuleString(tokenList).trim();
-        newRuleString = StringUtils.isEmpty(newRuleString) ? "" : ACTION_CONDITION_START + generateUniqueIdCondition(uniqueId) + newRuleString.trim() + ACTION_CONDITION_END;
+        newRuleString = StringUtils.isEmpty(newRuleString) ? "" : (ACTION_CONDITION_START + generateUniqueIdCondition(uniqueId) + newRuleString.trim() + ACTION_CONDITION_END);
         return newRuleString;
     }
 

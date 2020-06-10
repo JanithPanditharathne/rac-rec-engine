@@ -46,7 +46,7 @@ public class RecSlotConfig {
 
         RecSlotConfig that = (RecSlotConfig) o;
 
-        return recSlots != null ? recSlots.equals(that.recSlots) : that.recSlots == null;
+        return recSlots != null ? recSlots.equals(that.recSlots) : (that.recSlots == null);
     }
 
     /**

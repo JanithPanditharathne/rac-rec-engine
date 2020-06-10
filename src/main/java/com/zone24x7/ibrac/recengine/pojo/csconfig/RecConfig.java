@@ -49,7 +49,7 @@ public class RecConfig {
 
         RecConfig recConfig = (RecConfig) o;
 
-        return recs != null ? recs.equals(recConfig.recs) : recConfig.recs == null;
+        return recs != null ? recs.equals(recConfig.recs) : (recConfig.recs == null);
     }
 
     /**

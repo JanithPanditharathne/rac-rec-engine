@@ -193,8 +193,8 @@ public class SpringMainConfig {
     @Bean
     @Qualifier("errorProperties")
     public Properties provideErrorProperties() throws IOException {
-        Resource resource = new ClassPathResource("error.properties");
-        return PropertiesLoaderUtils.loadProperties(resource);
+        Resource errorPropertyResource = new ClassPathResource("error.properties");
+        return PropertiesLoaderUtils.loadProperties(errorPropertyResource);
     }
 
     /**
@@ -206,8 +206,8 @@ public class SpringMainConfig {
     @Bean
     @Qualifier("ccpProperties")
     public Properties provideCcpProperties() throws IOException {
-        Resource resource = new ClassPathResource("ccp.properties");
-        return PropertiesLoaderUtils.loadProperties(resource);
+        Resource ccpPropertyResource = new ClassPathResource("ccp.properties");
+        return PropertiesLoaderUtils.loadProperties(ccpPropertyResource);
     }
 
     /**

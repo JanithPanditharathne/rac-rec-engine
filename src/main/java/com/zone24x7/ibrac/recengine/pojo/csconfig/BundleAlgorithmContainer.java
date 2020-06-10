@@ -73,7 +73,7 @@ public class BundleAlgorithmContainer implements Comparable<BundleAlgorithmConta
             return false;
         }
 
-        return algorithm != null ? algorithm.equals(that.algorithm) : that.algorithm == null;
+        return algorithm != null ? algorithm.equals(that.algorithm) : (that.algorithm == null);
     }
 
     /**

@@ -46,7 +46,7 @@ public class BundleConfig {
 
         BundleConfig that = (BundleConfig) o;
 
-        return bundles != null ? bundles.equals(that.bundles) : that.bundles == null;
+        return bundles != null ? bundles.equals(that.bundles) : (that.bundles == null);
     }
 
     /**

@@ -67,7 +67,7 @@ public class EdeExecutedRuleInfo {
 
         EdeExecutedRuleInfo that = (EdeExecutedRuleInfo) obj;
 
-        if (ruleId != null ? !ruleId.equals(that.ruleId) : that.ruleId != null) {
+        if (ruleId != null ? !ruleId.equals(that.ruleId) : (that.ruleId != null)) {
             return false;
         }
 

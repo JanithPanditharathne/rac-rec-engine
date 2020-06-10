@@ -70,24 +70,6 @@ public class Bundle {
     }
 
     /**
-     * Method to get the type.
-     *
-     * @return the type
-     */
-    public String getType() {
-        return type;
-    }
-
-    /**
-     * Method to set the type.
-     *
-     * @param type the type
-     */
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    /**
      * Method to get the default limit.
      *
      * @return the default limit
@@ -103,6 +85,24 @@ public class Bundle {
      */
     public void setDefaultLimit(Integer defaultLimit) {
         this.defaultLimit = defaultLimit;
+    }
+
+    /**
+     * Method to get the type.
+     *
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * Method to set the type.
+     *
+     * @param type the type
+     */
+    public void setType(String type) {
+        this.type = type;
     }
 
     /**
@@ -163,27 +163,27 @@ public class Bundle {
 
         Bundle bundle = (Bundle) o;
 
-        if (id != null ? !id.equals(bundle.id) : bundle.id != null) {
+        if (id != null ? !id.equals(bundle.id) : (bundle.id != null)) {
             return false;
         }
 
-        if (name != null ? !name.equals(bundle.name) : bundle.name != null) {
+        if (name != null ? !name.equals(bundle.name) : (bundle.name != null)) {
             return false;
         }
 
-        if (type != null ? !type.equals(bundle.type) : bundle.type != null) {
+        if (type != null ? !type.equals(bundle.type) : (bundle.type != null)) {
             return false;
         }
 
-        if (defaultLimit != null ? !defaultLimit.equals(bundle.defaultLimit) : bundle.defaultLimit != null) {
+        if (defaultLimit != null ? !defaultLimit.equals(bundle.defaultLimit) : (bundle.defaultLimit != null)) {
             return false;
         }
 
-        if (algorithms != null ? !algorithms.equals(bundle.algorithms) : bundle.algorithms != null) {
+        if (algorithms != null ? !algorithms.equals(bundle.algorithms) : (bundle.algorithms != null)) {
             return false;
         }
 
-        return algoCombineInfo != null ? algoCombineInfo.equals(bundle.algoCombineInfo) : bundle.algoCombineInfo == null;
+        return algoCombineInfo != null ? algoCombineInfo.equals(bundle.algoCombineInfo) : (bundle.algoCombineInfo == null);
     }
 
     /**

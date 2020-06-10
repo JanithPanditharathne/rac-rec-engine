@@ -49,6 +49,24 @@ public class RecInputParams {
     }
 
     /**
+     * Method to get the limit.
+     *
+     * @return the limit
+     */
+    public Integer getLimit() {
+        return limit;
+    }
+
+    /**
+     * Method to set the limit.
+     *
+     * @param limit the limit to set
+     */
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    /**
      * Method to get the placeholder.
      *
      * @return the placeholder
@@ -82,23 +100,5 @@ public class RecInputParams {
      */
     public void setCcp(Map<String, String> ccp) {
         this.ccp = ccp;
-    }
-
-    /**
-     * Method to get the limit.
-     *
-     * @return the limit
-     */
-    public Integer getLimit() {
-        return limit;
-    }
-
-    /**
-     * Method to set the limit.
-     *
-     * @param limit the limit to set
-     */
-    public void setLimit(Integer limit) {
-        this.limit = limit;
     }
 }

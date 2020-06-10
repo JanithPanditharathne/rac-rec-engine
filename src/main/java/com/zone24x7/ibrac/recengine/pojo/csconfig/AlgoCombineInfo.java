@@ -67,7 +67,7 @@ public class AlgoCombineInfo {
             return false;
         }
 
-        return combineDisplayText != null ? combineDisplayText.equals(that.combineDisplayText) : that.combineDisplayText == null;
+        return combineDisplayText != null ? combineDisplayText.equals(that.combineDisplayText) : (that.combineDisplayText == null);
     }
 
     /**

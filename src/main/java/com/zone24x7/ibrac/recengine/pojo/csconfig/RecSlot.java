@@ -131,23 +131,23 @@ public class RecSlot {
 
         RecSlot recSlot = (RecSlot) o;
 
-        if (channel != null ? !channel.equals(recSlot.channel) : recSlot.channel != null) {
+        if (channel != null ? !channel.equals(recSlot.channel) : (recSlot.channel != null)) {
             return false;
         }
 
-        if (page != null ? !page.equals(recSlot.page) : recSlot.page != null) {
+        if (page != null ? !page.equals(recSlot.page) : (recSlot.page != null)) {
             return false;
         }
 
-        if (placeholder != null ? !placeholder.equals(recSlot.placeholder) : recSlot.placeholder != null) {
+        if (placeholder != null ? !placeholder.equals(recSlot.placeholder) : (recSlot.placeholder != null)) {
             return false;
         }
 
-        if (recIds != null ? !recIds.equals(recSlot.recIds) : recSlot.recIds != null) {
+        if (recIds != null ? !recIds.equals(recSlot.recIds) : (recSlot.recIds != null)) {
             return false;
         }
 
-        return ruleIds != null ? ruleIds.equals(recSlot.ruleIds) : recSlot.ruleIds == null;
+        return ruleIds != null ? ruleIds.equals(recSlot.ruleIds) : (recSlot.ruleIds == null);
     }
 
     /**
