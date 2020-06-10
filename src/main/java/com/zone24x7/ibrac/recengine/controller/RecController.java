@@ -266,6 +266,8 @@ public class RecController {
                     pageId,
                     placeholderId,
                     e);
+
+            Thread.currentThread().interrupt();
         }
 
         return null;

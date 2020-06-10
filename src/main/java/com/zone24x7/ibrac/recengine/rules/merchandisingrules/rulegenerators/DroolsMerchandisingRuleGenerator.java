@@ -263,8 +263,8 @@ public class DroolsMerchandisingRuleGenerator implements MerchandisingRuleGenera
      * Class to represent translated conditions.
      */
     private class TranslatedConditions {
-        String translatedMatchingCondition;
-        String translatedActionCondition;
+        private String translatedMatchingCondition;
+        private String translatedActionCondition;
 
         /**
          * Constructor to instantiate TranslatedConditions.

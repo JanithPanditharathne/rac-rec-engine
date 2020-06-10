@@ -110,6 +110,8 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                              algoId,
                              activeBundle.getId(),
                              e);
+
+                Thread.currentThread().interrupt();
             }
         }
 
@@ -167,6 +169,8 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                              algoId,
                              activeBundle.getId(),
                              e);
+
+                Thread.currentThread().interrupt();
             }
         }
 

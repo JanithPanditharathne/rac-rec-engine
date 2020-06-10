@@ -52,28 +52,26 @@ public class EdeExecutedRuleInfo {
     /**
      * Check the equality of this object to another EdeExecutedRuleInfo object
      *
-     * @param o the other object to compare against
+     * @param obj the other object to compare against
      * @return true if both objects are equal based on the assigned criteria, false otherwise
      */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (!(o instanceof EdeExecutedRuleInfo)) {
+
+        if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
 
-        EdeExecutedRuleInfo that = (EdeExecutedRuleInfo) o;
+        EdeExecutedRuleInfo that = (EdeExecutedRuleInfo) obj;
 
         if (ruleId != null ? !ruleId.equals(that.ruleId) : that.ruleId != null) {
             return false;
         }
-        if (ruleType != that.ruleType) {
-            return false;
-        }
 
-        return true;
+        return ruleType == that.ruleType;
     }
 
     /**
