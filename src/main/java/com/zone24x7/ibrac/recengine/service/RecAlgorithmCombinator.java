@@ -145,12 +145,10 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                     algoToUsedCcp.put(algoId, algorithmResult.getUsedCcp().entrySet().stream().map(e -> e.getKey() + ":" + e.getValue()).collect(Collectors.joining(",")));
                     displayText = algoIdToDisplayText.get(algoId);
                     break;
-                } else {
-                    if (maxProductList.size() < recProducts.size()) {
-                        maxAlgoId = algoId;
-                        maxProductList = recProducts;
-                        maxAlgoUsedCcp = algorithmResult.getUsedCcp();
-                    }
+                } else if (maxProductList.size() < recProducts.size()) {
+                    maxAlgoId = algoId;
+                    maxProductList = recProducts;
+                    maxAlgoUsedCcp = algorithmResult.getUsedCcp();
                 }
             }
         }

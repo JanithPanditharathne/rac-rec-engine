@@ -28,7 +28,9 @@ public class AlgorithmResult {
      * @param recProducts the recommendation products to set
      */
     public void setRecProducts(List<Product> recProducts) {
-        this.recProducts = recProducts;
+        if (recProducts != null) {
+            this.recProducts.addAll(recProducts);
+        }
     }
 
     /**
