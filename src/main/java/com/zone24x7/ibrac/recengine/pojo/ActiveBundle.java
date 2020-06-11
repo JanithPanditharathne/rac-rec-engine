@@ -2,6 +2,8 @@ package com.zone24x7.ibrac.recengine.pojo;
 
 import com.zone24x7.ibrac.recengine.pojo.csconfig.AlgoCombineInfo;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.BundleAlgorithm;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
 import java.util.Set;
@@ -19,31 +21,28 @@ public class ActiveBundle {
     private final AlgoCombineInfo algoCombineInfo;
     private final Set<String> placementFilteringRuleIds;
 
-    private static final int HASH_SEED = 31;
+    private static final int HASH_SEED1 = 17;
+    private static final int HASH_SEED2 = 37;
 
     /**
      * Constructor to instantiate ActiveBundle.
      *
-     * @param id the id
-     * @param name the name
-     * @param type the type
-     * @param recId the rec id
-     * @param limitToApply the limit to apply
+     * @param bundleInfo                  the bundle info
+     * @param recId                       the recommendation id
+     * @param limitToApply                the limit to apply
      * @param validAlgorithmListToExecute the valid algorithm list to execute
-     * @param algoCombineInfo the algorithm combine information
-     * @param placementFilteringRuleIds the placement filtering rule ids
+     * @param algoCombineInfo             the algorithm combine information
+     * @param placementFilteringRuleIds   the placement filtering rule ids
      */
-    public ActiveBundle(String id,
-                        String name,
-                        String type,
+    public ActiveBundle(BundleInfo bundleInfo,
                         String recId,
                         Integer limitToApply,
                         List<BundleAlgorithm> validAlgorithmListToExecute,
                         AlgoCombineInfo algoCombineInfo,
                         Set<String> placementFilteringRuleIds) {
-        this.id = id;
-        this.name = name;
-        this.type = type;
+        this.id = bundleInfo.getBundleId();
+        this.name = bundleInfo.getBundleName();
+        this.type = bundleInfo.getBundleType();
         this.recId = recId;
         this.limitToApply = limitToApply;
         this.validAlgorithmListToExecute = validAlgorithmListToExecute;
@@ -141,33 +140,16 @@ public class ActiveBundle {
 
         ActiveBundle that = (ActiveBundle) o;
 
-        if (id != null ? !id.equals(that.id) : (that.id != null)) {
-            return false;
-        }
-
-        if (name != null ? !name.equals(that.name) : (that.name != null)) {
-            return false;
-        }
-
-        if (type != null ? !type.equals(that.type) : (that.type != null)) {
-            return false;
-        }
-
-        if (recId != null ? !recId.equals(that.recId) : (that.recId != null)) {
-            return false;
-        }
-
-        if (limitToApply != null ? !limitToApply.equals(that.limitToApply) : (that.limitToApply != null)) {
-            return false;
-        }
-
-        if (validAlgorithmListToExecute != null ? !validAlgorithmListToExecute.equals(that.validAlgorithmListToExecute) : (that.validAlgorithmListToExecute != null)) {
-            return false;
-        }
-        if (algoCombineInfo != null ? !algoCombineInfo.equals(that.algoCombineInfo) : (that.algoCombineInfo != null)) {
-            return false;
-        }
-        return placementFilteringRuleIds != null ? placementFilteringRuleIds.equals(that.placementFilteringRuleIds) : (that.placementFilteringRuleIds == null);
+        return new EqualsBuilder()
+                .append(id, that.id)
+                .append(name, that.name)
+                .append(type, that.type)
+                .append(recId, that.recId)
+                .append(limitToApply, that.limitToApply)
+                .append(validAlgorithmListToExecute, that.validAlgorithmListToExecute)
+                .append(algoCombineInfo, that.algoCombineInfo)
+                .append(placementFilteringRuleIds, that.placementFilteringRuleIds)
+                .isEquals();
     }
 
     /**
@@ -177,14 +159,64 @@ public class ActiveBundle {
      */
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
-        result = HASH_SEED * result + (name != null ? name.hashCode() : 0);
-        result = HASH_SEED * result + (type != null ? type.hashCode() : 0);
-        result = HASH_SEED * result + (recId != null ? recId.hashCode() : 0);
-        result = HASH_SEED * result + (limitToApply != null ? limitToApply.hashCode() : 0);
-        result = HASH_SEED * result + (validAlgorithmListToExecute != null ? validAlgorithmListToExecute.hashCode() : 0);
-        result = HASH_SEED * result + (algoCombineInfo != null ? algoCombineInfo.hashCode() : 0);
-        result = HASH_SEED * result + (placementFilteringRuleIds != null ? placementFilteringRuleIds.hashCode() : 0);
-        return result;
+        return new HashCodeBuilder(HASH_SEED1, HASH_SEED2)
+                .append(id)
+                .append(name)
+                .append(type)
+                .append(recId)
+                .append(limitToApply)
+                .append(validAlgorithmListToExecute)
+                .append(algoCombineInfo)
+                .append(placementFilteringRuleIds)
+                .toHashCode();
+    }
+
+    /**
+     * Class to represent bundle information.
+     */
+    public static class BundleInfo {
+        private final String bundleId;
+        private final String bundleName;
+        private final String bundleType;
+
+        /**
+         * Constructor to instantiate BundleInfo.
+         *
+         * @param bundleId   the bundle id
+         * @param bundleName the bundle name
+         * @param bundleType the bundle type
+         */
+        public BundleInfo(String bundleId, String bundleName, String bundleType) {
+            this.bundleId = bundleId;
+            this.bundleName = bundleName;
+            this.bundleType = bundleType;
+        }
+
+        /**
+         * Method to get the bundle id.
+         *
+         * @return the bundle id
+         */
+        private String getBundleId() {
+            return bundleId;
+        }
+
+        /**
+         * Method to get the bundle name.
+         *
+         * @return the bundle name
+         */
+        private String getBundleName() {
+            return bundleName;
+        }
+
+        /**
+         * Method to get the bundle type.
+         *
+         * @return the bundle type
+         */
+        private String getBundleType() {
+            return bundleType;
+        }
     }
 }

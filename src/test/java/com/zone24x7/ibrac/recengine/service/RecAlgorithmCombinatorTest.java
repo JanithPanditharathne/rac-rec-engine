@@ -131,7 +131,7 @@ class RecAlgorithmCombinatorTest {
 
         int limit = 3;
 
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(2)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
@@ -154,7 +154,7 @@ class RecAlgorithmCombinatorTest {
 
         int limit = 1; // algo 100 satisfies
 
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(1)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
@@ -178,7 +178,7 @@ class RecAlgorithmCombinatorTest {
 
         int limit = 1; // algo 100 satisfies
 
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(1)));
         assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
@@ -203,7 +203,7 @@ class RecAlgorithmCombinatorTest {
 
         int limit = 2; // 1 product from algo 100 and one product from algo 101 satisfies limit=2
 
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
 
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(3)));
@@ -222,7 +222,7 @@ class RecAlgorithmCombinatorTest {
     @Test
     void should_return_not_null_MultipleAlgoResult_object_when_AlgoCombineInfo_is_null() {
         int limit = 3;
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, null, rules);
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, null, rules);
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
         assertThat(combinedAlgoResult, is(notNullValue()));
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(0)));
@@ -240,7 +240,7 @@ class RecAlgorithmCombinatorTest {
 
         int limit = 3;
         //Seeting null to valid algos to execute
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, null, algoCombineInfo, rules);
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, null, algoCombineInfo, rules);
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
         assertThat(combinedAlgoResult, is(notNullValue()));
         assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(0)));

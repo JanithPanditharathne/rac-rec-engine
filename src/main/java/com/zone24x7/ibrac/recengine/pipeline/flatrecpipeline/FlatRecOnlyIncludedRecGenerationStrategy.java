@@ -3,6 +3,8 @@ package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline;
 import com.zone24x7.ibrac.recengine.pipeline.RecGenerationStrategy;
 import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers.RecUnitHandler;
 import com.zone24x7.ibrac.recengine.pojo.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,6 +24,8 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
     @Autowired
     @Qualifier("accumulationHandler")
     private RecUnitHandler accumulationHandler;
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlatRecOnlyIncludedRecGenerationStrategy.class);
 
     /**
      * Method to generate recommendations
@@ -66,6 +70,7 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
     private void addStrategyHandlers(ActiveBundle activeBundle,
                                      List<RecUnitHandler> handlers) {
 
+        LOGGER.trace("Active bundle id : {}", activeBundle.getId());
         //-----------Add Pre Recommendation Generations Handlers------------//
         //Adds strategy initialization handler to the chain
         handlers.add(coreRecommendationHandler);

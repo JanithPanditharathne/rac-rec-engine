@@ -168,7 +168,7 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
             return Optional.empty();
         }
 
-        return Optional.of(new ActiveBundle(id, name, type, recId, limitToApply, algorithms, algoCombineInfo, new HashSet<>(placementFilteringRuleIds)));
+        return Optional.of(new ActiveBundle(new ActiveBundle.BundleInfo(id, name, type), recId, limitToApply, algorithms, algoCombineInfo, new HashSet<>(placementFilteringRuleIds)));
     }
 
     /**
