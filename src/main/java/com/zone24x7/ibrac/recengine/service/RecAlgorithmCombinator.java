@@ -177,7 +177,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
      * @param activeBundle          active bundle
      * @return Algorithm Result
      */
-    private AlgorithmResult resolveAndGetAlgoResult(Future<AlgorithmResult> algorithmResultFuture, ActiveBundle activeBundle, String algoId, RecCycleStatus recCycleStatus, String mode) {
+    private static AlgorithmResult resolveAndGetAlgoResult(Future<AlgorithmResult> algorithmResultFuture, ActiveBundle activeBundle, String algoId, RecCycleStatus recCycleStatus, String mode) {
         try {
             return algorithmResultFuture.get();
         } catch (InterruptedException e) {
