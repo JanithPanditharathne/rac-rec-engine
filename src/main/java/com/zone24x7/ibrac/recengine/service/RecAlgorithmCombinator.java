@@ -55,7 +55,6 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         Map<String, Future<AlgorithmResult>> futures = new LinkedHashMap<>();
         Map<String, String> algoIdToDisplayText = new LinkedHashMap<>();
 
-        //TODO: Change logic to limit HBase load by calling batch wise as a optimization
         for (BundleAlgorithm bundleAlgorithm : validAlgorithmListToExecute) {
             AlgorithmTask algorithmTask = algorithmTaskFactory.create(bundleAlgorithm.getId(), recInputParams.getCcp(), recCycleStatus);
             futures.put(bundleAlgorithm.getId(), cachedTaskExecutorService.submit(algorithmTask));
@@ -89,8 +88,10 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
             Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
             String algoId = entry.getKey();
-            try {
-                AlgorithmResult algorithmResult = algorithmResultFuture.get();
+
+            AlgorithmResult algorithmResult = resolveAndGetAlgoResult(algorithmResultFuture, activeBundle, algoId, recCycleStatus, "Combine");
+
+            if (algorithmResult != null) {
                 List<Product> recProducts = algorithmResult.getRecProducts();
                 if (CollectionUtils.isNotEmpty(recProducts)) {
                     products.addAll(recProducts);
@@ -100,20 +101,6 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                 if (products.size() >= activeBundle.getLimitToApply()) {
                     break;
                 }
-            } catch (InterruptedException e) {
-                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
-                             recCycleStatus.getRequestId(),
-                             algoId,
-                             activeBundle.getId(),
-                             e);
-
-                Thread.currentThread().interrupt();
-            } catch (ExecutionException e) {
-                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
-                             recCycleStatus.getRequestId(),
-                             algoId,
-                             activeBundle.getId(),
-                             e);
             }
         }
 
@@ -148,29 +135,10 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         for (Map.Entry<String, Future<AlgorithmResult>> entry : futures.entrySet()) {
             Future<AlgorithmResult> algorithmResultFuture = entry.getValue();
             String algoId = entry.getKey();
-            AlgorithmResult algorithmResult = null;
-
-            try {
-                algorithmResult = algorithmResultFuture.get();
-            } catch (InterruptedException e) {
-                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
-                             recCycleStatus.getRequestId(),
-                             algoId,
-                             activeBundle.getId(),
-                             e);
-
-                Thread.currentThread().interrupt();
-            } catch (ExecutionException e) {
-                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
-                             recCycleStatus.getRequestId(),
-                             algoId,
-                             activeBundle.getId(),
-                             e);
-            }
+            AlgorithmResult algorithmResult = resolveAndGetAlgoResult(algorithmResultFuture, activeBundle, algoId, recCycleStatus, "nonCombine");
 
             if (algorithmResult != null) {
                 List<Product> recProducts = algorithmResult.getRecProducts();
-
                 if (recProducts.size() >= activeBundle.getLimitToApply()) {
                     products.addAll(recProducts);
                     algoToProductsMap.put(algoId, products.stream().map(Product::getProductId).collect(Collectors.joining(",")));
@@ -200,5 +168,37 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         multipleAlgorithmResult.setAlgoToUsedCcp(algoToUsedCcp);
         multipleAlgorithmResult.setDisplayText(displayText);
         return multipleAlgorithmResult;
+    }
+
+    /**
+     * Get the result of algorithmResultFuture.
+     *
+     * @param algorithmResultFuture algorithmResultFuture to resolve
+     * @param recCycleStatus        recCycleStatus object
+     * @param algoId                algorithm id
+     * @param activeBundle          active bundle
+     * @return Algorithm Result
+     */
+    private AlgorithmResult resolveAndGetAlgoResult(Future<AlgorithmResult> algorithmResultFuture, ActiveBundle activeBundle, String algoId, RecCycleStatus recCycleStatus, String mode) {
+        try {
+            return algorithmResultFuture.get();
+        } catch (InterruptedException e) {
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm. mode:{} algo:{}, BundleId:{} ",
+                         recCycleStatus.getRequestId(),
+                         mode,
+                         algoId,
+                         activeBundle.getId(),
+                         e);
+
+            Thread.currentThread().interrupt();
+        } catch (ExecutionException e) {
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm. mode:{} algo:{},, BundleId:{} ",
+                         recCycleStatus.getRequestId(),
+                         mode,
+                         algoId,
+                         activeBundle.getId(),
+                         e);
+        }
+        return null;
     }
 }
