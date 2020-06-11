@@ -6,11 +6,13 @@ import com.zone24x7.ibrac.recengine.configuration.sync.CsConfiguration;
 import com.zone24x7.ibrac.recengine.configuration.sync.CsConfigurationStatus;
 import com.zone24x7.ibrac.recengine.configuration.sync.RecConfiguration;
 import com.zone24x7.ibrac.recengine.configuration.sync.RuleConfiguration;
+import com.zone24x7.ibrac.recengine.util.CustomReflectionTestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -36,7 +38,7 @@ class CsConfigurationSyncUpScheduledJobTest {
      * Setup mock classes
      */
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         csConfigurationsFetchStrategy = mock(CsConfigurationsFetchStrategy.class);
         logger = mock(Logger.class);
         Map<String, CsConfiguration> configMap = new HashMap<>();
@@ -51,7 +53,10 @@ class CsConfigurationSyncUpScheduledJobTest {
         configurationMap.put("rule", ruleConfigurationMock);
 
         ReflectionTestUtils.setField(csJob, "csConfigurationsFetchStrategy", csConfigurationsFetchStrategy);
-        ReflectionTestUtils.setField(csJob, "logger", logger);
+
+        Field loggerField = csJob.getClass().getDeclaredField("LOGGER");
+        CustomReflectionTestUtils.setFinalStaticField(loggerField, this.logger);
+
         ReflectionTestUtils.setField(csJob, "configurationMap", configurationMap);
         ReflectionTestUtils.setField(csJob, "configSyncLock", configSyncLock);
 

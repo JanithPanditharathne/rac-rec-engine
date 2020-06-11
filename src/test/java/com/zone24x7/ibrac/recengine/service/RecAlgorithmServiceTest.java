@@ -8,12 +8,14 @@ import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
+import com.zone24x7.ibrac.recengine.util.CustomReflectionTestUtils;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,7 +45,7 @@ class RecAlgorithmServiceTest {
      * Method to setup the dependencies for the test class
      */
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
         algorithmResultGenerator = mock(AlgorithmResultGenerator.class);
         algoCombinationIteratorProvider = mock(AlgoCombinationIteratorProvider.class);
         logger = mock(Logger.class);
@@ -61,7 +63,9 @@ class RecAlgorithmServiceTest {
         combinationMap2.put("department", "Electronics");
         combinationMap2.put("category", "Home Automation");
 
-        ReflectionTestUtils.setField(recAlgorithmService, "logger", logger);
+        Field loggerField = recAlgorithmService.getClass().getDeclaredField("LOGGER");
+        CustomReflectionTestUtils.setFinalStaticField(loggerField, this.logger);
+
         ReflectionTestUtils.setField(recAlgorithmService, "algorithmResultGenerator", algorithmResultGenerator);
         ReflectionTestUtils.setField(recAlgorithmService, "algoCombinationIteratorProvider", algoCombinationIteratorProvider);
 
@@ -152,5 +156,4 @@ class RecAlgorithmServiceTest {
 
         assertThat(algorithmResult.getRecProducts(), empty());
     }
-
 }

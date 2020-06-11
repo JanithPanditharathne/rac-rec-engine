@@ -44,7 +44,6 @@ public class CoreRecommendationHandlerTest {
 
         coreRecommendationHandler = new CoreRecommendationHandler();
         ReflectionTestUtils.setField(coreRecommendationHandler, "algorithmCombinator", algorithmCombinator);
-        ReflectionTestUtils.setField(coreRecommendationHandler, "logger", logger);
     }
 
     /**

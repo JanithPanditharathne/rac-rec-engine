@@ -2,13 +2,13 @@ package com.zone24x7.ibrac.recengine.configuration.sync;
 
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache;
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.rules.MerchandisingRuleKnowledgeBaseInfo;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.executors.MerchandisingRuleExecutor;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.knowledgebase.KnowledgeBaseGenerator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +18,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RuleConfiguration implements CsConfiguration {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RuleConfiguration.class);
+
     @Autowired
     private CsConfigurationTempCache csConfigurationTempCache;
 
@@ -26,9 +28,6 @@ public class RuleConfiguration implements CsConfiguration {
 
     @Autowired
     private MerchandisingRuleExecutor ruleExecutor;
-
-    @Log
-    private Logger logger;
 
     private String ruleConfig;
     private static String hashOfLastUsedRuleConfig;
@@ -87,7 +86,7 @@ public class RuleConfiguration implements CsConfiguration {
             knowledgeBaseGenerator.setConfigurations(ruleConfig);
             knowledgeBaseInfo = knowledgeBaseGenerator.getKnowledgeBaseInfo();
         } catch (MalformedConfigurationException e) {
-            logger.error("Error reading rule configuration", e);
+            LOGGER.error("Error reading rule configuration", e);
             status = CsConfigurationStatus.FAIL;
         }
 

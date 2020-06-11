@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.recengine.strategy;
 
 import com.zone24x7.ibrac.recengine.exceptions.SetupException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
@@ -9,6 +8,7 @@ import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import com.zone24x7.ibrac.recengine.recbundle.ActiveBundleProvider;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -20,6 +20,7 @@ import java.util.Optional;
  */
 @Component
 public class RecGenerationStrategyExecutorEngine implements RecGenerationEngine {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecGenerationStrategyExecutorEngine.class);
 
     @Autowired
     @Qualifier("strategyExecutors")
@@ -27,9 +28,6 @@ public class RecGenerationStrategyExecutorEngine implements RecGenerationEngine 
 
     @Autowired
     private ActiveBundleProvider activeBundleProvider;
-
-    @Log
-    private static Logger logger;
 
     /**
      * Returns the result provided by the implementation strategy based of the active bundle generated.
@@ -44,18 +42,18 @@ public class RecGenerationStrategyExecutorEngine implements RecGenerationEngine 
         try {
             activeBundle = activeBundleProvider.getActiveBundle(recInputParams, recCycleStatus);
         } catch (SetupException e) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error occurred when trying to retrieve active bundle.", recCycleStatus.getRequestId(), e);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error occurred when trying to retrieve active bundle.", recCycleStatus.getRequestId(), e);
         }
 
         if (!activeBundle.isPresent()) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "No active bundle found for : Channel:{}, Page: {}, Placeholder: {}",
-                    recCycleStatus.getRequestId(),
-                    recInputParams.getChannel(),
-                    recInputParams.getPage(),
-                    recInputParams.getPlaceholder());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "No active bundle found for : Channel:{}, Page: {}, Placeholder: {}",
+                         recCycleStatus.getRequestId(),
+                         recInputParams.getChannel(),
+                         recInputParams.getPage(),
+                         recInputParams.getPlaceholder());
             return null;
         } else {
-            logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Active bundle found for : Channel:{}, Page: {}, Placeholder: {}, BundleId: {}",
+            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Active bundle found for : Channel:{}, Page: {}, Placeholder: {}, BundleId: {}",
                         recCycleStatus.getRequestId(),
                         recInputParams.getChannel(),
                         recInputParams.getPage(),

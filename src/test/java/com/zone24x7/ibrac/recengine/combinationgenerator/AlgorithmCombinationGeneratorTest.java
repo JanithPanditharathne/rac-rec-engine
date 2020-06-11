@@ -1,12 +1,14 @@
 package com.zone24x7.ibrac.recengine.combinationgenerator;
 
 import com.zone24x7.ibrac.recengine.pojo.algoparams.AlgoParams;
+import com.zone24x7.ibrac.recengine.util.CustomReflectionTestUtils;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -45,7 +47,7 @@ class AlgorithmCombinationGeneratorTest {
      * Setup mock classes
      */
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         logger = mock(Logger.class);
         algoCombinationInputFilter = mock(AlgoCombinationInputFilter.class);
 
@@ -56,7 +58,10 @@ class AlgorithmCombinationGeneratorTest {
         ccpMap.put(GENDER, "Women's");
 
         algorithmCombinationGenerator = new AlgorithmCombinationGenerator();
-        ReflectionTestUtils.setField(algorithmCombinationGenerator, "logger", logger);
+
+        Field loggerField = algorithmCombinationGenerator.getClass().getDeclaredField("LOGGER");
+        CustomReflectionTestUtils.setFinalStaticField(loggerField, this.logger);
+
         ReflectionTestUtils.setField(algorithmCombinationGenerator, "algoCombinationInputFilter", algoCombinationInputFilter);
     }
 

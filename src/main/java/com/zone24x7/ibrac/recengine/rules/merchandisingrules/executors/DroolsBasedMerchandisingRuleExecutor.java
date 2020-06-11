@@ -1,6 +1,5 @@
 package com.zone24x7.ibrac.recengine.rules.merchandisingrules.executors;
 
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.rules.FilteringRulesResult;
@@ -13,6 +12,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.drools.core.impl.InternalKnowledgeBase;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -25,11 +25,10 @@ import java.util.Set;
  */
 @Component
 public class DroolsBasedMerchandisingRuleExecutor implements MerchandisingRuleExecutor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DroolsBasedMerchandisingRuleExecutor.class);
+
     private Set<String> globalFilteringRuleIds;
     private InternalKnowledgeBase knowledgeBase;
-
-    @Log
-    private static Logger logger;
 
     /**
      * Method to apply the rules to filter the recommended products
@@ -50,7 +49,7 @@ public class DroolsBasedMerchandisingRuleExecutor implements MerchandisingRuleEx
         RuleExecutionStatus ruleExecutionStatus = new RuleExecutionStatus();
 
         if (this.knowledgeBase == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + StringConstants.DROOLS_KNOWLEDGE_BASE_NULL_MSG, recCycleStatus.getRequestId());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + StringConstants.DROOLS_KNOWLEDGE_BASE_NULL_MSG, recCycleStatus.getRequestId());
             rulesResult.setFilteredRecommendedProductsList(recommendations);
             rulesResult.setExecutedFilteringRuleInfoList(new HashSet<>());
             return rulesResult;

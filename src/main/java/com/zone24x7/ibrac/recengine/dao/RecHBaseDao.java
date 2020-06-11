@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.recengine.dao;
 
 import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import org.apache.hadoop.hbase.TableName;
@@ -9,7 +8,6 @@ import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.Table;
-import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,9 +25,6 @@ public class RecHBaseDao implements HBaseDao {
 
     @Autowired
     private HBaseConnection hBaseConnection;
-
-    @Log
-    private static Logger logger;
 
     @Autowired
     @Qualifier("cachedThreadPoolTaskExecutor")

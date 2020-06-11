@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.recengine.dao;
 
 import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.tableconfigs.TableConfigInfo;
 import com.zone24x7.ibrac.recengine.service.TableConfigReaderService;
@@ -10,6 +9,7 @@ import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.hbase.client.Result;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.nio.charset.StandardCharsets;
@@ -19,15 +19,13 @@ import java.util.*;
  * Class to represent the HBase adapter implementation of the data source adapter.
  */
 public class HBaseAdapter implements DatasourceAdapter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(HBaseAdapter.class);
 
     @Autowired
     private HBaseDao hBaseDao;
 
     @Autowired
     private TableConfigReaderService tableConfigReaderService;
-
-    @Log
-    private static Logger logger;
 
     private static final String INVALID_ALGORITHM_ID_MSG = "Incorrect Algorithm ID provided, No tableConfigInfo found";
 
@@ -49,7 +47,7 @@ public class HBaseAdapter implements DatasourceAdapter {
         String key = HBaseKeyMaker.generateRowKey(ccp);
 
         if (tableConfigInfo == null || tableConfigInfo.getTableName() == null || tableConfigInfo.getColumnFamily() == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Table info not found for algo Id : {}", recCycleStatus.getRequestId(), algorithmId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Table info not found for algo Id : {}", recCycleStatus.getRequestId(), algorithmId);
             throw new UnsupportedOperationException(INVALID_ALGORITHM_ID_MSG);
         }
 

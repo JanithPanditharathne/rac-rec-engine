@@ -2,7 +2,6 @@ package com.zone24x7.ibrac.recengine.configuration.sync;
 
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache;
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.recbundle.ActiveBundleProviderConfig;
 import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
 import com.zone24x7.ibrac.recengine.recbundle.ActiveBundleConfigGenerator;
@@ -12,6 +11,7 @@ import com.zone24x7.ibrac.recengine.rules.recrules.executors.RecRuleExecutor;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +21,8 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RecConfiguration implements CsConfiguration {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecConfiguration.class);
+
     @Autowired
     private CsConfigurationTempCache csConfigurationTempCache;
 
@@ -35,9 +37,6 @@ public class RecConfiguration implements CsConfiguration {
 
     @Autowired
     private ActiveBundleConfigGenerator activeBundleConfigGenerator;
-
-    @Log
-    private Logger logger;
 
     private String recSlotConfig;
     private String recConfig;
@@ -112,7 +111,7 @@ public class RecConfiguration implements CsConfiguration {
             recRuleKnowledgeBaseGenerator.setConfigurations(recConfig);
             knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo();
         } catch (MalformedConfigurationException e) {
-            logger.error("Error in configuring rec configuration", e);
+            LOGGER.error("Error in configuring rec configuration", e);
             status = CsConfigurationStatus.FAIL;
         }
 
@@ -134,7 +133,7 @@ public class RecConfiguration implements CsConfiguration {
             recRuleExecutor.setRecRuleKnowledgeBaseInfo(knowledgeBaseInfo);
             updateHashOfLastUsedConfig(recSlotConfig, recConfig, bundleConfig);
         } catch (Exception e) {
-            logger.error("Error applying rec configuration", e);
+            LOGGER.error("Error applying rec configuration", e);
             status = CsConfigurationStatus.FAIL;
         }
 

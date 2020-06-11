@@ -2,7 +2,6 @@ package com.zone24x7.ibrac.recengine.rules.merchandisingrules.knowledgebase;
 
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.exceptions.RuleGeneratorException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.rules.MerchandisingRuleKnowledgeBaseInfo;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.Rule;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.RuleConfig;
@@ -21,6 +20,7 @@ import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.builder.conf.EvaluatorOption;
 import org.kie.internal.io.ResourceFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -40,11 +40,10 @@ import java.util.Set;
  */
 @Component
 public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<String, MerchandisingRuleKnowledgeBaseInfo> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(MerchandisingRuleKnowledgeBaseGenerator.class);
+
     @Autowired
     private MerchandisingRuleGenerator ruleGenerator;
-
-    @Log
-    private static Logger logger;
 
     private MerchandisingRuleKnowledgeBaseInfo knowledgeBaseInfo;
 
@@ -103,7 +102,7 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
         }
 
         if (knowledgeBuilder.hasErrors()) {
-            logger.error("Knowledge build has errors. {}", knowledgeBuilder.getErrors());
+            LOGGER.error("Knowledge build has errors. {}", knowledgeBuilder.getErrors());
             throw new MalformedConfigurationException("Error in building Rules Knowledge base.");
         }
 

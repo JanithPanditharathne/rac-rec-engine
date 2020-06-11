@@ -48,7 +48,6 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
 
         knowledgeBaseGenerator = new MerchandisingRuleKnowledgeBaseGenerator();
         ReflectionTestUtils.setField(knowledgeBaseGenerator, "ruleGenerator", ruleGenerator);
-        ReflectionTestUtils.setField(knowledgeBaseGenerator, "logger", mock(Logger.class));
     }
 
     /**

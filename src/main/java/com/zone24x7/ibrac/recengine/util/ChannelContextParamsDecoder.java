@@ -2,12 +2,12 @@ package com.zone24x7.ibrac.recengine.util;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.commons.codec.binary.Base64OutputStream;
 import org.apache.commons.codec.net.URLCodec;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -20,8 +20,7 @@ import java.util.Map;
  */
 @Component
 public class ChannelContextParamsDecoder {
-    @Log
-    private Logger logger;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChannelContextParamsDecoder.class);
 
     //URL encoding and decoding codec instance
     private static final URLCodec URLCODEC = new URLCodec();
@@ -39,7 +38,7 @@ public class ChannelContextParamsDecoder {
             try (Base64OutputStream base64Out = new Base64OutputStream(bytesOut)){
                 base64Out.write(new Gson().toJson(map).getBytes(StandardCharsets.UTF_8.name()));
             } catch (Exception ex) {
-                logger.error("Error in serializing Map to Base64", ex);
+                LOGGER.error("Error in serializing Map to Base64", ex);
             }
         }
 
@@ -65,7 +64,7 @@ public class ChannelContextParamsDecoder {
                 ccpParams = new Gson().fromJson(new String(bytesOut.toByteArray()), new TypeToken<Map<String, String>>() {
                 }.getType());
             } catch (Exception ex) {
-                logger.error("Error in deserializing from Base64 to Map", ex);
+                LOGGER.error("Error in deserializing from Base64 to Map", ex);
             }
         }
 
@@ -90,7 +89,7 @@ public class ChannelContextParamsDecoder {
                 }
                 return bytesOut.toString(StandardCharsets.UTF_8.name());
             } catch (Exception ex) {
-                logger.error("Error in deserializing from Base64 to Map", ex);
+                LOGGER.error("Error in deserializing from Base64 to Map", ex);
             }
         }
 
@@ -110,7 +109,7 @@ public class ChannelContextParamsDecoder {
             try {
                 urlEncodedBase64String = URLCODEC.encode(messageToEncode);
             } catch (Exception ex) {
-                logger.error("Error in encoding Base64 string to URL healthy Base64 string", ex);
+                LOGGER.error("Error in encoding Base64 string to URL healthy Base64 string", ex);
             }
         }
 
@@ -130,7 +129,7 @@ public class ChannelContextParamsDecoder {
             try {
                 urlDecodedBase64String = URLCODEC.decode(messageToDecode);
             } catch (Exception ex) {
-                logger.error("Error in decoding URL healthy Base64 string to Base64 string", ex);
+                LOGGER.error("Error in decoding URL healthy Base64 string to Base64 string", ex);
             }
         }
 

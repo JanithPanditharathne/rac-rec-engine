@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.recengine.recbundle;
 
 import com.zone24x7.ibrac.recengine.exceptions.SetupException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.ActiveBundle;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
@@ -12,6 +11,7 @@ import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +22,8 @@ import java.util.*;
  */
 @Component
 public class RecActiveBundleProvider implements ActiveBundleProvider {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecActiveBundleProvider.class);
+
     private static final String BUNDLE_PROVIDER_NOT_CONFIGURED_ERROR_MSG = "Active bundle provider not configured yet.";
     private static final String REC_TYPE_REGULAR = "REGULAR";
     private static final Integer BACKUP_DEFAULT_LIMIT = 5;
@@ -34,9 +36,6 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
 
     @Autowired
     private RecRuleExecutor recRuleExecutor;
-
-    @Log
-    private static Logger logger;
 
     /**
      * Method to generate an active bundle object execution details according to the given input parameters.
@@ -60,21 +59,21 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
         RecSlot recSlot = recSlotMap.get(recSlotInfoForQuerying.getPlacementInfoAsString());
 
         if (recSlot == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Rec slot not found for placement : {}", recCycleStatus.getRequestId(), recSlotInfoForQuerying.getPlacementInfoAsString());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Rec slot not found for placement : {}", recCycleStatus.getRequestId(), recSlotInfoForQuerying.getPlacementInfoAsString());
             return Optional.empty();
         }
 
         List<String> allRecIdsForRecSlot = recSlot.getRecIds();
 
         if (CollectionUtils.isEmpty(allRecIdsForRecSlot)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Rec ids not found for Rec slot : {}", recCycleStatus.getRequestId(), recSlotInfoForQuerying.getPlacementInfoAsString());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Rec ids not found for Rec slot : {}", recCycleStatus.getRequestId(), recSlotInfoForQuerying.getPlacementInfoAsString());
             return Optional.empty();
         }
 
         List<Rec> recList = filterRecListForTheGivenContext(allRecIdsForRecSlot, recInputParams.getCcp(), recCycleStatus);
 
         if (CollectionUtils.isEmpty(recList)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Matching Rec ids not found for given context. Rec slot : {}", recCycleStatus.getRequestId(), recSlotInfoForQuerying.getPlacementInfoAsString());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Matching Rec ids not found for given context. Rec slot : {}", recCycleStatus.getRequestId(), recSlotInfoForQuerying.getPlacementInfoAsString());
             return Optional.empty();
         }
 
@@ -86,7 +85,7 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
         Bundle bundle = getBundleFromRec(rec, recCycleStatus);
 
         if (bundle == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Rec bundle not found for rec Id : {}", recCycleStatus.getRequestId(), rec.getId());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Rec bundle not found for rec Id : {}", recCycleStatus.getRequestId(), rec.getId());
             return Optional.empty();
         }
 
@@ -131,13 +130,13 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
         // Currently default rec type is considered regular. If no type is sent, it is considered as regular.
         if (rec.getType() == null || rec.getType().equals(REC_TYPE_REGULAR)) {
             if (rec.getRegularConfig() == null) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Regular config null in Rec id : {}", recCycleStatus.getRequestId(), rec.getId());
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Regular config null in Rec id : {}", recCycleStatus.getRequestId(), rec.getId());
                 return null;
             }
             bundleId = rec.getRegularConfig().getBundleId();
 
         } else {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Unsupported rec type found. Rec id : {}", recCycleStatus.getRequestId(), rec.getId());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Unsupported rec type found. Rec id : {}", recCycleStatus.getRequestId(), rec.getId());
         }
 
         if (bundleId == null) {
@@ -165,7 +164,7 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
         AlgoCombineInfo algoCombineInfo = bundle.getAlgoCombineInfo();
 
         if (CollectionUtils.isEmpty(algorithms)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Valid algorithms not found for the given context. Bundle Id: {}", recCycleStatus.getRequestId(), bundle.getId());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Valid algorithms not found for the given context. Bundle Id: {}", recCycleStatus.getRequestId(), bundle.getId());
             return Optional.empty();
         }
 

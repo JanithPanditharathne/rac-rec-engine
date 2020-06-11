@@ -1,12 +1,12 @@
 package com.zone24x7.ibrac.recengine.service;
 
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.AlgoCombineInfo;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.BundleAlgorithm;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
  */
 @Component
 public class RecAlgorithmCombinator implements AlgorithmCombinator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecAlgorithmCombinator.class);
 
     @Autowired
     private AlgorithmTaskFactory algorithmTaskFactory;
@@ -29,9 +30,6 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
     @Autowired
     @Qualifier("cachedThreadPoolTaskExecutor")
     private ExecutorService cachedTaskExecutorService;
-
-    @Log
-    private Logger logger;
 
     /**
      * Combines results from multiple algorithms according to the provided strategy.
@@ -49,7 +47,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
         if (validAlgorithmListToExecute == null
                 || CollectionUtils.isEmpty(validAlgorithmListToExecute)
                 || algoCombineInfo == null) {
-            logger.error("Required information not available for algorithm execution and combination. " +
+            LOGGER.error("Required information not available for algorithm execution and combination. " +
                                  "AlgoCombineInfo: {}, ValidAlgorithmListToExecute: {}", algoCombineInfo, validAlgorithmListToExecute);
             return new MultipleAlgorithmResult();
         }
@@ -103,7 +101,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
                     break;
                 }
             } catch (InterruptedException e) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
                              recCycleStatus.getRequestId(),
                              algoId,
                              activeBundle.getId(),
@@ -111,7 +109,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
 
                 Thread.currentThread().interrupt();
             } catch (ExecutionException e) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo combine: {}, BundleId: {} ",
                              recCycleStatus.getRequestId(),
                              algoId,
                              activeBundle.getId(),
@@ -155,7 +153,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
             try {
                 algorithmResult = algorithmResultFuture.get();
             } catch (InterruptedException e) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
                              recCycleStatus.getRequestId(),
                              algoId,
                              activeBundle.getId(),
@@ -163,7 +161,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
 
                 Thread.currentThread().interrupt();
             } catch (ExecutionException e) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm at algo non combine: {}, BundleId: {} ",
                              recCycleStatus.getRequestId(),
                              algoId,
                              activeBundle.getId(),

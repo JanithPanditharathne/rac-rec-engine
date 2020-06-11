@@ -56,7 +56,6 @@ class RecConfigurationTest {
         ReflectionTestUtils.setField(recConfiguration, "hashOfLastUsedRecConfig", DigestUtils.sha256Hex(REC_CONFIG));
         ReflectionTestUtils.setField(recConfiguration, "hashOfLastUsedBundleConfig", DigestUtils.sha256Hex(BUNDLE_CONFIG));
         ReflectionTestUtils.setField(recConfiguration, "recRuleKnowledgeBaseGenerator", recRuleKnowledgeBaseGenerator);
-        ReflectionTestUtils.setField(recConfiguration, "logger", logger);
         ReflectionTestUtils.setField(recConfiguration, "recRuleExecutor", recRuleExecutor);
         ReflectionTestUtils.setField(recConfiguration, "activeBundleProvider", activeBundleProvider);
         ReflectionTestUtils.setField(recConfiguration, "activeBundleConfigGenerator", activeBundleConfigGenerator);

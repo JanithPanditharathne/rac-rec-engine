@@ -6,9 +6,9 @@ import static org.hamcrest.Matchers.*;
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.zone24x7.ibrac.recengine.exceptions.DateTimeException;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
+import com.zone24x7.ibrac.recengine.util.CustomReflectionTestUtils;
 import com.zone24x7.ibrac.recengine.util.JsonPojoConverter;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import com.zone24x7.ibrac.reconlib.api.ProductApi;
@@ -27,7 +27,7 @@ import org.mockito.MockitoAnnotations;
 import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.io.IOException;
+import java.lang.reflect.Field;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -88,7 +88,7 @@ class ReconLibRecommendedProductsCuratorTest {
      * Setup method to prepare the mocked objects before running the tests.
      */
     @BeforeEach
-    void setup() throws DateTimeException, IOException {
+    void setup() throws Exception {
         MockitoAnnotations.initMocks(this);
 
         // NOTE: The configurations has to be set for the reconlib APIs. In case new configs are added, add them to the configString.
@@ -98,7 +98,9 @@ class ReconLibRecommendedProductsCuratorTest {
 
         when(recCycleStatus.getRequestId()).thenReturn(REQUEST_ID);
 
-        ReflectionTestUtils.setField(reconLibRecommendedProductsCurator, "logger", logger);
+        Field loggerField = reconLibRecommendedProductsCurator.getClass().getDeclaredField("LOGGER");
+        CustomReflectionTestUtils.setFinalStaticField(loggerField, this.logger);
+
         ReflectionTestUtils.setField(reconLibRecommendedProductsCurator, "productApi", productApi);
         ReflectionTestUtils.setField(reconLibRecommendedProductsCurator, "priceFilteringEnabled", false);
         ReflectionTestUtils.setField(reconLibRecommendedProductsCurator, "inventoryFilteringEnabled", false);

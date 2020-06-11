@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.recengine.recommendation.curator;
 
 import com.zone24x7.ibrac.recengine.exceptions.DateTimeException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.RecProductCurationStatus;
@@ -16,6 +15,7 @@ import com.zone24x7.ibrac.reconlib.error.ReconLibException;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +30,8 @@ import java.util.*;
  */
 @Component
 public class ReconLibRecommendedProductsCurator implements RecommendedProductsCurator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(ReconLibRecommendedProductsCurator.class);
+
     @Autowired
     @Qualifier("productApi")
     private ProductApi productApi;
@@ -39,9 +41,6 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
 
     @Value(AppConfigStringConstants.PRODUCT_CURATE_INVENTORY_FILTERING_ENABLED)
     private boolean inventoryFilteringEnabled;
-
-    @Log
-    private Logger logger;
 
     //Error messages
     private static final String PROD_ID_LIST_NULL_OR_EMPTY = "ProductId list null or empty";
@@ -68,13 +67,13 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
 
         // if the product id is empty, return null.
         if (StringUtils.isEmpty(productId)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PROD_ID_NULL_OR_EMPTY, requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PROD_ID_NULL_OR_EMPTY, requestId);
             return null;
         }
 
         if (priceFilteringEnabled && priceFilterDateTime == null) {
             // if no price is provided for filtering, return null.
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + INVALID_DATE_TIME_TO_RETRIEVE_PRODUCTS, requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + INVALID_DATE_TIME_TO_RETRIEVE_PRODUCTS, requestId);
             return null;
         }
 
@@ -91,11 +90,11 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
         // if the productContainer is not null & has an error, log the error and return null.
         if (productContainer.getErrorState() != null) {
             if (productContainer.getErrorState().equals(ErrorState.NO_INFO)) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PRODUCT_INFO_NOT_AVAILABLE, requestId, productId);
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PRODUCT_INFO_NOT_AVAILABLE, requestId, productId);
             } else if (productContainer.getErrorState().equals(ErrorState.INV_OUT)) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + INVENTORY_NOT_FOUND, requestId, productId);
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + INVENTORY_NOT_FOUND, requestId, productId);
             } else if (productContainer.getErrorState().equals(ErrorState.PRICE_OUT)) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + VALID_PRICE_NOT_FOUND, requestId, productId, productPriceFilteringDateTime);
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + VALID_PRICE_NOT_FOUND, requestId, productId, productPriceFilteringDateTime);
             }
 
             return null;
@@ -105,7 +104,7 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
         // if the product is present without any error, create the curated product.
         if (productContainer.getReconLibProduct() != null) {
             curatedProduct = generateCuratedProduct(productId, productContainer.getReconLibProduct(), requestId);
-            logger.debug(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PRODUCT_DETAILS_FOUND, requestId, productId);
+            LOGGER.debug(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PRODUCT_DETAILS_FOUND, requestId, productId);
         }
 
         return curatedProduct;
@@ -125,13 +124,13 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
 
         // if list of products are empty,return.
         if (CollectionUtils.isEmpty(productIds)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PROD_ID_LIST_NULL_OR_EMPTY, requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PROD_ID_LIST_NULL_OR_EMPTY, requestId);
             return Collections.emptyList();
         }
 
         if (priceFilteringEnabled && priceFilterDateTime == null) {
             // if no price is provided for filtering, return null.
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + INVALID_DATE_TIME_TO_RETRIEVE_PRODUCTS, requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + INVALID_DATE_TIME_TO_RETRIEVE_PRODUCTS, requestId);
             return Collections.emptyList();
         }
 
@@ -159,18 +158,18 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
         String curationStatus = generateCurationStatusMessage(recProductCurationStatus);
 
         if (StringUtils.isNotEmpty(curationStatus)) {
-            logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Product curation Status: {}", recCycleStatus.getRequestId(), curationStatus);
+            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Product curation Status: {}", recCycleStatus.getRequestId(), curationStatus);
         }
 
         String requestedProductIds = String.join(",", productIds);
         String curatedProductIds = String.join(",", recProductCurationStatus.getCuratedProducts());
-        logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Curation Result => " +
+        LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Curation Result => " +
                                                                 "Number of products to curate: {}, product Ids: {} and Number of products after curation: {}, product Ids: {}",
-                                                                requestId,
-                                                                productIds.size(),
-                                                                requestedProductIds,
-                                                                curatedProducts.size(),
-                                                                curatedProductIds);
+                    requestId,
+                    productIds.size(),
+                    requestedProductIds,
+                    curatedProducts.size(),
+                    curatedProductIds);
 
         if(CollectionUtils.isEmpty(curatedProducts) && CollectionUtils.isNotEmpty(productIds)){
             recCycleStatus.indicateCurationRemovedAllProducts();
@@ -224,7 +223,7 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
         try {
             return productApi.getProduct(productId, priceFilteringDateTime, checkInventory);
         } catch (ReconLibException e) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + EXCEPTION_WHEN_RETRIEVING_PROD_INFO_FOR_PROD_ID, requestId, productId, e);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + EXCEPTION_WHEN_RETRIEVING_PROD_INFO_FOR_PROD_ID, requestId, productId, e);
         }
 
         return null;
@@ -300,7 +299,7 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
             priceAttributesMap.put(StringConstants.PRODUCT_PRICE_VALID_START_DATE, getFormattedDate(validPrice.getValidStartDate()));
             priceAttributesMap.put(StringConstants.PRODUCT_PRICE_VALID_END_DATE, getFormattedDate(validPrice.getValidEndDate()));
         } catch (Exception e) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + EXCEPTION_OCCURRED_WHEN_CONVERTING_PRODUCT_PRICE, requestId, productId, e);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + EXCEPTION_OCCURRED_WHEN_CONVERTING_PRODUCT_PRICE, requestId, productId, e);
         }
 
         return priceAttributesMap;

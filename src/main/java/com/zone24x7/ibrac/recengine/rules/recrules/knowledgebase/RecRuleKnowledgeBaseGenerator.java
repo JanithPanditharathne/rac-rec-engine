@@ -3,7 +3,6 @@ package com.zone24x7.ibrac.recengine.rules.recrules.knowledgebase;
 
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 import com.zone24x7.ibrac.recengine.exceptions.RuleGeneratorException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.Rec;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.RecConfig;
 import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
@@ -23,6 +22,7 @@ import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.builder.conf.EvaluatorOption;
 import org.kie.internal.io.ResourceFactory;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,15 +43,13 @@ import java.util.Set;
  */
 @Component
 public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<String, RecRuleKnowledgeBaseInfo> {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecRuleKnowledgeBaseGenerator.class);
 
     private RecRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo;
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Autowired
     private RecRuleGenerator recRuleGenerator;
-
-    @Log
-    private Logger logger;
 
     /**
      * Converts the input configuration to knowledge base and sets recRuleKnowledgeBaseInfo
@@ -107,7 +105,7 @@ public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<Str
         }
 
         if (knowledgeBuilder.hasErrors()) {
-            logger.error("Knowledge build has errors. {}", knowledgeBuilder.getErrors());
+            LOGGER.error("Knowledge build has errors. {}", knowledgeBuilder.getErrors());
             throw new MalformedConfigurationException("Error in building Rules Knowledge base.");
         }
 

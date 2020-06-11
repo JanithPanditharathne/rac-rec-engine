@@ -1,12 +1,12 @@
 package com.zone24x7.ibrac.recengine.combinationgenerator;
 
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.algoparams.AlgoParams;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.math3.util.CombinatoricsUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +17,8 @@ import java.util.*;
  */
 @Component
 public class AlgorithmCombinationGenerator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AlgorithmCombinationGenerator.class);
+
     private static final String ALGO_PARAMS_NULL_MSG = "Algo params to generate algorithm combinations is null.";
     private static final String EMPTY_CCP_MAP_TO_GENERATE_ALGO_COMBINATIONS_MSG = "Empty ccp map to generate algorithm combinations. Algo Id: {}";
     private static final String MANDATORY_PARAMS_NOT_FOUND_MSG = "Mandatory params not found in ccp map to generate algorithm combinations. AlgoId: {} Ccp Map: {} Required Mandatory Params: {}";
@@ -25,9 +27,6 @@ public class AlgorithmCombinationGenerator {
 
     @Autowired
     private AlgoCombinationInputFilter algoCombinationInputFilter;
-
-    @Log
-    private static Logger logger;
 
     /**
      * Method to generate combinations based on algorithm params and input ccp params.
@@ -40,7 +39,7 @@ public class AlgorithmCombinationGenerator {
     List<List<String>> generateAlgoCombinations(AlgoParams algoParams, Map<String, String> ccp, String requestId) {
         // if algo params is null, return an empty list.
         if (algoParams == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + ALGO_PARAMS_NULL_MSG, requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + ALGO_PARAMS_NULL_MSG, requestId);
             return Collections.emptyList();
         }
 
@@ -50,7 +49,7 @@ public class AlgorithmCombinationGenerator {
         }
 
         if (MapUtils.isEmpty(ccp)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + EMPTY_CCP_MAP_TO_GENERATE_ALGO_COMBINATIONS_MSG, requestId, algoParams.getAlgoId());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + EMPTY_CCP_MAP_TO_GENERATE_ALGO_COMBINATIONS_MSG, requestId, algoParams.getAlgoId());
             return Collections.emptyList();
         }
 
@@ -64,7 +63,7 @@ public class AlgorithmCombinationGenerator {
         if (CollectionUtils.isNotEmpty(algoParams.getMandatoryParams())) {
             // return an empty list, since no mandatory params found.
             if (CollectionUtils.isEmpty(mandatoryParams)) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + MANDATORY_PARAMS_NOT_FOUND_MSG, requestId, algoParams.getAlgoId(), ccp, algoParams.getMandatoryParams());
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + MANDATORY_PARAMS_NOT_FOUND_MSG, requestId, algoParams.getAlgoId(), ccp, algoParams.getMandatoryParams());
                 return Collections.emptyList();
             } else {
                 return generateMandatoryCombinations(algoParams, mandatoryParams, conditionalMandatoryParams, optionalParams);
@@ -75,7 +74,7 @@ public class AlgorithmCombinationGenerator {
         if (CollectionUtils.isNotEmpty(algoParams.getConditionalMandatoryParams())) {
             // return an empty list, if conditional mandatory params are empty.
             if (CollectionUtils.isEmpty(conditionalMandatoryParams)) {
-                logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + CONDITIONAL_MANDATORY_PARAMS_NOT_FOUND_MSG, requestId, algoParams.getAlgoId(), ccp, algoParams.getConditionalMandatoryParams());
+                LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + CONDITIONAL_MANDATORY_PARAMS_NOT_FOUND_MSG, requestId, algoParams.getAlgoId(), ccp, algoParams.getConditionalMandatoryParams());
                 return Collections.emptyList();
             }
 
@@ -92,7 +91,7 @@ public class AlgorithmCombinationGenerator {
             return getOptionalCombinations(optionalParams, optionalCombinationEnabled);
         }
 
-        logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + NO_COMBINATIONS_GENERATED_MSG, requestId, algoParams.getAlgoId(), ccp);
+        LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + NO_COMBINATIONS_GENERATED_MSG, requestId, algoParams.getAlgoId(), ccp);
         return Collections.emptyList();
     }
 

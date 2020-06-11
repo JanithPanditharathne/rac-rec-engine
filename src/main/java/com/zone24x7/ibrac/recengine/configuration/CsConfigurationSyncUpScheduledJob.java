@@ -4,9 +4,9 @@ import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationFetchExce
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationsFetchStrategy;
 import com.zone24x7.ibrac.recengine.configuration.sync.CsConfiguration;
 import com.zone24x7.ibrac.recengine.configuration.sync.CsConfigurationStatus;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -22,6 +22,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  */
 @Component
 public class CsConfigurationSyncUpScheduledJob {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CsConfigurationSyncUpScheduledJob.class);
 
     @Autowired
     private CsConfigurationsFetchStrategy csConfigurationsFetchStrategy;
@@ -34,17 +35,14 @@ public class CsConfigurationSyncUpScheduledJob {
     @Qualifier("ConfigSyncLock")
     private ReentrantReadWriteLock configSyncLock;
 
-    @Log
-    private static Logger logger;
-
     /**
      * Scheduled method to call periodically with the given time interval to initiate configuration sync up
      */
     @Scheduled(fixedRateString = AppConfigStringConstants.CONFIG_SYNC_INTERVAL)
     public void run() {
-        logger.info("Started config sync up task");
+        LOGGER.info("Started config sync up task");
         if (!initializeCsConfigurationsSyncUp()) {
-            logger.error("Error initializing configurations syncup");
+            LOGGER.error("Error initializing configurations syncup");
             //Return on initialization failure
             return;
         }
@@ -53,25 +51,25 @@ public class CsConfigurationSyncUpScheduledJob {
 
         if (!loadConfigurations(configurations)) {
             // Loading failed
-            logger.error("Configurations loading failed");
+            LOGGER.error("Configurations loading failed");
             if (configurationNotAppliedAtLeastOnce(configurations)) {
                 //TODO: Write to call back up
-                logger.warn("Valid configuration is not available");
+                LOGGER.warn("Valid configuration is not available");
             } else {
-                logger.warn("Running with existing config due to configuration loader error");
+                LOGGER.warn("Running with existing config due to configuration loader error");
             }
             return;
         }
 
         if (!generateConfigurations(configurations)) {
-            logger.error("Error generating configurations");
+            LOGGER.error("Error generating configurations");
             return;
         }
 
         if (applyConfigurations(configurations)) {
-            logger.info("Finished configurations apply");
+            LOGGER.info("Finished configurations apply");
         } else {
-            logger.error("Error applying configurations");
+            LOGGER.error("Error applying configurations");
         }
     }
 
@@ -85,7 +83,7 @@ public class CsConfigurationSyncUpScheduledJob {
             csConfigurationsFetchStrategy.fetchConfigurations();
             return true;
         } catch (CsConfigurationFetchException e) {
-            logger.error("Error while fetching CS configurations", e);
+            LOGGER.error("Error while fetching CS configurations", e);
             return false;
         }
     }
@@ -133,12 +131,12 @@ public class CsConfigurationSyncUpScheduledJob {
             configSyncLock.writeLock().lock();
             boolean result = applyConfiguration(csConfigurations);
             if (!result) {
-                logger.error("Error applying CS dependent configuration! RE might be in an undefined state!");
+                LOGGER.error("Error applying CS dependent configuration! RE might be in an undefined state!");
                 return false;
             }
             return true;
         } catch (Exception e) {
-            logger.error("Exception in applying configurations", e);
+            LOGGER.error("Exception in applying configurations", e);
             return false;
         } finally {
             configSyncLock.writeLock().unlock();

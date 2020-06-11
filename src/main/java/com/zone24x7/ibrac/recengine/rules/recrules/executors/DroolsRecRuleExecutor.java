@@ -1,6 +1,5 @@
 package com.zone24x7.ibrac.recengine.rules.recrules.executors;
 
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.Rec;
 import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;
@@ -11,6 +10,7 @@ import org.apache.commons.collections.CollectionUtils;
 import org.drools.core.impl.InternalKnowledgeBase;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -20,11 +20,9 @@ import java.util.*;
  */
 @Component
 public class DroolsRecRuleExecutor implements RecRuleExecutor {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DroolsRecRuleExecutor.class);
 
     private RecRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo;
-
-    @Log
-    private Logger logger;
 
     /**
      * Get context matched recs from the set of given RecIds
@@ -41,7 +39,7 @@ public class DroolsRecRuleExecutor implements RecRuleExecutor {
         List<Rec> resultRecs = new LinkedList<>();
 
         if (this.recRuleKnowledgeBaseInfo == null || this.recRuleKnowledgeBaseInfo.getKnowledgeBase() == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + StringConstants.DROOLS_KNOWLEDGE_BASE_NULL_MSG, recCycleStatus.getRequestId());
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + StringConstants.DROOLS_KNOWLEDGE_BASE_NULL_MSG, recCycleStatus.getRequestId());
             return resultRecs;
         }
 

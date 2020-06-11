@@ -79,7 +79,6 @@ public class RecActiveBundleProviderTest {
         when(algoParamsValidator.isValidForIncomingContext("100", ccp)).thenReturn(true);
         when(algoParamsValidator.isValidForIncomingContext("101", ccp)).thenReturn(false);
 
-        ReflectionTestUtils.setField(recActiveBundleProvider, "logger", logger);
         ReflectionTestUtils.setField(recActiveBundleProvider, "recRuleExecutor", recRuleExecutor);
         ReflectionTestUtils.setField(recActiveBundleProvider, "algoParamsValidator", algoParamsValidator);
     }

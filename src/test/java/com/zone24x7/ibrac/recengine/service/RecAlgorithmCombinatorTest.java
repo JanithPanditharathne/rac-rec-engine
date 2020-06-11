@@ -5,7 +5,6 @@ import com.zone24x7.ibrac.recengine.pojo.csconfig.AlgoCombineInfo;
 import com.zone24x7.ibrac.recengine.pojo.csconfig.BundleAlgorithm;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.*;
@@ -59,7 +58,6 @@ class RecAlgorithmCombinatorTest {
 
         algorithmTaskFactory = mock(AlgorithmTaskFactory.class);
         cachedTaskExecutorService = mock(ExecutorService.class);
-        ReflectionTestUtils.setField(recAlgorithmCombinator, "logger", mock(Logger.class));
         ReflectionTestUtils.setField(recAlgorithmCombinator, "algorithmTaskFactory", algorithmTaskFactory);
         ReflectionTestUtils.setField(recAlgorithmCombinator, "cachedTaskExecutorService", cachedTaskExecutorService);
 

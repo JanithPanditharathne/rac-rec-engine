@@ -57,7 +57,6 @@ public class RecGenerationStrategyExecutorEngineTest {
         engine = new RecGenerationStrategyExecutorEngine();
         ReflectionTestUtils.setField(engine, "strategyExecutor", strategyExecutor);
         ReflectionTestUtils.setField(engine, "activeBundleProvider", activeBundleProvider);
-        ReflectionTestUtils.setField(engine, "logger", logger);
     }
 
     /**

@@ -1,10 +1,10 @@
 package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers;
 
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import com.zone24x7.ibrac.recengine.service.AlgorithmCombinator;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,12 +17,10 @@ import java.util.stream.Collectors;
 @Component
 @Qualifier("coreRecommendationHandler")
 public class CoreRecommendationHandler implements RecUnitHandler {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CoreRecommendationHandler.class);
 
     @Autowired
     private AlgorithmCombinator algorithmCombinator;
-
-    @Log
-    private Logger logger;
 
     /**
      * Method to handle the task.
@@ -37,7 +35,7 @@ public class CoreRecommendationHandler implements RecUnitHandler {
 
         if (multipleAlgorithmResult != null) {
             String productIds = multipleAlgorithmResult.getRecProducts().stream().map(Product::getProductId).collect(Collectors.joining(","));
-            logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Multiple algo result generated. placeholder: {}, " +
+            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Multiple algo result generated. placeholder: {}, " +
                                 "ProductIds:{}, algoToProductMap: {}, algoToCcpMap: {}",
                         recStatusParams.getRecCycleStatus().getRequestId(),
                         recInputParams.getPlaceholder(),
@@ -45,7 +43,7 @@ public class CoreRecommendationHandler implements RecUnitHandler {
                         multipleAlgorithmResult.getAlgoToProductsMap(),
                         multipleAlgorithmResult.getAlgoToUsedCcp());
         } else {
-            logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "MultipleAlgorithmResult is null for placeholder: {}",
+            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "MultipleAlgorithmResult is null for placeholder: {}",
                         recStatusParams.getRecCycleStatus().getRequestId(),
                         recInputParams.getPlaceholder());
         }

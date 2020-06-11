@@ -2,13 +2,13 @@ package com.zone24x7.ibrac.recengine.service;
 
 import com.zone24x7.ibrac.recengine.dao.DatasourceAdapter;
 import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import com.zone24x7.ibrac.recengine.recommendation.curator.RecommendedProductsCurator;
 import com.zone24x7.ibrac.recengine.util.StringConstants;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -18,20 +18,18 @@ import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
-
 /**
  * Class for producing algorithm result
  */
 @Component
 public class RecAlgorithmResultGenerator implements AlgorithmResultGenerator {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecAlgorithmResultGenerator.class);
+
     @Autowired
     private DatasourceAdapter datasourceAdapter;
 
     @Autowired
     private RecommendedProductsCurator recommendedProductsCurator;
-
-    @Log
-    private Logger logger;
 
     @Autowired
     @Qualifier("timeZoneId")
@@ -61,7 +59,7 @@ public class RecAlgorithmResultGenerator implements AlgorithmResultGenerator {
         } catch (BaseConnectionException e) {
             //TODO: If client requires back up. Add backup products here.
             // Currently to avoid multiple calls in disaster scenario when one exception happens returns with empty products with algoId = -1
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "HBase call failed. Algo:{}, ccp:{}",
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "HBase call failed. Algo:{}, ccp:{}",
                          recCycleStatus.getRequestId(),
                          algorithmId,
                          ccp,

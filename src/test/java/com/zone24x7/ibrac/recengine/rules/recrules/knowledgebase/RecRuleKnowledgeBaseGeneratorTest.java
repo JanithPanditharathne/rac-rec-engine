@@ -64,7 +64,6 @@ class RecRuleKnowledgeBaseGeneratorTest {
         validator = spy(Validation.buildDefaultValidatorFactory().getValidator());
         recRuleKnowledgeBaseInfo = spy(RecRuleKnowledgeBaseInfo.class);
 
-        ReflectionTestUtils.setField(recRuleKnowledgeBaseGenerator, "logger", logger);
         ReflectionTestUtils.setField(recRuleKnowledgeBaseGenerator, "recRuleGenerator", recRuleGenerator);
         ReflectionTestUtils.setField(recRuleKnowledgeBaseGenerator, "validator", validator);
         ReflectionTestUtils.setField(recRuleKnowledgeBaseGenerator, "recRuleKnowledgeBaseInfo", recRuleKnowledgeBaseInfo);

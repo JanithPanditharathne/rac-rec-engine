@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.exceptions.ErrorCode;
 import com.zone24x7.ibrac.recengine.exceptions.InputValidationException;
-import com.zone24x7.ibrac.recengine.logging.Log;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
 import com.zone24x7.ibrac.recengine.service.RecLimitingRecommendationGeneratorService;
@@ -14,6 +13,7 @@ import com.zone24x7.ibrac.recengine.util.*;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +35,7 @@ import static java.util.UUID.randomUUID;
  */
 @RestController
 public class RecController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RecController.class);
 
     @Autowired
     @Qualifier("cachedThreadPoolTaskExecutor")
@@ -66,9 +67,6 @@ public class RecController {
     @Value(AppConfigStringConstants.CONFIG_REC_RESPONSE_IMAGE_HEIGHT)
     private String imageHeight;
 
-    @Log
-    private Logger logger;
-
     /**
      * Controller method to get recommendations.
      *
@@ -86,7 +84,7 @@ public class RecController {
 
         //TODO: This is temporary. Set the request id in a way it is accessible for access logs also.
         String requestId = randomUUID().toString();
-        logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Received cid: {}, pgid: {}, plids: {}, ccp: {}",
+        LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Received cid: {}, pgid: {}, plids: {}, ccp: {}",
                     requestId,
                     channelId,
                     pageId,
@@ -103,7 +101,7 @@ public class RecController {
         }
 
         Map<String, String> channelContextParamsMap = generateFilteredChannelContextParamsMapFromBase64String(channelContextParameters, requestId);
-        logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Filtered ccp: {}", requestId, channelContextParamsMap);
+        LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Filtered ccp: {}", requestId, channelContextParamsMap);
 
         if (channelContextParamsMap == null) {
             throw new InputValidationException(ErrorCode.RE1007.toString());
@@ -123,32 +121,32 @@ public class RecController {
     private void validateInputParameters(String channelId, String pageId, String placeholderIds, String requestId) {
         //Check if the required parameters are all provided
         if (channelId == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter cid.", requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter cid.", requestId);
             throw new InputValidationException(ErrorCode.RE1000.toString());
         }
 
         if (StringUtils.isBlank(channelId) || !ValidationUtilities.matchesPattern(inputParamValidationPattern, channelId)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid mandatory parameter cid: {}", requestId, channelId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid mandatory parameter cid: {}", requestId, channelId);
             throw new InputValidationException(ErrorCode.RE1003.toString());
         }
 
         if (pageId == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter pgid.", requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter pgid.", requestId);
             throw new InputValidationException(ErrorCode.RE1001.toString());
         }
 
         if (StringUtils.isBlank(pageId) || !ValidationUtilities.matchesPattern(inputParamValidationPattern, pageId)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid mandatory parameter pgid: {}", requestId, pageId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid mandatory parameter pgid: {}", requestId, pageId);
             throw new InputValidationException(ErrorCode.RE1004.toString());
         }
 
         if (placeholderIds == null) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter plids.", requestId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Missing mandatory parameter plids.", requestId);
             throw new InputValidationException(ErrorCode.RE1002.toString());
         }
 
         if (StringUtils.isBlank(placeholderIds) || !ValidationUtilities.matchesPattern(inputParamValidationPatternExtraChars, placeholderIds)) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid mandatory parameter plids: {}", requestId, placeholderIds);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid mandatory parameter plids: {}", requestId, placeholderIds);
             throw new InputValidationException(ErrorCode.RE1005.toString());
         }
     }
@@ -170,7 +168,7 @@ public class RecController {
 
         // filter the ccp map by the whitelisted ccp keys
         if (MapUtils.isNotEmpty(urlDecodedCcpMap)) {
-            logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Filtering decoded ccp map: {}", requestId, urlDecodedCcpMap);
+            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Filtering decoded ccp map: {}", requestId, urlDecodedCcpMap);
             return CcpProcessorUtilities.filterChannelContextParamMap(urlDecodedCcpMap);
         }
 
@@ -203,7 +201,7 @@ public class RecController {
                         (recResult.getRecMetaInfo().getType() == RecommendationType.FLAT_RECOMMENDATION)) {
                     FlatRecPayload recPayload = (FlatRecPayload) recResult.getRecPayload();
                     String productIds = recPayload != null ? recPayload.getProducts().stream().map(Product::getProductId).collect(Collectors.joining(",")) : "";
-                    logger.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Final Result for placeholder: {}, productIds: {}",
+                    LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Final Result for placeholder: {}, productIds: {}",
                                 requestId,
                                 placeholderId,
                                 productIds);
@@ -277,7 +275,7 @@ public class RecController {
         try {
             return cachedTaskExecutorService.submit(placementTask).get();
         } catch (InterruptedException e) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
                          requestId,
                          channelId,
                          pageId,
@@ -286,12 +284,12 @@ public class RecController {
 
             Thread.currentThread().interrupt();
         } catch (ExecutionException e) {
-            logger.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
-                    requestId,
-                    channelId,
-                    pageId,
-                    placeholderId,
-                    e);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Placement task had an error. Channel ID: {}, Page ID: {}, Placeholder ID: {}",
+                         requestId,
+                         channelId,
+                         pageId,
+                         placeholderId,
+                         e);
         }
 
         return null;

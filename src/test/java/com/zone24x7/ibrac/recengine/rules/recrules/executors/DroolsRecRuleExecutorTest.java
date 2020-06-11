@@ -43,7 +43,6 @@ class DroolsRecRuleExecutorTest {
     public void setup() {
         recCycleStatus = mock(RecCycleStatus.class);
         ruleExecutor = new DroolsRecRuleExecutor();
-        ReflectionTestUtils.setField(ruleExecutor, "logger", mock(Logger.class));
 
         // Create knowledge builder configs
         KnowledgeBuilderConfiguration builderConf = KnowledgeBuilderFactory.newKnowledgeBuilderConfiguration();
