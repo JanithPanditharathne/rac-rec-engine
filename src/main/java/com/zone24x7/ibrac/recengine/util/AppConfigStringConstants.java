@@ -3,7 +3,7 @@ package com.zone24x7.ibrac.recengine.util;
 /**
  * Publicly used String constants values are stored here.
  */
-public class AppConfigStringConstants {
+public final class AppConfigStringConstants {
     public static final String CONFIG_SYNC_STRATEGY = "${config.sync.strategy}";
     public static final String CONFIG_SYNC_INTERVAL = "${config.sync.interval}";
     public static final String CONFIG_SYNC_API_REC_SLOT = "${config.sync.api.recslot}";

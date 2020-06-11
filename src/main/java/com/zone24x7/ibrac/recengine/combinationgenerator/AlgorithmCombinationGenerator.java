@@ -197,7 +197,7 @@ public class AlgorithmCombinationGenerator {
      * @param optionalParams    list of optional params.
      * @return optional and main combination lists.
      */
-    private List<List<String>> generateOptionalParamsBasedCombinations(List<List<String>> listToCombineWith, List<List<String>> optionalParams) {
+    private static List<List<String>> generateOptionalParamsBasedCombinations(List<List<String>> listToCombineWith, List<List<String>> optionalParams) {
         List<List<String>> finalList = new LinkedList<>();
         // for each mandatory/conditional mandatory params, combine with optional params.
         for (List<String> list : listToCombineWith) {
@@ -247,7 +247,7 @@ public class AlgorithmCombinationGenerator {
      * @param optionalParams list of optional params.
      * @return list of combined params.
      */
-    private List<List<String>> getCombinationsDisabledOptionalParams(List<String> params, List<String> optionalParams) {
+    private static List<List<String>> getCombinationsDisabledOptionalParams(List<String> params, List<String> optionalParams) {
         List<List<String>> finalCombinationList = new LinkedList<>();
         optionalParams.forEach(optionalParam -> {
             List<String> combinedParams = new LinkedList<>(params);

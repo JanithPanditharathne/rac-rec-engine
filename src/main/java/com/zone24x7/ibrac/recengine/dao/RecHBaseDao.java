@@ -51,9 +51,12 @@ public class RecHBaseDao implements HBaseDao {
     private static final String HBASE_CONNECTION_RETRY_SKIPPED = "Connection retry skipped due to exceeding skip count.";
     private static final String HBASE_CONNECTION_TIMEOUT_EXP_MSG = "Hbase call timed out";
 
-
-    @Autowired
-    public void HBaseConnection(@Value(AppConfigStringConstants.HBASE_CONNECTION_SKIP_COUNT) Integer skipCount) {
+    /**
+     * Constructor to instantiate RecHBaseDao.
+     *
+     * @param skipCount the skip count
+     */
+    public RecHBaseDao(@Value(AppConfigStringConstants.HBASE_CONNECTION_SKIP_COUNT) Integer skipCount) {
         this.isHBaseOnline = new AtomicBoolean(true);
         this.hBaseConnectionSkipCount = skipCount;
         this.currentHBaseConnectionSkipCount = new AtomicInteger(skipCount);

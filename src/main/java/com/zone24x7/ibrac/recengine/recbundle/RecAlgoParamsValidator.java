@@ -69,7 +69,7 @@ public class RecAlgoParamsValidator implements AlgoParamsValidator {
      * @param ccp        the channel context
      * @return true if valid and false if not
      */
-    private boolean checkValidity(List<String> parameters, Map<String, String> ccp) {
+    private static boolean checkValidity(List<String> parameters, Map<String, String> ccp) {
         return ccp.keySet().containsAll(parameters);
     }
 }

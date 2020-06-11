@@ -42,12 +42,10 @@ class AlgoCombinationInputFilter {
         List<List<String>> algoConditionalMandatoryParams = algoParams.getConditionalMandatoryParams();
 
         if (CollectionUtils.isNotEmpty(algoConditionalMandatoryParams)) {
-            List<List<String>> conditionalMandatory = new LinkedList<>();
-            algoConditionalMandatoryParams.stream()
-                                          .filter(combination -> ccpMap.keySet().containsAll(combination))
-                                          .forEach(conditionalMandatory::add);
+            return algoConditionalMandatoryParams.stream()
+                                                 .filter(combination -> ccpMap.keySet().containsAll(combination))
+                                                 .collect(Collectors.toList());
 
-            return conditionalMandatory;
         }
 
         return Collections.emptyList();

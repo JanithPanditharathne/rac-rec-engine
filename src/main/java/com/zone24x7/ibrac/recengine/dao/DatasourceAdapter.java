@@ -1,7 +1,6 @@
 package com.zone24x7.ibrac.recengine.dao;
 
 import com.zone24x7.ibrac.recengine.exceptions.BaseConnectionException;
-import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 
 import java.util.List;

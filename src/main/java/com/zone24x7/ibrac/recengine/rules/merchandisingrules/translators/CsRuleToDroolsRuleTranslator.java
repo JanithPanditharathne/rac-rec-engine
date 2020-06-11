@@ -399,7 +399,7 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
      * @param tokenList the token list
      * @return the rule string
      */
-    private String joinTokensToRuleString(List<String> tokenList) {
+    private static String joinTokensToRuleString(List<String> tokenList) {
         StringBuilder builder = new StringBuilder();
 
         int i = 0;

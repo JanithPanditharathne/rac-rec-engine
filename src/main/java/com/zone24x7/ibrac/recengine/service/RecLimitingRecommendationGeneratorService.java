@@ -40,7 +40,7 @@ public class RecLimitingRecommendationGeneratorService implements RecLimitingRec
      * @param fullProductList full product list that may contain duplicates
      * @return duplicates removed product list
      */
-    private List<Product> removeDuplicates(List<Product> fullProductList) {
+    private static List<Product> removeDuplicates(List<Product> fullProductList) {
         Set<Product> duplicateFilteringSet = new LinkedHashSet<>();
         List<Product> nonDuplicatedProductList = new LinkedList<>();
         duplicateFilteringSet.addAll(fullProductList);

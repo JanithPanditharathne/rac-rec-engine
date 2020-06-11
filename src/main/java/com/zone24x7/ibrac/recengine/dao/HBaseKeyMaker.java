@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Utility class to get the row key
  */
-public class HBaseKeyMaker {
+public final class HBaseKeyMaker {
 
     //Constants
     private static final String ALGORITHM_ID_KEY = "algorithmId";
@@ -25,7 +25,7 @@ public class HBaseKeyMaker {
      * Private constructor to avoid instantiating instances of this final class
      */
     private HBaseKeyMaker() {
-
+        // Default constructor made private
     }
 
     /**

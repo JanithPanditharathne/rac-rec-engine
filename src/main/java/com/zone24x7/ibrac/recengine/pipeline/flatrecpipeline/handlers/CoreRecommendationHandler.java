@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Qualifier("coreRecommendationHandler")
-public class CoreRecommendationHandler extends RecUnitHandler {
+public class CoreRecommendationHandler implements RecUnitHandler {
 
     @Autowired
     private AlgorithmCombinator algorithmCombinator;

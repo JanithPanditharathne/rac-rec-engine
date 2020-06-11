@@ -102,15 +102,15 @@ public class SpringMainConfig {
     /**
      * Method to provide the configuration service related configurations map.
      *
-     * @param RecConfiguration  the recommendation configurations
+     * @param recConfiguration  the recommendation configurations
      * @param ruleConfiguration the rule configurations
      * @return the configurations map
      */
     @Bean
     @Qualifier("CsConfigurations")
-    public Map<String, CsConfiguration> getCsConfigurations(RecConfiguration RecConfiguration, RuleConfiguration ruleConfiguration) {
+    public Map<String, CsConfiguration> getCsConfigurations(RecConfiguration recConfiguration, RuleConfiguration ruleConfiguration) {
         Map<String, CsConfiguration> csConfigurationHashMap = new HashMap<>();
-        csConfigurationHashMap.put("bundleConfiguration", RecConfiguration);
+        csConfigurationHashMap.put("bundleConfiguration", recConfiguration);
         csConfigurationHashMap.put("ruleConfiguration", ruleConfiguration);
         return csConfigurationHashMap;
     }

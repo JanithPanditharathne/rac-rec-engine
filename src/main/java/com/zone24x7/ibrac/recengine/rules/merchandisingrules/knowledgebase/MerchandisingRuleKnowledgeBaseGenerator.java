@@ -154,7 +154,7 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
      * @param rule the rule to check
      * @return true if a global filtering rule, else false
      */
-    private boolean isRuleAGlobalFilteringRule(Rule rule) {
+    private static boolean isRuleAGlobalFilteringRule(Rule rule) {
         return (rule.isGlobal() && Arrays.asList(BOOST, BURY, ONLY_RECOMMEND, DO_NOT_RECOMMEND).contains(rule.getType()));
     }
 }

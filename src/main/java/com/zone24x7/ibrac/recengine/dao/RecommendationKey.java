@@ -1,12 +1,10 @@
 package com.zone24x7.ibrac.recengine.dao;
 
-import com.zone24x7.ibrac.recengine.util.AppConfigStringConstants;
 import org.apache.commons.codec.digest.MurmurHash3;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Class to represent recommendation key.

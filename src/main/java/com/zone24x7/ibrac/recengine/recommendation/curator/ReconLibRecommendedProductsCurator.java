@@ -312,7 +312,7 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
      * @param dateTimeToConvert zonedDateTime to convert
      * @return formatted date string.
      */
-    private String getFormattedDate(ZonedDateTime dateTimeToConvert) {
+    private static String getFormattedDate(ZonedDateTime dateTimeToConvert) {
         if (dateTimeToConvert == null) {
             return null;
         }

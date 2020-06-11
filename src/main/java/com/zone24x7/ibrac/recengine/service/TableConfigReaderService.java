@@ -15,7 +15,7 @@ public class TableConfigReaderService {
 
     @Autowired
     @Qualifier("tableConfigurationMap")
-    private Map<String, TableConfigInfo> tableConfigurationMap = null;
+    private Map<String, TableConfigInfo> tableConfigurationMap;
 
 
     /**

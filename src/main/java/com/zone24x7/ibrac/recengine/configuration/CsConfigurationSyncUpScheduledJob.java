@@ -96,7 +96,7 @@ public class CsConfigurationSyncUpScheduledJob {
      * @param configurations configurations to load
      * @return true if loading success
      */
-    private boolean loadConfigurations(List<CsConfiguration> configurations) {
+    private static boolean loadConfigurations(List<CsConfiguration> configurations) {
         for (CsConfiguration configuration : configurations) {
             CsConfigurationStatus status = configuration.load();
             if (status != CsConfigurationStatus.SUCCESS) {
@@ -111,7 +111,7 @@ public class CsConfigurationSyncUpScheduledJob {
      *
      * @param csConfigurations List of configurations
      */
-    private boolean generateConfigurations(List<CsConfiguration> csConfigurations) {
+    private static boolean generateConfigurations(List<CsConfiguration> csConfigurations) {
         // Parse and try to generate new configurations
         for (CsConfiguration configuration : csConfigurations) {
             CsConfigurationStatus status = configuration.configure();
@@ -151,7 +151,7 @@ public class CsConfigurationSyncUpScheduledJob {
      * @param configurations configurations to check
      * @return true if at least one configuration not applied at least once
      */
-    private boolean configurationNotAppliedAtLeastOnce(List<CsConfiguration> configurations) {
+    private static boolean configurationNotAppliedAtLeastOnce(List<CsConfiguration> configurations) {
         for (CsConfiguration configuration : configurations) {
             if (!configuration.configAppliedAtLeastOnce()) {
                 return true;
@@ -166,7 +166,7 @@ public class CsConfigurationSyncUpScheduledJob {
      * @param configurations List of configurations
      * @return Status of applying
      */
-    private boolean applyConfiguration(List<CsConfiguration> configurations) {
+    private static boolean applyConfiguration(List<CsConfiguration> configurations) {
         for (CsConfiguration configuration : configurations) {
             if (!configuration.isNewConfiguration()) {
                 continue;

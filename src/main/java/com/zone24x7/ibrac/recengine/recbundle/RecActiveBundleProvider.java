@@ -200,7 +200,7 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
      * @param defaultLimit the default limit
      * @return the limit to apply
      */
-    private Integer getLimitToApply(Integer inputLimit, Integer defaultLimit) {
+    private static Integer getLimitToApply(Integer inputLimit, Integer defaultLimit) {
         if (inputLimit != null && inputLimit > 0) {
             return inputLimit;
         } else if (defaultLimit != null && defaultLimit > 0) {
