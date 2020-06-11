@@ -267,8 +267,8 @@ class RecAlgorithmCombinatorTest {
 
         when(future1.get()).thenThrow(new ExecutionException(new Exception()));
 
-        //Seeting null to valid algos to execute
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        //Setting null to valid algos to execute
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
 
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
 
@@ -297,8 +297,8 @@ class RecAlgorithmCombinatorTest {
 
         when(future1.get()).thenThrow(new InterruptedException());
 
-        //Seeting null to valid algos to execute
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        //Setting null to valid algos to execute
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
 
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
 
@@ -326,8 +326,8 @@ class RecAlgorithmCombinatorTest {
 
         when(future1.get()).thenThrow(new ExecutionException(new Exception()));
 
-        //Seeting null to valid algos to execute
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        //Setting null to valid algos to execute
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
 
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
 
@@ -355,8 +355,8 @@ class RecAlgorithmCombinatorTest {
 
         when(future1.get()).thenThrow(new InterruptedException());
 
-        //Seeting null to valid algos to execute
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        //Seting null to valid algos to execute
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
 
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
 
@@ -388,7 +388,7 @@ class RecAlgorithmCombinatorTest {
         bundleAlgorithm.setCustomDisplayText(null);
         bundleAlgorithm.setDefaultDisplayText("algo1DefaultDisplayText");
 
-        ActiveBundle activeBundle = new ActiveBundle("1", "", "FLAT", "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
         MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
 
         assertThat(combinedAlgoResult.getDisplayText(), is("algo1DefaultDisplayText"));
