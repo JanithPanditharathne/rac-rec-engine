@@ -56,7 +56,7 @@ public class RecAlgorithmService implements AlgorithmService {
                             recCycleStatus.getRequestId(), algorithmId, currentCcp);
                 break;
             } else {
-                logMessageBuilder.append(currentCcp.toString()).append(",");
+                logMessageBuilder.append(currentCcp.toString());
             }
         }
 
