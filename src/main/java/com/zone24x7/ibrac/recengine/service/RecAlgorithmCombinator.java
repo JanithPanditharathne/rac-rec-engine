@@ -190,7 +190,7 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
 
             Thread.currentThread().interrupt();
         } catch (ExecutionException e) {
-            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm. mode:{} algo:{},, BundleId:{} ",
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Error executing algorithm. mode:{} algo:{}, BundleId:{} ",
                          recCycleStatus.getRequestId(),
                          mode,
                          algoId,

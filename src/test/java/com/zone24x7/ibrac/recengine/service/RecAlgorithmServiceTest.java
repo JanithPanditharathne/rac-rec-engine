@@ -27,7 +27,7 @@ import static org.mockito.Mockito.*;
  * Test class of RecAlgorithmService
  */
 class RecAlgorithmServiceTest {
-    private static Logger logger;
+    private Logger logger;
     private AlgorithmResultGenerator algorithmResultGenerator;
     private AlgoCombinationIteratorProvider algoCombinationIteratorProvider;
     private AlgorithmService recAlgorithmService;
