@@ -2,7 +2,9 @@ package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline;
 
 import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers.AccumulationHandler;
 import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers.CoreRecommendationHandler;
+import com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers.FilteringRulesHandler;
 import com.zone24x7.ibrac.recengine.pojo.*;
+import com.zone24x7.ibrac.recengine.pojo.rules.FilteringRulesResult;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -17,6 +19,7 @@ public class FlatRecOnlyIncludedRecGenerationStrategyTest {
     private FlatRecOnlyIncludedRecGenerationStrategy flatRecOnlyIncludedRecGenerationStrategy;
     private CoreRecommendationHandler coreRecommendationHandler;
     private AccumulationHandler accumulationHandler;
+    private FilteringRulesHandler filteringRulesHandler;
     private RecInputParams recInputParams;
     private RecStatusParams recStatusParams;
     private ActiveBundle activeBundle;
@@ -34,11 +37,13 @@ public class FlatRecOnlyIncludedRecGenerationStrategyTest {
         recStatusParams.setRecCycleStatus(recCycleStatus);
 
         coreRecommendationHandler = mock(CoreRecommendationHandler.class);
+        filteringRulesHandler = mock(FilteringRulesHandler.class);
         accumulationHandler = mock(AccumulationHandler.class);
 
         flatRecOnlyIncludedRecGenerationStrategy = new FlatRecOnlyIncludedRecGenerationStrategy();
         ReflectionTestUtils.setField(flatRecOnlyIncludedRecGenerationStrategy, "coreRecommendationHandler", coreRecommendationHandler);
         ReflectionTestUtils.setField(flatRecOnlyIncludedRecGenerationStrategy, "accumulationHandler", accumulationHandler);
+        ReflectionTestUtils.setField(flatRecOnlyIncludedRecGenerationStrategy, "filteringRulesHandler", filteringRulesHandler);
     }
 
     /**

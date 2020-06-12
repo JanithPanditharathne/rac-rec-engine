@@ -43,7 +43,7 @@ public class CoreRecommendationHandler implements RecUnitHandler {
                         multipleAlgorithmResult.getAlgoToProductsMap(),
                         multipleAlgorithmResult.getAlgoToUsedCcp());
         } else {
-            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "MultipleAlgorithmResult is null for placeholder: {}",
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "MultipleAlgorithmResult is null for placeholder: {}",
                         recStatusParams.getRecCycleStatus().getRequestId(),
                         recInputParams.getPlaceholder());
         }

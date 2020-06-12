@@ -1,5 +1,7 @@
 package com.zone24x7.ibrac.recengine.pojo;
 
+import com.zone24x7.ibrac.recengine.pojo.rules.FilteringRulesResult;
+
 /**
  * Class to represent recommendation status parameters.
  */
@@ -7,6 +9,7 @@ public class RecStatusParams {
     private int limit;
     private RecCycleStatus recCycleStatus;
     private MultipleAlgorithmResult multipleAlgorithmResult;
+    private FilteringRulesResult filteringRulesResult;
     private RecResult<FlatRecPayload> recResult;
 
     /**
@@ -79,5 +82,23 @@ public class RecStatusParams {
      */
     public void setMultipleAlgorithmResult(MultipleAlgorithmResult multipleAlgorithmResult) {
         this.multipleAlgorithmResult = multipleAlgorithmResult;
+    }
+
+    /**
+     * Method to set the filtering rule result
+     *
+     * @param filteringRulesResult filtering rule result
+     */
+    public void setFilteringRulesResult(FilteringRulesResult filteringRulesResult) {
+        this.filteringRulesResult = filteringRulesResult;
+    }
+
+    /**
+     * Method to get a filtering rule result
+     *
+     * @return filtering rules
+     */
+    public FilteringRulesResult getFilteringRuleResult() {
+        return filteringRulesResult;
     }
 }

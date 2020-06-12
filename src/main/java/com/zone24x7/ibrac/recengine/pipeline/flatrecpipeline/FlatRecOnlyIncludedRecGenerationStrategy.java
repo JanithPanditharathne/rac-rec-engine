@@ -22,6 +22,10 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
     private RecUnitHandler coreRecommendationHandler;
 
     @Autowired
+    @Qualifier("filteringRulesHandler")
+    private RecUnitHandler filteringRulesHandler;
+
+    @Autowired
     @Qualifier("accumulationHandler")
     private RecUnitHandler accumulationHandler;
 
@@ -74,6 +78,7 @@ public class FlatRecOnlyIncludedRecGenerationStrategy implements RecGenerationSt
         //-----------Add Pre Recommendation Generations Handlers------------//
         //Adds strategy initialization handler to the chain
         handlers.add(coreRecommendationHandler);
+        handlers.add(filteringRulesHandler);
         handlers.add(accumulationHandler);
         //Adds the global manual rules handler to the chain
     }

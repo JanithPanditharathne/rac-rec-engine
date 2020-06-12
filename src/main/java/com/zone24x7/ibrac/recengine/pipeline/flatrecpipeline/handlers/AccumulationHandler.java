@@ -2,10 +2,9 @@ package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers;
 
 import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.*;
+import com.zone24x7.ibrac.recengine.pojo.rules.FilteringRulesResult;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import java.util.Collections;
 
 @Component
 @Qualifier("accumulationHandler")
@@ -31,19 +30,15 @@ public class AccumulationHandler implements RecUnitHandler {
      * @param activeBundle    active bundle details object
      */
     private static void createRecResult(RecInputParams recInputParams, RecStatusParams recStatusParams, ActiveBundle activeBundle) {
-        RecResult<FlatRecPayload> recPayloadRecResult = new RecResult<>();
-        recPayloadRecResult.setPlaceHolder(recInputParams.getPlaceholder());
-        recPayloadRecResult.setRecCycleStatus(recStatusParams.getRecCycleStatus());
+        RecResult<FlatRecPayload> recResult = new RecResult<>();
+        recResult.setPlaceHolder(recInputParams.getPlaceholder());
+        recResult.setRecCycleStatus(recStatusParams.getRecCycleStatus());
 
         //Populate payload
         MultipleAlgorithmResult multipleAlgorithmResult = recStatusParams.getMultipleAlgorithmResult();
-        FlatRecPayload flatRecPayload = new FlatRecPayload();
-        if (multipleAlgorithmResult != null) {
-            flatRecPayload.setProducts(multipleAlgorithmResult.getRecProducts());
-            flatRecPayload.setDisplayText(multipleAlgorithmResult.getDisplayText());
-        }
+        FilteringRulesResult filteringRulesResult = recStatusParams.getFilteringRuleResult();
 
-        recPayloadRecResult.setRecPayload(flatRecPayload);
+        recResult.setRecPayload(populateFlatRecPayload(multipleAlgorithmResult, filteringRulesResult));
 
         //Populate meta info
         RecMetaInfo recMetaInfo = new RecMetaInfo();
@@ -55,13 +50,34 @@ public class AccumulationHandler implements RecUnitHandler {
             recMetaInfo.setLimitToApply(activeBundle.getLimitToApply());
         }
 
-        //TODO: add executed rule set once completed
-        recMetaInfo.setExecutedFilteringRuleInfoList(Collections.emptySet());
+        //If filtering rule result exist
+        if(filteringRulesResult != null) {
+            recMetaInfo.setExecutedFilteringRuleInfoList(filteringRulesResult.getExecutedFilteringRuleInfo());
+        }
 
-        recPayloadRecResult.setRecMetaInfo(recMetaInfo);
-
+        recResult.setRecMetaInfo(recMetaInfo);
 
         //Set to status params
-        recStatusParams.setRecResult(recPayloadRecResult);
+        recStatusParams.setRecResult(recResult);
+    }
+
+    /**
+     * Method to populate the the flatrec payload based on the input
+     *
+     * @param multipleAlgorithmResult multipleAlgorithmResult object
+     * @param filteringRulesResult    filteringRulesResult object
+     * @return a FlatRecPayload
+     */
+    private static FlatRecPayload populateFlatRecPayload(MultipleAlgorithmResult multipleAlgorithmResult,
+                                                         FilteringRulesResult filteringRulesResult) {
+        FlatRecPayload flatRecPayload = new FlatRecPayload();
+        if (filteringRulesResult != null) {
+            flatRecPayload.setProducts(filteringRulesResult.getFilteredRecommendedProductsList());
+            flatRecPayload.setDisplayText(multipleAlgorithmResult.getDisplayText());
+        } else if (multipleAlgorithmResult != null) {
+            flatRecPayload.setProducts(multipleAlgorithmResult.getRecProducts());
+            flatRecPayload.setDisplayText(multipleAlgorithmResult.getDisplayText());
+        }
+        return flatRecPayload;
     }
 }
