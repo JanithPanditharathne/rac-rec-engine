@@ -6,7 +6,7 @@ import com.zone24x7.ibrac.recengine.enumeration.RuleType;
  * Class to represent the information about a rule that was executed by the recommendation provider
  * when generating the recommendations
  */
-public class EdeExecutedRuleInfo {
+public class ExecutedRuleInfo {
     private String ruleId;
     private RuleType ruleType;
 
@@ -50,7 +50,7 @@ public class EdeExecutedRuleInfo {
     }
 
     /**
-     * Check the equality of this object to another EdeExecutedRuleInfo object
+     * Check the equality of this object to another ExecutedRuleInfo object
      *
      * @param obj the other object to compare against
      * @return true if both objects are equal based on the assigned criteria, false otherwise
@@ -65,7 +65,7 @@ public class EdeExecutedRuleInfo {
             return false;
         }
 
-        EdeExecutedRuleInfo that = (EdeExecutedRuleInfo) obj;
+        ExecutedRuleInfo that = (ExecutedRuleInfo) obj;
 
         if (ruleId != null ? !ruleId.equals(that.ruleId) : (that.ruleId != null)) {
             return false;

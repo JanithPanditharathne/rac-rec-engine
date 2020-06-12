@@ -28,7 +28,7 @@ public final class AppConfigStringConstants {
     public static final String PRODUCT_CURATE_INVENTORY_FILTERING_ENABLED = "${prodCurator.enableInventoryFiltering}";
     public static final String PRODUCT_CURATE_PRICE_FILTERING_ENABLED = "${prodCurator.enablePriceFiltering}";
 
-    public static final String TABLE_CONFIG_FILE_NAME = "classpath:GetAllEdeTableConfigs.json";
+    public static final String TABLE_CONFIG_FILE_NAME = "classpath:GetAllAlgoTableConfigs.json";
     public static final String HBASE_CONNECTION_TIMEOUT = "${hbase.connection.timeout}";
     public static final String HBASE_CONNECTION_SKIP_COUNT = "${hbase.connection.skipcount}";
     public static final String HBASE_KEYMAKER_IGNORED_PARAMETERS = "#{'${hbase.keymaker.ignoredParameters}'.split(',')}";

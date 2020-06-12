@@ -2,7 +2,7 @@ package com.zone24x7.ibrac.recengine.rules.merchandisingrules.executors;
 
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
-import com.zone24x7.ibrac.recengine.pojo.rules.EdeExecutedRuleInfo;
+import com.zone24x7.ibrac.recengine.pojo.rules.ExecutedRuleInfo;
 import com.zone24x7.ibrac.recengine.pojo.rules.FilteringRulesResult;
 import com.zone24x7.ibrac.recengine.pojo.rules.MerchandisingRuleKnowledgeBaseInfo;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.customoperators.StringEvaluatorDefinition;
@@ -17,8 +17,6 @@ import org.kie.internal.builder.KnowledgeBuilderConfiguration;
 import org.kie.internal.builder.KnowledgeBuilderFactory;
 import org.kie.internal.builder.conf.EvaluatorOption;
 import org.kie.internal.io.ResourceFactory;
-import org.slf4j.Logger;
-import org.springframework.test.util.ReflectionTestUtils;
 
 import java.nio.file.Paths;
 import java.util.*;
@@ -479,7 +477,7 @@ public class DroolsBasedMerchandisingRuleExecutorTest {
         assertEquals(expectedExecutedRuleCount, filteringRulesResult.getExecutedFilteringRuleInfo().size());
 
         if (expectedExecutedRuleCount > 0) {
-            Iterator<EdeExecutedRuleInfo> iterator = filteringRulesResult.getExecutedFilteringRuleInfo().iterator();
+            Iterator<ExecutedRuleInfo> iterator = filteringRulesResult.getExecutedFilteringRuleInfo().iterator();
             List<String> ruleIdsList = Arrays.asList(expectedExecutedRuleIds);
             for (int i = 0; i < expectedExecutedRuleCount; i++) {
                 assertTrue(ruleIdsList.contains(iterator.next().getRuleId()));

@@ -1,7 +1,7 @@
 package com.zone24x7.ibrac.recengine.pojo;
 
 import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
-import com.zone24x7.ibrac.recengine.pojo.rules.EdeExecutedRuleInfo;
+import com.zone24x7.ibrac.recengine.pojo.rules.ExecutedRuleInfo;
 
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +15,7 @@ public class RecMetaInfo {
     private int limitToApply;
     private Map<String, String> algoToProductsMap;
     private Map<String, String> algoToUsedCcp;
-    private Set<EdeExecutedRuleInfo> executedFilteringRuleInfoList;
+    private Set<ExecutedRuleInfo> executedFilteringRuleInfoList;
 
     /**
      * Method to return the type of recommendations
@@ -90,20 +90,20 @@ public class RecMetaInfo {
     }
 
     /**
-     * Method to set EdeExecutedRuleInfo
+     * Method to set ExecutedRuleInfo
      *
-     * @return EdeExecutedRuleInfo set
+     * @return ExecutedRuleInfo set
      */
-    public Set<EdeExecutedRuleInfo> getExecutedFilteringRuleInfoList() {
+    public Set<ExecutedRuleInfo> getExecutedFilteringRuleInfoList() {
         return executedFilteringRuleInfoList;
     }
 
     /**
-     * Method to return the EdeExecutedRuleInfo set
+     * Method to return the ExecutedRuleInfo set
      *
-     * @param executedFilteringRuleInfoList EdeExecutedRuleInfo set to set
+     * @param executedFilteringRuleInfoList ExecutedRuleInfo set to set
      */
-    public void setExecutedFilteringRuleInfoList(Set<EdeExecutedRuleInfo> executedFilteringRuleInfoList) {
+    public void setExecutedFilteringRuleInfoList(Set<ExecutedRuleInfo> executedFilteringRuleInfoList) {
         this.executedFilteringRuleInfoList = executedFilteringRuleInfoList;
     }
 

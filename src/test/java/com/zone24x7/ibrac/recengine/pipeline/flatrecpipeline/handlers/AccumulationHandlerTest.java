@@ -2,9 +2,8 @@ package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers;
 
 import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.*;
-import com.zone24x7.ibrac.recengine.pojo.rules.EdeExecutedRuleInfo;
+import com.zone24x7.ibrac.recengine.pojo.rules.ExecutedRuleInfo;
 import com.zone24x7.ibrac.recengine.pojo.rules.FilteringRulesResult;
-import org.apache.yetus.audience.InterfaceAudience;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,7 +29,7 @@ public class AccumulationHandlerTest {
     private RecCycleStatus recCycleStatus;
     private MultipleAlgorithmResult multipleAlgorithmResult;
     private FilteringRulesResult filteringRulesResult;
-    private Set<EdeExecutedRuleInfo> executedRuleInfos;
+    private Set<ExecutedRuleInfo> executedRuleInfos;
 
     private List<Product> productList = new LinkedList<>();
     private List<Product> filteredProductList = new LinkedList<>();
@@ -68,9 +67,9 @@ public class AccumulationHandlerTest {
         //Populate filtered product list
         filteredProductList.add(product2);
 
-        EdeExecutedRuleInfo edeExecutedRuleInfo = new EdeExecutedRuleInfo();
+        ExecutedRuleInfo executedRuleInfo = new ExecutedRuleInfo();
         executedRuleInfos = new HashSet<>();
-        executedRuleInfos.add(edeExecutedRuleInfo);
+        executedRuleInfos.add(executedRuleInfo);
 
         when(activeBundle.getId()).thenReturn("1");
         when(activeBundle.getLimitToApply()).thenReturn(10);

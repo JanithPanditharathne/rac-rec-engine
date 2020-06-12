@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class FilteringRulesResult {
     private List<Product> filteredRecommendedProductsList;
-    private Set<EdeExecutedRuleInfo> executedFilteringRuleInfoList;
+    private Set<ExecutedRuleInfo> executedFilteringRuleInfoList;
 
     /**
      * Method to get the filtered recommended product list.
@@ -35,7 +35,7 @@ public class FilteringRulesResult {
      *
      * @return the executed filtering rules information
      */
-    public Set<EdeExecutedRuleInfo> getExecutedFilteringRuleInfo() {
+    public Set<ExecutedRuleInfo> getExecutedFilteringRuleInfo() {
         return executedFilteringRuleInfoList;
     }
 
@@ -44,7 +44,7 @@ public class FilteringRulesResult {
      *
      * @param executedFilteringRuleInfoList the executed filtering rules information
      */
-    public void setExecutedFilteringRuleInfoList(Set<EdeExecutedRuleInfo> executedFilteringRuleInfoList) {
+    public void setExecutedFilteringRuleInfoList(Set<ExecutedRuleInfo> executedFilteringRuleInfoList) {
         this.executedFilteringRuleInfoList = executedFilteringRuleInfoList;
     }
 }

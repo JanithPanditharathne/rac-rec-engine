@@ -11,7 +11,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Class keeping track of rule execution
  */
 public class RuleExecutionStatus {
-    private Set<EdeExecutedRuleInfo> executedRuleInfo;
+    private Set<ExecutedRuleInfo> executedRuleInfo;
     private ConcurrentMap<String, AtomicInteger> hitCountMap;
 
     /**
@@ -29,7 +29,7 @@ public class RuleExecutionStatus {
      * @param ruleType the rule type to add
      */
     public void addExecutedRuleId(String ruleId, RuleType ruleType) {
-        EdeExecutedRuleInfo currentExecutedRuleInfo = new EdeExecutedRuleInfo();
+        ExecutedRuleInfo currentExecutedRuleInfo = new ExecutedRuleInfo();
         currentExecutedRuleInfo.setRuleId(ruleId);
         currentExecutedRuleInfo.setRuleType(ruleType);
         this.executedRuleInfo.add(currentExecutedRuleInfo);
@@ -43,7 +43,7 @@ public class RuleExecutionStatus {
      *
      * @return the list of executed rule info
      */
-    public Set<EdeExecutedRuleInfo> getExecutedRuleInfo() {
+    public Set<ExecutedRuleInfo> getExecutedRuleInfo() {
         return this.executedRuleInfo;
     }
 
