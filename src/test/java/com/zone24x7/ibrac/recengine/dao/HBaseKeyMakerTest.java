@@ -18,7 +18,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * Class to test HBaseKeyMaker.
  */
-@Disabled
 public class HBaseKeyMakerTest {
 
     private Map<String, String> testMap;

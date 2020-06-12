@@ -62,4 +62,15 @@ public final class JsonPojoConverter {
     public static <T> Map<String, String> toMap(T pojo) {
         return mapper.convertValue(pojo, new TypeReference<Map<String, String>>() {});
     }
+
+    /**
+     * Method to convert string to given pojo class.
+     *
+     * @param inputNode         input json string
+     * @param typeReference     type to convert
+     * @return the pojo
+     */
+    public static <T> T toPojo(String inputNode, TypeReference<T> typeReference) throws IOException {
+        return mapper.readValue(inputNode, typeReference);
+    }
 }

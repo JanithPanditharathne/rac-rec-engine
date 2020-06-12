@@ -123,7 +123,9 @@ public final class RecResponseFormatter {
                 recNode.put("executedRuleInfoList", recMetaInfo.getExecutedFilteringRuleInfoList().toString());
             }
 
-            recNode.put("recGenerationCycleMask", recResult.getRecCycleStatus().getRecGenerationCycleMask());
+            if(recResult.getRecCycleStatus() != null) {
+                recNode.put("recGenerationCycleMask", recResult.getRecCycleStatus().getRecGenerationCycleMask());
+            }
         }
         return recNode;
     }

@@ -43,7 +43,7 @@ public final class CcpProcessorUtilities {
      *
      * @param whitelistedCcpKeys List of allowed ccp keys.
      */
-    static void setWhitelistedCcpKeys(List<String> whitelistedCcpKeys) {
+    public static void setWhitelistedCcpKeys(List<String> whitelistedCcpKeys) {
         CcpProcessorUtilities.whitelistedCcpKeys = whitelistedCcpKeys;
     }
 }

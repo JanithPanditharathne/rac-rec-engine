@@ -96,6 +96,7 @@ public class RecController {
         // Decode the placement ids
         List<PlaceholderId> decodedPlacementIds = PlaceholderIdsDecoder.decodePlaceholderIds(placeholderIds);
 
+
         if (decodedPlacementIds.isEmpty()) {
             throw new InputValidationException(ErrorCode.RE1006.toString());
         }
