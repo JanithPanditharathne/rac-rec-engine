@@ -55,7 +55,6 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
      *
      * @param mappingInfo mapping information of attribute types
      */
-    //TODO: Remove this attribute mapping to the configuration constants class
     public CsRuleToDroolsRuleTranslator(@Value(AppConfigStringConstants.RULE_TRANSLATOR_ATTRIBUTE_MAPPING)
                                                 Map<String, String> mappingInfo) {
         if (MapUtils.isNotEmpty(mappingInfo)) {

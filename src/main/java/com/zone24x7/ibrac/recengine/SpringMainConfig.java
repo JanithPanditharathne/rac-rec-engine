@@ -95,7 +95,7 @@ public class SpringMainConfig {
      */
     @Bean
     public DatasourceAdapter getDataSource() {
-        //TODO: if else according to data store initiate the bean
+        // NOTE : if the data source changes, provide the proper data source according to a conditional config.
         return new HBaseAdapter();
     }
 
