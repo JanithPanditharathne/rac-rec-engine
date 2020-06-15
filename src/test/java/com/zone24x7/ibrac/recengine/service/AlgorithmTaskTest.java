@@ -1,6 +1,5 @@
 package com.zone24x7.ibrac.recengine.service;
 
-import com.sun.org.apache.regexp.internal.RE;
 import com.zone24x7.ibrac.recengine.pojo.AlgorithmResult;
 import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
 import org.junit.jupiter.api.BeforeEach;
