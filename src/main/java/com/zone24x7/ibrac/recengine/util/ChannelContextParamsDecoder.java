@@ -56,7 +56,7 @@ public class ChannelContextParamsDecoder {
         Map<String, String> ccpParams = null;
 
         if (StringUtils.isNotEmpty(base64String)) {
-            try (Base64InputStream base64In = new Base64InputStream(new ByteArrayInputStream(base64String.getBytes(StandardCharsets.UTF_8.name())));) {
+            try (Base64InputStream base64In = new Base64InputStream(new ByteArrayInputStream(base64String.getBytes(StandardCharsets.UTF_8.name())))) {
                 for (int data; (data = base64In.read()) > -1; ) {
                     bytesOut.write(data);
                 }

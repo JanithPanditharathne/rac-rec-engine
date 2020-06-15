@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.zone24x7.ibrac.recengine.exceptions.InputValidationException;
-import com.zone24x7.ibrac.recengine.pojo.*;
+import com.zone24x7.ibrac.recengine.pojo.FlatRecPayload;
+import com.zone24x7.ibrac.recengine.pojo.RecCycleStatus;
+import com.zone24x7.ibrac.recengine.pojo.RecInputParams;
+import com.zone24x7.ibrac.recengine.pojo.RecResult;
 import com.zone24x7.ibrac.recengine.pojo.controller.ResponseFormatterConfig;
 import com.zone24x7.ibrac.recengine.service.RecLimitingRecommendationGeneratorService;
 import com.zone24x7.ibrac.recengine.strategy.PlacementTask;
@@ -156,17 +159,15 @@ public class RecControllerTest {
 
         List<RecResult> recResultList = new ArrayList<>();
 
-        String node = ((java.util.LinkedList)((AbstractMap.SimpleImmutableEntry)responseEntity.getHeaders().entrySet().toArray()[0]).getValue()).get(0).toString();
+        String node = ((java.util.LinkedList) ((AbstractMap.SimpleImmutableEntry) responseEntity.getHeaders().entrySet().toArray()[0]).getValue()).get(0).toString();
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode headerNode = mapper.readTree(node);
-
-
-        String requestId = headerNode.get("requestId").asText();
+        String requestId = null;
 
         recResultList.add(recResult);
 
-        ObjectNode headerNodeToCompare = RecResponseFormatter.formatHeader(channelId,pageId,requestId,recResultList);
+        ObjectNode headerNodeToCompare = RecResponseFormatter.formatHeader(channelId, pageId, requestId, recResultList);
 
         // Assert the header node.
         assertThat(headerNode, is(Matchers.equalTo(headerNodeToCompare)));

@@ -90,15 +90,14 @@ cp src/main/resources/application.properties "$PACKAGE_DIR/conf/."
 cp src/main/resources/logback.xml "$PACKAGE_DIR/conf/."
 cp "src/main/environmentConfigs/override-${PROFILE}.properties" "$PACKAGE_DIR/conf/override.properties"
 
-# Write a file to keep the artifact version
-echo $ARTIFACT_VERSION > "$PACKAGE_DIR/conf/version"
-
 echoOK "Content copy"
 
 # --------------------------------------------------------
 # Add logback.xml reference to application.properties file
 # --------------------------------------------------------
 printf "\nlogging.config=conf/logback.xml\n" >> "$PACKAGE_DIR/conf/application.properties"
+printf "info.app.name=${ARTIFACT_ID}\n" >> "$PACKAGE_DIR/conf/application.properties"
+printf "info.app.version=${ARTIFACT_VERSION}\n" >> "$PACKAGE_DIR/conf/application.properties"
 
 echoProgress "Creating final package"
 
