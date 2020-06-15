@@ -1,10 +1,9 @@
 package com.zone24x7.ibrac.recengine.util;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.anEmptyMap;
@@ -13,6 +12,17 @@ import static org.hamcrest.Matchers.anEmptyMap;
  * Test class of CcpProcessorUtilities.
  */
 class CcpProcessorUtilitiesTest {
+
+    /**
+     * Method to run before each test.
+     */
+    @BeforeEach
+    public void setup() {
+        List<String> whitelistedKeys = new LinkedList<>();
+        whitelistedKeys.add("category");
+
+        CcpProcessorUtilities.setWhitelistedCcpKeys(whitelistedKeys);
+    }
 
     /**
      * Test to verify an empty map is returned if the whitelisted ccp key list is empty.
