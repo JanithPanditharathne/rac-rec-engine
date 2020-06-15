@@ -283,7 +283,6 @@ class ReconLibRecommendedProductsCuratorTest {
 
         verify(logger, times(1)).debug(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PRODUCT_DETAILS_FOUND, recCycleStatus.getRequestId(), PRODUCT_ID_1);
         assertThat(product, is(not(nullValue())));
-       // assertThat(product.getAttributesMap(), is(aMapWithSize(8)));
         assertThat(product.getAttributesMap(), IsMapContaining.hasKey("validStartDate"));
         assertThat(product.getAttributesMap(), IsMapContaining.hasKey("validEndDate"));
     }
@@ -337,7 +336,7 @@ class ReconLibRecommendedProductsCuratorTest {
      * Test to verify that an empty list is returned if the product api returns an empty list.
      */
     @Test
-    void should_return_an_empty_list_if_the_price_filter_is_enabled_and_priceFilterDate_is_null()  {
+    void should_return_an_empty_list_if_the_price_filter_is_enabled_and_priceFilterDate_is_null() {
         ReflectionTestUtils.setField(reconLibRecommendedProductsCurator, "priceFilteringEnabled", true);
         List<String> productIds = Arrays.asList(PRODUCT_ID_1, PRODUCT_ID_2);
 
@@ -493,5 +492,36 @@ class ReconLibRecommendedProductsCuratorTest {
         verify(logger, times(1)).info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + OVERALL_CURATION_STATUS_MSG, REQUEST_ID, productIds.size(), String.join(",", productIds), 1, String.join(",", "2213225"));
         verify(logger, times(1)).info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Product curation Status: {}", REQUEST_ID, "Product info unavailable products: [2213223]\n");
         assertThat(productList, hasSize(1));
+    }
+
+    /**
+     * Test to verify that an empty list is returned if the product container is empty.
+     *
+     * @throws ReconLibException if an error occurs.
+     */
+    @Test
+    void should_return_empty_list_if_the_product_container_is_empty_when_getting_multiple_products() throws ReconLibException {
+        when(productApi.getProduct(PRODUCT_ID_1, null, false)).thenReturn(new ReconLibProductContainer());
+        List<Product> productList = reconLibRecommendedProductsCurator.getProducts(Arrays.asList(PRODUCT_ID_1), null, recCycleStatus);
+
+        verify(logger, times(1)).error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid product container received for product: {}", recCycleStatus.getRequestId(), PRODUCT_ID_1);
+        verify(logger, times(1)).info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Product curation Status: {}", REQUEST_ID, "Product info unavailable products: [2213225]\n");
+        verify(recCycleStatus, times(1)).indicateCurationRemovedAllProducts();
+        assertThat(productList, is(empty()));
+    }
+
+    /**
+     * Test to verify that a null is returned if the product container is empty.
+     *
+     * @throws ReconLibException if an error occurs.
+     */
+    @Test
+    void should_return_null_if_the_product_container_is_empty_when_getting_a_single_product() throws ReconLibException {
+        when(productApi.getProduct(PRODUCT_ID_1, null, false)).thenReturn(new ReconLibProductContainer());
+        List<Product> productList = reconLibRecommendedProductsCurator.getProducts(Arrays.asList(PRODUCT_ID_1), null, recCycleStatus);
+
+        verify(logger, times(1)).error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid product container received for product: {}", recCycleStatus.getRequestId(), PRODUCT_ID_1);
+        verify(logger, times(1)).info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Product curation Status: {}", REQUEST_ID, "Product info unavailable products: [2213225]\n");
+        assertThat(productList, is(empty()));
     }
 }

@@ -105,6 +105,8 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
         if (productContainer.getReconLibProduct() != null) {
             curatedProduct = generateCuratedProduct(productId, productContainer.getReconLibProduct(), requestId);
             LOGGER.debug(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + PRODUCT_DETAILS_FOUND, requestId, productId);
+        } else {
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid product container received for product: {}", requestId, productId);
         }
 
         return curatedProduct;
@@ -185,10 +187,6 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
      * @return the curation status message
      */
     private String generateCurationStatusMessage(RecProductCurationStatus recProductCurationStatus) {
-        if (recProductCurationStatus == null) {
-            return "";
-        }
-
         StringBuilder curationStatusBuilder = new StringBuilder();
 
         if (CollectionUtils.isNotEmpty(recProductCurationStatus.getErrorOccurredProducts())) {
@@ -253,6 +251,9 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
 
         if (productContainer.getReconLibProduct() != null) {
             return generateCuratedProduct(productId, productContainer.getReconLibProduct(), requestId);
+        } else {
+            recProductCurationStatus.addProductInfoNonExistenceProduct(productId);
+            LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Invalid product container received for product: {}", requestId, productId);
         }
 
         return null;

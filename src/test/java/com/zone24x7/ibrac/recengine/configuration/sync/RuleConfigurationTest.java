@@ -1,6 +1,10 @@
 package com.zone24x7.ibrac.recengine.configuration.sync;
 
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache;
+import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
+import com.zone24x7.ibrac.recengine.pojo.rules.MerchandisingRuleKnowledgeBaseInfo;
+import com.zone24x7.ibrac.recengine.rules.merchandisingrules.executors.MerchandisingRuleExecutor;
+import com.zone24x7.ibrac.recengine.rules.merchandisingrules.knowledgebase.KnowledgeBaseGenerator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,6 +21,11 @@ import static org.mockito.Mockito.when;
 class RuleConfigurationTest {
     private RuleConfiguration ruleConfiguration = new RuleConfiguration();
     private CsConfigurationTempCache csConfigurationTempCache;
+
+    private MerchandisingRuleKnowledgeBaseInfo merchandisingRuleKnowledgeBaseInfo;
+    private KnowledgeBaseGenerator<String, MerchandisingRuleKnowledgeBaseInfo> knowledgeBaseGenerator;
+    private MerchandisingRuleExecutor ruleExecutor;
+
     private static final String RULE_CONFIG = "{\"rules\":[]}";
 
     /**
@@ -25,8 +34,15 @@ class RuleConfigurationTest {
     @BeforeEach
     void setUp() {
         csConfigurationTempCache = mock(CsConfigurationTempCache.class);
+        knowledgeBaseGenerator = mock(KnowledgeBaseGenerator.class);
+        merchandisingRuleKnowledgeBaseInfo = mock(MerchandisingRuleKnowledgeBaseInfo.class);
+        ruleExecutor = mock(MerchandisingRuleExecutor.class);
+
         ReflectionTestUtils.setField(ruleConfiguration, "csConfigurationTempCache", csConfigurationTempCache);
         ReflectionTestUtils.setField(ruleConfiguration, "hashOfLastUsedRuleConfig", DigestUtils.sha256Hex(RULE_CONFIG));
+        ReflectionTestUtils.setField(ruleConfiguration, "knowledgeBaseGenerator", knowledgeBaseGenerator);
+        ReflectionTestUtils.setField(ruleConfiguration, "knowledgeBaseInfo", merchandisingRuleKnowledgeBaseInfo);
+        ReflectionTestUtils.setField(ruleConfiguration, "ruleExecutor", ruleExecutor);
 
         when(csConfigurationTempCache.getConfiguration(CsConfigurationTypes.RULE_CONFIG)).thenReturn(RULE_CONFIG);
     }
@@ -101,5 +117,42 @@ class RuleConfigurationTest {
         ReflectionTestUtils.setField(ruleConfiguration, "ruleConfig", "");
         boolean result = ruleConfiguration.isNewConfiguration();
         assertThat(result, equalTo(true));
+    }
+
+    /**
+     * Should return fail if setting merchandising knowledge base configurations throws an error.
+     */
+    @Test
+    void should_return_fail_if_adding_merchandising_knowledge_base_configuration_throws_an_error() throws MalformedConfigurationException {
+        doThrow(MalformedConfigurationException.class).when(knowledgeBaseGenerator).setConfigurations(null);
+
+        CsConfigurationStatus result = ruleConfiguration.configure();
+        assertThat(result, equalTo(CsConfigurationStatus.FAIL));
+    }
+
+    /**
+     * Should return success if merchandising knowledge base info is set as expected.
+     */
+    @Test
+    void should_return_success_when_knowledge_base_info_is_set_successfully() throws MalformedConfigurationException {
+        doNothing().when(knowledgeBaseGenerator).setConfigurations(any());
+        when(knowledgeBaseGenerator.getKnowledgeBaseInfo()).thenReturn(merchandisingRuleKnowledgeBaseInfo);
+
+        CsConfigurationStatus result = ruleConfiguration.configure();
+        assertThat(result, equalTo(CsConfigurationStatus.SUCCESS));
+        verify(knowledgeBaseGenerator, times(1)).setConfigurations(any());
+        verify(knowledgeBaseGenerator, times(1)).getKnowledgeBaseInfo();
+    }
+
+    /**
+     * Should return success if configurations applied successfully.
+     */
+    @Test
+    void should_return_success_if_rule_configurations_applied_successfully() {
+        ReflectionTestUtils.setField(ruleConfiguration, "ruleConfig", RULE_CONFIG);
+        CsConfigurationStatus result = ruleConfiguration.apply();
+
+        verify(ruleExecutor, times(1)).setKnowledgeBaseInfo(merchandisingRuleKnowledgeBaseInfo);
+        assertThat(result, equalTo(CsConfigurationStatus.SUCCESS));
     }
 }
