@@ -2,7 +2,6 @@ package com.zone24x7.ibrac.recengine.dao;
 
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -95,7 +94,7 @@ public class HBaseKeyMakerTest {
     /**
      * Fill the ignoredKeys array list
      */
-    private void fill_ignored_keys_array(){
+    private void fill_ignored_keys_array() {
 
         ignoredKeys = new ArrayList<>();
 
@@ -106,7 +105,7 @@ public class HBaseKeyMakerTest {
     /**
      * Fill the sortedKeys array list
      */
-    private void fill_sorted_keys_array(){
+    private void fill_sorted_keys_array() {
 
         sortedKeys = new ArrayList<>();
 
