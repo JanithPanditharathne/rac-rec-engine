@@ -31,6 +31,7 @@ import java.util.concurrent.Future;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -201,6 +202,7 @@ public class RecControllerTest {
     @Test
     public void should_generate_response_entry_body_correctly_without_ccps() throws InterruptedException, ExecutionException, IOException {
         Future<RecResult> recResultFuture = mock(Future.class);
+        recResult.setRecCycleStatus(mock(RecCycleStatus.class));
 
         when(channelContextParamsDecoder.deserializeFromBase64StringToMap(enCodedCCP)).thenReturn(urlDecodedCcpMap);
         when(cachedTaskExecutorService.submit(placementTask)).thenReturn(recResultFuture);
@@ -288,6 +290,41 @@ public class RecControllerTest {
         });
     }
 
+    /**
+     * Test to verify that the empty payload response body is returned when an execution exception occurs.
+     */
+    @Test
+    public void should_handle_execution_exceptions_and_return_empty_payload_as_expected() throws InterruptedException, ExecutionException, IOException {
+        // Mock the RecResult Future.
+        Future<RecResult> recResultFuture = mock(Future.class);
+
+        when(channelContextParamsDecoder.deserializeFromBase64StringToMap(enCodedCCP)).thenReturn(urlDecodedCcpMap);
+        when(cachedTaskExecutorService.submit(placementTask)).thenReturn(recResultFuture);
+        when(recResultFuture.get()).thenThrow(mock(ExecutionException.class));
+
+        ObjectNode nodeToCompare = RecResponseFormatter.format(channelId, pageId, new ArrayList<>(), new ResponseFormatterConfig(null, null, null));
+
+        ResponseEntity<Object> responseEntity = recController.getRecommendation(channelId, pageId, placementId, enCodedCCP);
+        assertThat(responseEntity.getBody(), equalTo(nodeToCompare));
+    }
+
+    /**
+     * Test to verify that the empty payload response body is returned when an interrupted exception occurs.
+     */
+    @Test
+    public void should_handle_interrupted_exceptions_and_return_empty_payload_as_expected() throws InterruptedException, ExecutionException, IOException {
+        // Mock the RecResult Future.
+        Future<RecResult> recResultFuture = mock(Future.class);
+
+        when(channelContextParamsDecoder.deserializeFromBase64StringToMap(enCodedCCP)).thenReturn(urlDecodedCcpMap);
+        when(cachedTaskExecutorService.submit(placementTask)).thenReturn(recResultFuture);
+        when(recResultFuture.get()).thenThrow(mock(InterruptedException.class));
+
+        ObjectNode nodeToCompare = RecResponseFormatter.format(channelId, pageId, new ArrayList<>(), new ResponseFormatterConfig(null, null, null));
+
+        ResponseEntity<Object> responseEntity = recController.getRecommendation(channelId, pageId, placementId, enCodedCCP);
+        assertThat(responseEntity.getBody(), equalTo(nodeToCompare));
+    }
 
     /**
      * Fill the whitelistedCcpKeys array list
