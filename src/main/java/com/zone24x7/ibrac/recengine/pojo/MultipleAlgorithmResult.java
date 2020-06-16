@@ -46,7 +46,7 @@ public class MultipleAlgorithmResult {
      *
      * @param algoToProductsMap algoToProductsMap to set
      */
-    public void setAlgoToProductsMap(Map<String, String> algoToProductsMap) {
+    public void addToAlgoToProductsMap(Map<String, String> algoToProductsMap) {
         this.algoToProductsMap.putAll(algoToProductsMap);
     }
 
@@ -64,7 +64,7 @@ public class MultipleAlgorithmResult {
      *
      * @param algoToUsedCcp used ccp to add
      */
-    public void setAlgoToUsedCcp(Map<String, String> algoToUsedCcp) {
+    public void addToAlgoToUsedCcp(Map<String, String> algoToUsedCcp) {
         this.algoToUsedCcp.putAll(algoToUsedCcp);
     }
 

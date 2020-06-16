@@ -36,10 +36,7 @@ public class FilteringRulesHandler implements RecUnitHandler {
         MultipleAlgorithmResult multipleAlgorithmResult = recStatusParams.getMultipleAlgorithmResult();
         Set<String> placementFilteringRuleIds = activeBundle.getPlacementFilteringRuleIds();
 
-        if (multipleAlgorithmResult != null &&
-                CollectionUtils.isNotEmpty(multipleAlgorithmResult.getRecProducts()) &&
-                CollectionUtils.isNotEmpty(placementFilteringRuleIds)) {
-
+        if (multipleAlgorithmResult != null && CollectionUtils.isNotEmpty(multipleAlgorithmResult.getRecProducts())) {
             FilteringRulesResult filteringRulesResult = merchandisingRuleExecutor.getFilteredRecommendations(multipleAlgorithmResult.getRecProducts(),
                                                                                                              placementFilteringRuleIds,
                                                                                                              recInputParams.getCcp(),

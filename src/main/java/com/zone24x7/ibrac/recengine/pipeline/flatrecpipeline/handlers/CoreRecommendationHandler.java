@@ -23,7 +23,7 @@ public class CoreRecommendationHandler implements RecUnitHandler {
     private AlgorithmCombinator algorithmCombinator;
 
     /**
-     * Method to handle the task.
+     * Method to handle the core recommendation generation.
      *
      * @param recInputParams  the input parameters for recommendation generation
      * @param recStatusParams rec status parameters for recommendation generation

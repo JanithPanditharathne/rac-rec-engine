@@ -29,6 +29,7 @@ public class AlgorithmResult {
      */
     public void setRecProducts(List<Product> recProducts) {
         if (recProducts != null) {
+            this.recProducts.clear();
             this.recProducts.addAll(recProducts);
         }
     }
@@ -48,7 +49,10 @@ public class AlgorithmResult {
      * @param usedCcp map of used ccps
      */
     public void setUsedCcp(Map<String, String> usedCcp) {
-        this.usedCcp = usedCcp;
+        if (usedCcp != null) {
+            this.usedCcp.clear();
+            this.usedCcp.putAll(usedCcp);
+        }
     }
 
     /**

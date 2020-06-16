@@ -62,7 +62,6 @@ public final class RecResponseFormatter {
      * @return ObjectNode       ObjectNode
      */
     public static ObjectNode formatHeader(String channelId, String pageId, String requestId, List<RecResult> recResultList) {
-
         ObjectNode rootNode = JsonNodeFactory.instance.objectNode();
 
         // Populate the root level keys.
@@ -92,9 +91,7 @@ public final class RecResponseFormatter {
      * @return ObjectNode
      */
     private static ObjectNode formatRecResultForHeader(RecResult recResult) {
-
         ObjectNode recNode = JsonNodeFactory.instance.objectNode();
-
         recNode.put("placeholder", recResult.getPlaceHolder());
 
         RecMetaInfo recMetaInfo = recResult.getRecMetaInfo();

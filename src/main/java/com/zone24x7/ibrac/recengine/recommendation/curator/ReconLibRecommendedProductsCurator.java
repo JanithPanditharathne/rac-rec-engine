@@ -166,14 +166,14 @@ public class ReconLibRecommendedProductsCurator implements RecommendedProductsCu
         String requestedProductIds = String.join(",", productIds);
         String curatedProductIds = String.join(",", recProductCurationStatus.getCuratedProducts());
         LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Curation Result => " +
-                                                                "Number of products to curate: {}, product Ids: {} and Number of products after curation: {}, product Ids: {}",
+                            "Number of products to curate: {}, product Ids: {} and Number of products after curation: {}, product Ids: {}",
                     requestId,
                     productIds.size(),
                     requestedProductIds,
                     curatedProducts.size(),
                     curatedProductIds);
 
-        if(CollectionUtils.isEmpty(curatedProducts) && CollectionUtils.isNotEmpty(productIds)){
+        if (CollectionUtils.isEmpty(curatedProducts) && CollectionUtils.isNotEmpty(productIds)) {
             recCycleStatus.indicateCurationRemovedAllProducts();
         }
 

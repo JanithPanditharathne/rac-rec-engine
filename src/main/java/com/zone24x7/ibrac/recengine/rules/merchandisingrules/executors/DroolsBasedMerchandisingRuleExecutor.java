@@ -56,7 +56,7 @@ public class DroolsBasedMerchandisingRuleExecutor implements MerchandisingRuleEx
         }
 
         Set<String> rules = new HashSet<>();
-        if (ruleIds != null && !ruleIds.isEmpty()) {
+        if (CollectionUtils.isNotEmpty(ruleIds)) {
             rules.addAll(ruleIds);
         }
 

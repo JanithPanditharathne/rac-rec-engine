@@ -6,15 +6,15 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * Test class for RecLimitingRecommendationGeneratorService
+ */
 public class RecLimitingRecommendationGeneratorServiceTest {
 
     RecLimitingRecommendationGeneratorService recLimitingRecommendationGeneratorService;
@@ -32,7 +32,6 @@ public class RecLimitingRecommendationGeneratorServiceTest {
 
     }
 
-
     /**
      * Test to verify duplicate remove from the product list.
      */
@@ -42,7 +41,6 @@ public class RecLimitingRecommendationGeneratorServiceTest {
         assertThat(resultedProducts, is(equalTo(productListWithoutDuplicates)));
     }
 
-
     /**
      * Test to verify product list limitation by providing the limit.
      */
@@ -51,7 +49,6 @@ public class RecLimitingRecommendationGeneratorServiceTest {
         List<Product> resultedProducts = recLimitingRecommendationGeneratorService.generateUniqueRecsForGivenLimit(duplicateProductList,1);
         assertThat(resultedProducts, is(equalTo(limitedProductListWithoutDuplicates)));
     }
-
 
     /**
      * Create the products and fill duplicate and non-duplicate lists.

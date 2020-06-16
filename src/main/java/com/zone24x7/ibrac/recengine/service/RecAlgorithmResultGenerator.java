@@ -57,7 +57,7 @@ public class RecAlgorithmResultGenerator implements AlgorithmResultGenerator {
         try {
             result = datasourceAdapter.getResult(algorithmId, ccp, recCycleStatus);
         } catch (BaseConnectionException e) {
-            //TODO: If client requires back up. Add backup products here.
+            // Note: If client requires back up. Add backup products here.
             // Currently to avoid multiple calls in disaster scenario when one exception happens returns with empty products with algoId = -1
             LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "HBase call failed. Algo:{}, ccp:{}",
                          recCycleStatus.getRequestId(),
@@ -70,7 +70,6 @@ public class RecAlgorithmResultGenerator implements AlgorithmResultGenerator {
         }
 
         List<Product> products = recommendedProductsCurator.getProducts(result, ZonedDateTime.now(recEngineTimezone), recCycleStatus);
-
         algorithmResult.setRecProducts(products);
         return algorithmResult;
     }

@@ -98,10 +98,10 @@ class FilteringRulesHandlerTest {
     }
 
     /**
-     * When there are no rules to run no rule executor call should be made
+     * When there are no rules to run rule executor call should still be made
      */
     @Test
-    void should_not_call_rule_executor_when_empty_rules_to_run() {
+    void should_call_rule_executor_when_empty_rules_to_run() {
         when(recStatusParams.getMultipleAlgorithmResult()).thenReturn(multipleAlgorithmResult);
 
         products.add(product1);
@@ -112,7 +112,7 @@ class FilteringRulesHandlerTest {
 
         filteringRulesHandler.handleTask(recInputParams, recStatusParams, activeBundle);
 
-        verify(merchandisingRuleExecutor, never()).getFilteredRecommendations(products, ruleIds, Collections.emptyMap(), recCycleStatus);
+        verify(merchandisingRuleExecutor, atMostOnce()).getFilteredRecommendations(products, ruleIds, Collections.emptyMap(), recCycleStatus);
         verify(recStatusParams, never()).setFilteringRulesResult(filteringRulesResult);
     }
 }

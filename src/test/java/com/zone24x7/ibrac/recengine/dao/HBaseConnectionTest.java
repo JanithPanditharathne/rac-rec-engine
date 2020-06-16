@@ -2,6 +2,7 @@ package com.zone24x7.ibrac.recengine.dao;
 
 import com.zone24x7.ibrac.recengine.HBaseConfig;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -9,11 +10,11 @@ import java.io.IOException;
 /**
  * Class to test HBaseAdapterTest.
  */
+@Disabled
 public class HBaseConnectionTest {
 
-    HBaseConnection hBaseConnection;
-    HBaseConfig hBaseConfig;
-
+    private HBaseConnection hBaseConnection;
+    private HBaseConfig hBaseConfig;
 
     /**
      * Setup mock classes
@@ -32,7 +33,6 @@ public class HBaseConnectionTest {
     @Test
     public void should_create_the_hbase_connection_without_errors() throws UnsupportedOperationException, IOException {
         hBaseConnection = new HBaseConnection(hBaseConfig);
-
         hBaseConnection.getConnection();
     }
 }

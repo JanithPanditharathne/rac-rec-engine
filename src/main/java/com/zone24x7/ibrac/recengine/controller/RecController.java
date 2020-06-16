@@ -208,16 +208,13 @@ public class RecController {
             }
         }
 
-
         ObjectNode node = RecResponseFormatter.format(channelId, pageId, recResultList, new ResponseFormatterConfig(currency, imageWidth, imageHeight));
-
         ObjectNode headerNode = RecResponseFormatter.formatHeader(channelId, pageId, requestId, recResultList);
 
         return ResponseEntity.ok()
                 .header(StringConstants.REC_META, headerNode.toString())
                 .body(node);
     }
-
 
     /**
      * Method to limit the products for the given limit
@@ -247,7 +244,6 @@ public class RecController {
             recResult.setRecPayload(flatRecPayload);
         }
     }
-
 
     /**
      * Method to get placeholder based rec result.

@@ -1,13 +1,11 @@
 package com.zone24x7.ibrac.recengine.service;
 
 import com.zone24x7.ibrac.recengine.pojo.Product;
+import com.zone24x7.ibrac.recengine.util.ListUtilities;
 import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Recommendation generator which allows filtering out the unique recommendations from a list of recommendations
@@ -27,27 +25,11 @@ public class RecLimitingRecommendationGeneratorService implements RecLimitingRec
     @Override
     public List<Product> generateUniqueRecsForGivenLimit(List<Product> allRecs, int limit) {
         //First remove duplicates if any
-        List<Product> duplicatesRemovedList = removeDuplicates(allRecs);
+        List<Product> duplicatesRemovedList = ListUtilities.removeDuplicates(allRecs);
 
         //Then apply limiting functionality
         return applyLimit(duplicatesRemovedList, limit);
     }
-
-
-    /**
-     * Method used to remove duplicate products from the final list
-     *
-     * @param fullProductList full product list that may contain duplicates
-     * @return duplicates removed product list
-     */
-    private static List<Product> removeDuplicates(List<Product> fullProductList) {
-        Set<Product> duplicateFilteringSet = new LinkedHashSet<>();
-        List<Product> nonDuplicatedProductList = new LinkedList<>();
-        duplicateFilteringSet.addAll(fullProductList);
-        nonDuplicatedProductList.addAll(duplicateFilteringSet);
-        return nonDuplicatedProductList;
-    }
-
 
     /**
      * Applies the specified limit for the given list of recommendations.
@@ -63,5 +45,4 @@ public class RecLimitingRecommendationGeneratorService implements RecLimitingRec
             return originalList;
         }
     }
-
 }

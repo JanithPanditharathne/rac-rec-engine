@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pipeline.flatrecpipeline.handlers;
 import com.zone24x7.ibrac.recengine.enumeration.RecommendationType;
 import com.zone24x7.ibrac.recengine.pojo.*;
 import com.zone24x7.ibrac.recengine.pojo.rules.FilteringRulesResult;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
@@ -51,7 +52,7 @@ public class AccumulationHandler implements RecUnitHandler {
         }
 
         //If filtering rule result exist
-        if(filteringRulesResult != null) {
+        if (filteringRulesResult != null) {
             recMetaInfo.setExecutedFilteringRuleInfoList(filteringRulesResult.getExecutedFilteringRuleInfo());
         }
 
@@ -71,7 +72,7 @@ public class AccumulationHandler implements RecUnitHandler {
     private static FlatRecPayload populateFlatRecPayload(MultipleAlgorithmResult multipleAlgorithmResult,
                                                          FilteringRulesResult filteringRulesResult) {
         FlatRecPayload flatRecPayload = new FlatRecPayload();
-        if (filteringRulesResult != null) {
+        if (filteringRulesResult != null && CollectionUtils.isNotEmpty(filteringRulesResult.getExecutedFilteringRuleInfo())) {
             flatRecPayload.setProducts(filteringRulesResult.getFilteredRecommendedProductsList());
             flatRecPayload.setDisplayText(multipleAlgorithmResult.getDisplayText());
         } else if (multipleAlgorithmResult != null) {

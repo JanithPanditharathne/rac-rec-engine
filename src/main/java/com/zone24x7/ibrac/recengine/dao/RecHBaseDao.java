@@ -33,7 +33,6 @@ public class RecHBaseDao implements HBaseDao {
     @Value(AppConfigStringConstants.HBASE_CONNECTION_TIMEOUT)
     private Integer hBaseConnectionTimeout;
 
-
     /*
         Following variables are used to maintain HBase state and to control the number of threads that gets blocked
         in an HBase offline situation
