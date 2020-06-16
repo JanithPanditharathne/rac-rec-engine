@@ -188,7 +188,8 @@ class RecAlgorithmCombinatorTest {
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("100"), is("1"));
         assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
         assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("100"), is("productNumbers:2213222"));
-        assertThat(combinedAlgoResult.getDisplayText(), is("CombinedDisplayText"));
+        //Should be algo1 display text as result is only from algo1
+        assertThat(combinedAlgoResult.getDisplayText(), is("algo1DisplayText"));
     }
 
     /**
@@ -277,7 +278,8 @@ class RecAlgorithmCombinatorTest {
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("101"), is("2,3"));
         assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
         assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("101"), is(""));
-        assertThat(combinedAlgoResult.getDisplayText(), is("CombinedDisplayText"));
+        //Should be algo2 display text as result is only from algo 2
+        assertThat(combinedAlgoResult.getDisplayText(), is("algo2DisplayText"));
     }
 
     /**
@@ -307,7 +309,8 @@ class RecAlgorithmCombinatorTest {
         assertThat(combinedAlgoResult.getAlgoToProductsMap().get("101"), is("2,3"));
         assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
         assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("101"), is(""));
-        assertThat(combinedAlgoResult.getDisplayText(), is("CombinedDisplayText"));
+        //Should be algo2 display text as result is only from algo 2
+        assertThat(combinedAlgoResult.getDisplayText(), is("algo2DisplayText"));
     }
 
     /**

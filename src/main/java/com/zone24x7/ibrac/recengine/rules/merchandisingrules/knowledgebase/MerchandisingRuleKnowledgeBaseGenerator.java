@@ -54,6 +54,12 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
 
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
+    /**
+     * Sets configuration.
+     *
+     * @param inputConfigurations the configurations to set
+     * @throws MalformedConfigurationException malformed configuration
+     */
     @Override
     public void setConfigurations(String inputConfigurations) throws MalformedConfigurationException {
         if (StringUtils.isEmpty(inputConfigurations)) {
