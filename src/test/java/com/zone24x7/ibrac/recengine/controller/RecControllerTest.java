@@ -28,6 +28,7 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Pattern;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -45,7 +46,6 @@ public class RecControllerTest {
     private String channelId = "TCom";
     private String pageId = "PDP";
     private String placementId = "Grid";
-
     private String invalidPlacementId = "Grid|for";
 
     private String enCodedCCP = "eyJwcm9kdWN0TnVtYmVyIjoiMjIxMzIyMiJ9";
@@ -57,14 +57,15 @@ public class RecControllerTest {
     private ChannelContextParamsDecoder channelContextParamsDecoder;
     private PlacementTaskFactory placementTaskFactory;
     private ExecutorService cachedTaskExecutorService;
-    Map<String, String> urlDecodedCcpMap;
+    private ReentrantReadWriteLock configSyncLock;
+    private ReentrantReadWriteLock.WriteLock writeLock;
+    private ReentrantReadWriteLock.ReadLock readLock;
+    private Map<String, String> urlDecodedCcpMap;
     private String recResultString = "{\"recPayload\":{\"displayText\":\"Top Trending Products\",\"products\":[{\"productId\":\"1000001\",\"attributesMap\":{\"productTitle\":\"Women's LC Lauren Conrad Eyelet Fit & Flare Dress\",\"productId\":\"1000001\",\"rating\":\"3.0\",\"reviewCount\":\"2\",\"department\":\"Clothing\",\"category\":\"Dresses\",\"productUrl\":\"lauren_conrad_1000001_yellow\",\"brand\":\"Lauren Conrad\",\"gender\":\"Womens\",\"inInventory\":\"true\",\"imageUrl\":\"https://images.pexels.com/photos/1055691/pexels-photo-1055691.jpeg\",\"regularPrice\":\"5500.00\",\"validStartDate\":\"2020/04/20 23:50:30 +0530\",\"validEndDate\":\"2021/05/02 23:50:30 +0530\"}}]},\"recMetaInfo\":{\"type\":\"FLAT_RECOMMENDATION\",\"bundleId\":\"1\",\"limitToApply\":5,\"algoToProductsMap\":{\"100\":\"1000001,1000003,1000006,1000007,1000008,1000009,1000011,1000012,1000001\"},\"algoToUsedCcp\":{\"100\":\"\"},\"executedFilteringRuleInfoList\":[]},\"placeHolder\":\"Grid\"}";
     private RecResult recResult;
-    PlacementTask placementTask;
+    private PlacementTask placementTask;
     private static List<String> whitelistedCcpKeys;
-    RecLimitingRecommendationGeneratorService recLimitingRecommendationGeneratorService;
-
-
+    private RecLimitingRecommendationGeneratorService recLimitingRecommendationGeneratorService;
     private String currency = "Rs";
     private String imageWidth = "180";
     private String imageHeight = "180";
@@ -83,9 +84,11 @@ public class RecControllerTest {
         cachedTaskExecutorService = mock(ExecutorService.class);
         placementTask = mock(PlacementTask.class);
         recLimitingRecommendationGeneratorService = mock(RecLimitingRecommendationGeneratorService.class);
+        configSyncLock = mock(ReentrantReadWriteLock.class);
+        readLock = mock(ReentrantReadWriteLock.ReadLock.class);
+        writeLock = mock(ReentrantReadWriteLock.WriteLock.class);
 
-        recResult = JsonPojoConverter.toPojo(recResultString, new TypeReference<RecResult<FlatRecPayload>>() {
-        });
+        recResult = JsonPojoConverter.toPojo(recResultString, new TypeReference<RecResult<FlatRecPayload>>() {});
 
         // Fill the white listed array.
         fill_white_listed_ccp_keys_array();
@@ -111,12 +114,14 @@ public class RecControllerTest {
         ReflectionTestUtils.setField(recController, "cachedTaskExecutorService", cachedTaskExecutorService);
         ReflectionTestUtils.setField(recController, "placementTaskFactory", placementTaskFactory);
         ReflectionTestUtils.setField(recController, "recLimitingRecommendationGeneratorService", recLimitingRecommendationGeneratorService);
+        ReflectionTestUtils.setField(recController, "configSyncLock", configSyncLock);
 
         when(recLimitingRecommendationGeneratorService.generateUniqueRecsForGivenLimit(flatRecPayload.getProducts(), 5)).thenReturn(flatRecPayload.getProducts());
         when(channelContextParamsDecoder.urlDecode(enCodedCCP)).thenReturn(enCodedCCP);
         when(placementTaskFactory.create(ArgumentMatchers.any(RecInputParams.class), ArgumentMatchers.any(RecCycleStatus.class))).thenReturn(placementTask);
+        when(configSyncLock.writeLock()).thenReturn(writeLock);
+        when(configSyncLock.readLock()).thenReturn(readLock);
     }
-
 
     /**
      * Test to verify that the response entry body generate correctly for valid channel,page,placement and ccps.
@@ -195,7 +200,6 @@ public class RecControllerTest {
         assertThat(responseEntity.getBody(), is(Matchers.equalTo(nodeToCompare)));
     }
 
-
     /**
      * Test to verify that InputValidationException thrown for invalid ccp value format.
      */
@@ -247,7 +251,6 @@ public class RecControllerTest {
         assertThrows(InputValidationException.class, () -> recController.getRecommendation(channelId, pageId, null, enCodedCCP));
         assertThrows(InputValidationException.class, () -> recController.getRecommendation(channelId, pageId, "", enCodedCCP));
     }
-
 
     /**
      * Test to verify that InputValidationException thrown for invalid placement value format.
