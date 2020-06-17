@@ -47,7 +47,7 @@ public class TestConfig {
         }
 
         TestConfig that = (TestConfig) o;
-        return id != null ? id.equals(that.id) : that.id == null;
+        return id != null ? id.equals(that.id) : (that.id == null);
     }
 
     /**
