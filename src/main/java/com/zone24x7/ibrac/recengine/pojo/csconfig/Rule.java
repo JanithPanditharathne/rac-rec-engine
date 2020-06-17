@@ -1,5 +1,8 @@
 package com.zone24x7.ibrac.recengine.pojo.csconfig;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -22,6 +25,9 @@ public class Rule {
 
     @NotEmpty
     private String actionCondition;
+
+    private static final int HASH_SEED1 = 17;
+    private static final int HASH_SEED2 = 37;
 
     /**
      * Method to get the id.
@@ -129,5 +135,50 @@ public class Rule {
      */
     public void setActionCondition(String actionCondition) {
         this.actionCondition = actionCondition;
+    }
+
+    /**
+     * Overridden equals method
+     *
+     * @param o object to compare
+     * @return true if equal and false if not
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        Rule rule = (Rule) o;
+
+        return new EqualsBuilder()
+                .append(isGlobal, rule.isGlobal)
+                .append(id, rule.id)
+                .append(name, rule.name)
+                .append(type, rule.type)
+                .append(matchingCondition, rule.matchingCondition)
+                .append(actionCondition, rule.actionCondition)
+                .isEquals();
+    }
+
+    /**
+     * Overridden hash code method
+     *
+     * @return the hashcode
+     */
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(HASH_SEED1, HASH_SEED2)
+                .append(id)
+                .append(name)
+                .append(type)
+                .append(isGlobal)
+                .append(matchingCondition)
+                .append(actionCondition)
+                .toHashCode();
     }
 }

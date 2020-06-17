@@ -27,4 +27,35 @@ public class RuleConfig {
     public void setRules(List<Rule> rules) {
         this.rules = rules;
     }
+
+    /**
+     * Overridden equals method
+     *
+     * @param o object to compare
+     * @return true if equal and false if not
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        RuleConfig that = (RuleConfig) o;
+
+        return rules != null ? rules.equals(that.rules) : (that.rules == null);
+    }
+
+    /**
+     * Overridden hash code method
+     *
+     * @return the hashcode
+     */
+    @Override
+    public int hashCode() {
+        return rules != null ? rules.hashCode() : 0;
+    }
 }
