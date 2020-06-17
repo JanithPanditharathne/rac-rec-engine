@@ -71,7 +71,7 @@ public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<Str
             throw new MalformedConfigurationException("Error occurred when converting rule config string to pojo.", e);
         }
 
-        if (recConfig == null || recConfig.getRecs() == null) {
+        if (recConfig == null) {
             throw new MalformedConfigurationException("RecConfig or recs inside recConfig is null ");
         }
 

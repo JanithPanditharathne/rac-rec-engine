@@ -42,7 +42,6 @@ public class RecAlgoParamsValidator implements AlgoParamsValidator {
         List<String> mandatoryParams = algoParams.getMandatoryParams();
         List<List<String>> conditionalMandatoryParams = algoParams.getConditionalMandatoryParams();
 
-
         if (CollectionUtils.isNotEmpty(mandatoryParams)) {
             // If all mandatory parameters are available return true, else false.
             return checkValidity(mandatoryParams, ccp);

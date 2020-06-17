@@ -128,7 +128,7 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
         String bundleId = null;
 
         // Currently default rec type is considered regular. If no type is sent, it is considered as regular.
-        if (rec.getType() == null || rec.getType().equals(REC_TYPE_REGULAR)) {
+        if (rec.getType() == null || REC_TYPE_REGULAR.equals(rec.getType())) {
             if (rec.getRegularConfig() == null) {
                 LOGGER.error(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Regular config null in Rec id : {}", recCycleStatus.getRequestId(), rec.getId());
                 return null;
@@ -168,7 +168,7 @@ public class RecActiveBundleProvider implements ActiveBundleProvider {
             return Optional.empty();
         }
 
-        return Optional.of(new ActiveBundle(new ActiveBundle.BundleInfo(id, name, type), recId, limitToApply, algorithms, algoCombineInfo, new HashSet<>(placementFilteringRuleIds)));
+        return Optional.of(new ActiveBundle(new ActiveBundle.BundleInfo(id, name, type), recId, limitToApply, algorithms, algoCombineInfo, new LinkedHashSet<>(placementFilteringRuleIds)));
     }
 
     /**
