@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,10 @@ public class RecController {
 
     @Value(AppConfigStringConstants.CONFIG_REC_RESPONSE_IMAGE_HEIGHT)
     private String imageHeight;
+
+    @Autowired
+    @Qualifier("ConfigSyncLock")
+    private ReentrantReadWriteLock configSyncLock;
 
     /**
      * Controller method to get recommendations.
@@ -106,7 +111,12 @@ public class RecController {
             throw new InputValidationException(ErrorCode.RE1007.toString());
         }
 
-        return getRecommendationResult(channelId, pageId, decodedPlacementIds, channelContextParamsMap, requestId);
+        try {
+            configSyncLock.readLock().lock();
+            return getRecommendationResult(channelId, pageId, decodedPlacementIds, channelContextParamsMap, requestId);
+        } finally {
+            configSyncLock.readLock().unlock();
+        }
     }
 
     /**
@@ -202,7 +212,7 @@ public class RecController {
                     String productIds = recPayload != null ? recPayload.getProducts().stream().map(Product::getProductId).collect(Collectors.joining(",")) : "";
                     LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Final Result for placeholder: {}, productIds: {}",
                                 requestId,
-                                placeholderId,
+                                placeholderId.getId(),
                                 productIds);
                 }
             }

@@ -24,7 +24,6 @@ public class CsConfigurationsFetchLocalConfigStrategy implements CsConfiguration
     @Autowired
     private CsConfigurationTempCache csConfigurationTempCache;
 
-
     /**
      * Method to fetch the configurations via strategy.
      * Fetched configuration will be updated to CSConfigurationTempCache

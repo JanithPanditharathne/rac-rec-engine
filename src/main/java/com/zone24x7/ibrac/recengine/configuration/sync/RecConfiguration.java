@@ -104,18 +104,15 @@ public class RecConfiguration implements CsConfiguration {
     @Override
     public CsConfigurationStatus configure() {
         //Generate knowledgeBaseInfo
-        CsConfigurationStatus status = CsConfigurationStatus.SUCCESS;
-
         try {
             activeBundleProviderConfig = activeBundleConfigGenerator.generateConfiguration(recSlotConfig, bundleConfig);
             recRuleKnowledgeBaseGenerator.setConfigurations(recConfig);
             knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo();
+            return CsConfigurationStatus.SUCCESS;
         } catch (MalformedConfigurationException e) {
             LOGGER.error("Error in configuring rec configuration", e);
-            status = CsConfigurationStatus.FAIL;
+            return CsConfigurationStatus.FAIL;
         }
-
-        return status;
     }
 
     /**

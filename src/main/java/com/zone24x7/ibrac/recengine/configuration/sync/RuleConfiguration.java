@@ -100,12 +100,16 @@ public class RuleConfiguration implements CsConfiguration {
      */
     @Override
     public CsConfigurationStatus apply() {
-        // Apply knowledge base
-        ruleExecutor.setKnowledgeBaseInfo(knowledgeBaseInfo);
-
-        // Update hash
-        updateHashOfLastUsedConfig(ruleConfig);
-        return CsConfigurationStatus.SUCCESS;
+        try {
+            // Apply knowledge base
+            ruleExecutor.setKnowledgeBaseInfo(knowledgeBaseInfo);
+            // Update hash
+            updateHashOfLastUsedConfig(ruleConfig);
+            return CsConfigurationStatus.SUCCESS;
+        } catch (Exception e) {
+            LOGGER.error("Error applying rec configuration", e);
+            return CsConfigurationStatus.FAIL;
+        }
     }
 
     /**
