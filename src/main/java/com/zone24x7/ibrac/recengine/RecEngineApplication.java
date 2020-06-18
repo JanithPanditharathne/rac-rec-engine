@@ -14,7 +14,7 @@ public class RecEngineApplication {
      *
      * @param args input arguments.
      */
-    public static void main(String[] args) {
-        SpringApplication.run(RecEngineApplication.class, args);
+    public static void main(String[] args) { // NOSONAR
+        SpringApplication.run(RecEngineApplication.class, args); // NOSONAR
     }
 }
