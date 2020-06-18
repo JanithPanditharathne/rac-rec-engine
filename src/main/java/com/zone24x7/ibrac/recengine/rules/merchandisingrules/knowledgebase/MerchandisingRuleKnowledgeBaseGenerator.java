@@ -45,8 +45,6 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
     @Autowired
     private MerchandisingRuleGenerator ruleGenerator;
 
-    private MerchandisingRuleKnowledgeBaseInfo knowledgeBaseInfo;
-
     private static final String BOOST = "BOOST";
     private static final String BURY = "BURY";
     private static final String ONLY_RECOMMEND = "ONLY_RECOMMEND";
@@ -117,7 +115,7 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
         InternalKnowledgeBase knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
         knowledgeBase.addPackages(knowledgePackages);
 
-        knowledgeBaseInfo = new MerchandisingRuleKnowledgeBaseInfo();
+        MerchandisingRuleKnowledgeBaseInfo knowledgeBaseInfo = new MerchandisingRuleKnowledgeBaseInfo();
         knowledgeBaseInfo.setKnowledgeBase(knowledgeBase);
         knowledgeBaseInfo.addGlobalFilteringRuleIds(globalFilteringRuleIds);
         return knowledgeBaseInfo;

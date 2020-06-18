@@ -53,8 +53,6 @@ class RecRuleKnowledgeBaseGeneratorTest {
             "then\n" +
             "    $recs.add($recIdToRecMap.get(\"100\"));\n" +
             "end";
-    private RecRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo;
-
 
     @BeforeEach
     void setUp() throws RuleGeneratorException {
@@ -62,11 +60,9 @@ class RecRuleKnowledgeBaseGeneratorTest {
         logger = mock(Logger.class);
         recRuleGenerator = mock(DroolsRecRuleGenerator.class);
         validator = spy(Validation.buildDefaultValidatorFactory().getValidator());
-        recRuleKnowledgeBaseInfo = spy(RecRuleKnowledgeBaseInfo.class);
 
         ReflectionTestUtils.setField(recRuleKnowledgeBaseGenerator, "recRuleGenerator", recRuleGenerator);
         ReflectionTestUtils.setField(recRuleKnowledgeBaseGenerator, "validator", validator);
-        ReflectionTestUtils.setField(recRuleKnowledgeBaseGenerator, "recRuleKnowledgeBaseInfo", recRuleKnowledgeBaseInfo);
 
         when(recRuleGenerator.generateRecRule(anyString(), anyString())).thenReturn(EXAMPLE_DRL);
     }

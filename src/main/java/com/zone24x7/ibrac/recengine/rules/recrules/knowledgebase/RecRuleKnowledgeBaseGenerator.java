@@ -45,7 +45,6 @@ import java.util.Set;
 public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<String, RecRuleKnowledgeBaseInfo> {
     private static final Logger LOGGER = LoggerFactory.getLogger(RecRuleKnowledgeBaseGenerator.class);
 
-    private RecRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo;
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Autowired
@@ -117,7 +116,7 @@ public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<Str
         Map<String, Rec> recMap = new HashMap<>();
         recConfig.getRecs().stream().forEach(rec -> recMap.put(rec.getId(), rec));
 
-        recRuleKnowledgeBaseInfo = new RecRuleKnowledgeBaseInfo();
+        RecRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo = new RecRuleKnowledgeBaseInfo();
         recRuleKnowledgeBaseInfo.setKnowledgeBase(knowledgeBase);
         recRuleKnowledgeBaseInfo.setRecIdToRecMap(recMap);
         return recRuleKnowledgeBaseInfo;
