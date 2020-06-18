@@ -15,10 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Drools based implementation for the merchandising rule executor.
@@ -55,7 +52,7 @@ public class DroolsBasedMerchandisingRuleExecutor implements MerchandisingRuleEx
             return rulesResult;
         }
 
-        Set<String> rules = new HashSet<>();
+        Set<String> rules = new LinkedHashSet<>();
         if (CollectionUtils.isNotEmpty(ruleIds)) {
             rules.addAll(ruleIds);
         }

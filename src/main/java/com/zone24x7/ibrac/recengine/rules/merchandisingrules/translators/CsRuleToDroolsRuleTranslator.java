@@ -193,8 +193,8 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
     /**
      * Method to process values which are inside of double quotes.
      * Example:
-     * Input token list => department ,==, "clothing ,&, shoes"
-     * Output token list => department ,==, clothing & shoes
+     * Input token list => department ,=, =, "clothing ,&, shoes"
+     * Output token list => department ,=, =, "clothing & shoes"
      *
      * @param tokenList the input token list
      * @return the output token with processed values
