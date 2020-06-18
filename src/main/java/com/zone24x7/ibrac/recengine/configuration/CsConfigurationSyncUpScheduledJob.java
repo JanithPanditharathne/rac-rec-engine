@@ -173,6 +173,8 @@ public class CsConfigurationSyncUpScheduledJob {
             if (status != CsConfigurationStatus.SUCCESS) {
                 return false;
             }
+
+            LOGGER.info("New configuration applied: {}", configuration.getClass().getSimpleName());
         }
         return true;
     }
