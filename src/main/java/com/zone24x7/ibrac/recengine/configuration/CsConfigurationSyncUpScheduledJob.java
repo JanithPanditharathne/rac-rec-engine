@@ -53,7 +53,7 @@ public class CsConfigurationSyncUpScheduledJob {
             // Loading failed
             LOGGER.error("Configurations loading failed");
             if (configurationNotAppliedAtLeastOnce(configurations)) {
-                //TODO: Write to call back up
+                // NOTE: Write to call back up if required in future.
                 LOGGER.warn("Valid configuration is not available");
             } else {
                 LOGGER.warn("Running with existing config due to configuration loader error");

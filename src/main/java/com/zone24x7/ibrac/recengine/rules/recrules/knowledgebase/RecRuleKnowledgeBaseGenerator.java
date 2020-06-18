@@ -37,7 +37,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-//TODO: Singleton and does not support multi config threads at the moment. Need to change
 /**
  * KnowledgeBaseGenerator for rec rules
  */
