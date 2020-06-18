@@ -172,16 +172,15 @@ public class RecController {
             return Collections.emptyMap();
         }
 
-        String urlDecodedString = channelContextParamsDecoder.urlDecode(channelContextParameters);
-        Map<String, String> urlDecodedCcpMap = channelContextParamsDecoder.deserializeFromBase64StringToMap(urlDecodedString);
+        Map<String, String> base64DecodedCcpMap = channelContextParamsDecoder.deserializeFromBase64StringToMap(channelContextParameters);
 
         // filter the ccp map by the whitelisted ccp keys
-        if (MapUtils.isNotEmpty(urlDecodedCcpMap)) {
-            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Filtering decoded ccp map: {}", requestId, urlDecodedCcpMap);
-            return CcpProcessorUtilities.filterChannelContextParamMap(urlDecodedCcpMap);
+        if (MapUtils.isNotEmpty(base64DecodedCcpMap)) {
+            LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Base64 decoded ccp map: {}", requestId, base64DecodedCcpMap);
+            return CcpProcessorUtilities.filterChannelContextParamMap(base64DecodedCcpMap);
         }
 
-        return urlDecodedCcpMap;
+        return base64DecodedCcpMap;
     }
 
     /**
