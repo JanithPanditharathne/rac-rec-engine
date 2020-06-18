@@ -31,8 +31,6 @@ import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -269,23 +267,5 @@ public class SpringMainConfig {
     @Qualifier("timeZoneId")
     public ZoneId getTimeZoneId(@Value("${recengine.timezone}") String timezoneName) {
         return ZoneId.of(timezoneName);
-    }
-
-    /**
-     * Method to configure the cors application wide
-     *
-     * @return WebMvcConfigurer with cors details
-     */
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/recengine/**")
-                        .allowedOrigins("*")
-                        .allowedHeaders("Content-Type")
-                        .allowedMethods("GET");
-            }
-        };
     }
 }
