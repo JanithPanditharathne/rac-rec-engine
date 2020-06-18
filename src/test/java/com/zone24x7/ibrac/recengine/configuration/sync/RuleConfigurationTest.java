@@ -124,7 +124,7 @@ class RuleConfigurationTest {
      */
     @Test
     void should_return_fail_if_adding_merchandising_knowledge_base_configuration_throws_an_error() throws MalformedConfigurationException {
-        doThrow(MalformedConfigurationException.class).when(knowledgeBaseGenerator).setConfigurations(null);
+        doThrow(MalformedConfigurationException.class).when(knowledgeBaseGenerator).generate(null);
 
         CsConfigurationStatus result = ruleConfiguration.configure();
         assertThat(result, equalTo(CsConfigurationStatus.FAIL));
@@ -135,13 +135,11 @@ class RuleConfigurationTest {
      */
     @Test
     void should_return_success_when_knowledge_base_info_is_set_successfully() throws MalformedConfigurationException {
-        doNothing().when(knowledgeBaseGenerator).setConfigurations(any());
-        when(knowledgeBaseGenerator.getKnowledgeBaseInfo()).thenReturn(merchandisingRuleKnowledgeBaseInfo);
-
+        when(knowledgeBaseGenerator.generate(anyString())).thenReturn(merchandisingRuleKnowledgeBaseInfo);
+        ReflectionTestUtils.setField(ruleConfiguration, "ruleConfig", RULE_CONFIG);
         CsConfigurationStatus result = ruleConfiguration.configure();
         assertThat(result, equalTo(CsConfigurationStatus.SUCCESS));
-        verify(knowledgeBaseGenerator, times(1)).setConfigurations(any());
-        verify(knowledgeBaseGenerator, times(1)).getKnowledgeBaseInfo();
+        verify(knowledgeBaseGenerator, times(1)).generate(anyString());
     }
 
     /**

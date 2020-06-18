@@ -76,8 +76,8 @@ class RecRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rec_rule_config_is_empty_or_null() {
-        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.setConfigurations(""));
-        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.setConfigurations(null));
+        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.generate(""));
+        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.generate(null));
     }
 
     /**
@@ -85,7 +85,7 @@ class RecRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     void should_throw_MalformedConfigurationException_if_non_json_input_is_received() throws MalformedConfigurationException {
-        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.setConfigurations("<html></html>"));
+        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.generate("<html></html>"));
     }
 
     /**
@@ -93,7 +93,7 @@ class RecRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     void should_throw_MalformedConfigurationException_if_recs_node_is_null() throws MalformedConfigurationException {
-        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.setConfigurations("{\"recs\":null}"));
+        assertThrows(MalformedConfigurationException.class, () -> recRuleKnowledgeBaseGenerator.generate("{\"recs\":null}"));
     }
 
     /**
@@ -103,7 +103,7 @@ class RecRuleKnowledgeBaseGeneratorTest {
     void should_throw_MalformedConfigurationException_when_invalid_rec_object_is_found() {
         assertThrows(MalformedConfigurationException.class, () ->
                 //Sample Rec Config 2 does not have a id
-                recRuleKnowledgeBaseGenerator.setConfigurations(
+                recRuleKnowledgeBaseGenerator.generate(
                         "{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":null," +
                                 "\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null},{\"name\":\"Sample Rec Config 2\"," +
                                 "\"type\":\"REGULAR\",\"matchingCondition\":null,\"regularConfig\":{\"bundleId\":\"1202\"}," +
@@ -116,15 +116,13 @@ class RecRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     void returned_knowledge_base_must_have_all_required_fields_set_in_happy_path() throws MalformedConfigurationException, RuleGeneratorException {
-        recRuleKnowledgeBaseGenerator.setConfigurations("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}");
+        RecRuleKnowledgeBaseInfo knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.generate("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}");
         verify(recRuleGenerator).generateRecRule("100", "department #= \"Clothing\" && brand #= \"Tommy\"");
 
-        RecRuleKnowledgeBaseInfo knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo();
-
         assertThat(knowledgeBaseInfo, is(notNullValue()));
-        assertThat(recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo().getKnowledgeBase(), is(notNullValue()));
-        assertThat(recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo().getRecIdToRecMap(), is(notNullValue()));
-        assertThat(recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo().getRecIdToRecMap().size(), equalTo(1));
+        assertThat(knowledgeBaseInfo.getKnowledgeBase(), is(notNullValue()));
+        assertThat(knowledgeBaseInfo.getRecIdToRecMap(), is(notNullValue()));
+        assertThat(knowledgeBaseInfo.getRecIdToRecMap().size(), equalTo(1));
     }
 
     /**
@@ -137,7 +135,7 @@ class RecRuleKnowledgeBaseGeneratorTest {
 
         assertThrows(MalformedConfigurationException.class, () ->
                 recRuleKnowledgeBaseGenerator
-                        .setConfigurations("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}")
+                        .generate("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}")
         );
     }
 
@@ -151,7 +149,7 @@ class RecRuleKnowledgeBaseGeneratorTest {
 
         assertThrows(MalformedConfigurationException.class, () ->
                 recRuleKnowledgeBaseGenerator
-                        .setConfigurations("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}")
+                        .generate("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}")
         );
     }
 
@@ -169,7 +167,7 @@ class RecRuleKnowledgeBaseGeneratorTest {
 
         assertThrows(MalformedConfigurationException.class, () ->
                 recRuleKnowledgeBaseGenerator
-                        .setConfigurations("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}")
+                        .generate("{\"recs\":[{\"id\":\"100\",\"name\":\"Sample Rec Config 1\",\"type\":\"REGULAR\",\"matchingCondition\":\"department #= \\\"Clothing\\\" && brand #= \\\"Tommy\\\"\",\"regularConfig\":{\"bundleId\":\"1201\"},\"testConfig\":null}]}")
         );
     }
 }

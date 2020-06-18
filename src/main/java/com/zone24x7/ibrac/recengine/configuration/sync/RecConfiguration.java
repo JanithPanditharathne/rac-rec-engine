@@ -106,8 +106,7 @@ public class RecConfiguration implements CsConfiguration {
         //Generate knowledgeBaseInfo
         try {
             activeBundleProviderConfig = activeBundleConfigGenerator.generateConfiguration(recSlotConfig, bundleConfig);
-            recRuleKnowledgeBaseGenerator.setConfigurations(recConfig);
-            knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo();
+            knowledgeBaseInfo = recRuleKnowledgeBaseGenerator.generate(recConfig);
             return CsConfigurationStatus.SUCCESS;
         } catch (MalformedConfigurationException e) {
             LOGGER.error("Error in configuring rec configuration", e);

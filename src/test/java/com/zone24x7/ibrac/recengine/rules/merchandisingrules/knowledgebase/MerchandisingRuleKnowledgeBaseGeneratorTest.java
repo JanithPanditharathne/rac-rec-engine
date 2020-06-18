@@ -1,12 +1,12 @@
 package com.zone24x7.ibrac.recengine.rules.merchandisingrules.knowledgebase;
 
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
+import com.zone24x7.ibrac.recengine.pojo.rules.MerchandisingRuleKnowledgeBaseInfo;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.rulegenerators.DroolsMerchandisingRuleGenerator;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.rulegenerators.MerchandisingRuleGenerator;
 import com.zone24x7.ibrac.recengine.rules.merchandisingrules.translators.CsRuleToDroolsRuleTranslator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import javax.validation.ValidationException;
@@ -55,8 +55,8 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_is_empty_or_null() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(""));
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(null));
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(""));
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(null));
     }
 
     /**
@@ -66,11 +66,11 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_create_an_empty_knowledge_base_if_rule_config_has_zero_rules() throws MalformedConfigurationException {
-        knowledgeBaseGenerator.setConfigurations(RULE_CONFIG_WITH_ZERO_RULES);
-        assertNotNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
-        assertTrue(knowledgeBaseGenerator.getKnowledgeBaseInfo().getGlobalFilteringRuleIds().isEmpty());
-        assertNotNull(knowledgeBaseGenerator.getKnowledgeBaseInfo().getKnowledgeBase());
-        assertTrue(knowledgeBaseGenerator.getKnowledgeBaseInfo().getKnowledgeBase().getPackagesMap().isEmpty());
+        MerchandisingRuleKnowledgeBaseInfo knowledgeBaseInfo = knowledgeBaseGenerator.generate(RULE_CONFIG_WITH_ZERO_RULES);
+        assertNotNull(knowledgeBaseInfo);
+        assertTrue(knowledgeBaseInfo.getGlobalFilteringRuleIds().isEmpty());
+        assertNotNull(knowledgeBaseInfo.getKnowledgeBase());
+        assertTrue(knowledgeBaseInfo.getKnowledgeBase().getPackagesMap().isEmpty());
     }
 
     /**
@@ -78,17 +78,15 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_is_malformed() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG));
     }
 
     /**
      * Test to verify that an exception is thrown when the rule config has an error in conditions.
      */
     @Test
-    public void should_throw_exception_when_rule_config_is_has_a_error_in_conditions() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_CONDITION_ERROR));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+    public void should_throw_exception_when_rule_config_has_a_error_in_conditions() {
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_CONDITION_ERROR));
     }
 
     /**
@@ -96,8 +94,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_invalid_operator() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_INVALID_OPERATOR));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_INVALID_OPERATOR));
     }
 
     /**
@@ -105,8 +102,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_null_rule_id() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_RULE_ID_NULL));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_RULE_ID_NULL));
     }
 
     /**
@@ -114,8 +110,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_empty_rule_id() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_RULE_ID_EMPTY));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_RULE_ID_EMPTY));
     }
 
     /**
@@ -123,8 +118,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_null_type() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_TYPE_NULL));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_TYPE_NULL));
     }
 
     /**
@@ -132,8 +126,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_empty_type() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_TYPE_EMPTY));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_TYPE_EMPTY));
     }
 
     /**
@@ -141,8 +134,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_invalid_type() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_INVALID_TYPE));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_INVALID_TYPE));
     }
 
     /**
@@ -150,8 +142,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_null_action_condition() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_ACTION_CONDITION_NULL));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_ACTION_CONDITION_NULL));
     }
 
     /**
@@ -159,8 +150,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_throw_exception_when_rule_config_has_empty_action_condition() {
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(MALFORMED_JSON_RULE_CONFIG_WITH_ACTION_CONDITION_EMPTY));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(MALFORMED_JSON_RULE_CONFIG_WITH_ACTION_CONDITION_EMPTY));
     }
 
     /**
@@ -172,8 +162,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
         when(validator.validate(any())).thenThrow(ValidationException.class);
         ReflectionTestUtils.setField(knowledgeBaseGenerator, "validator", validator);
 
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(VALID_RULE_CONFIG_WITH_ONE_RULE));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(VALID_RULE_CONFIG_WITH_ONE_RULE));
     }
 
     /**
@@ -185,8 +174,7 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
         when(validator.validate(any())).thenThrow(IllegalArgumentException.class);
         ReflectionTestUtils.setField(knowledgeBaseGenerator, "validator", validator);
 
-        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.setConfigurations(VALID_RULE_CONFIG_WITH_ONE_RULE));
-        assertNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
+        assertThrows(MalformedConfigurationException.class, () -> knowledgeBaseGenerator.generate(VALID_RULE_CONFIG_WITH_ONE_RULE));
     }
 
     /**
@@ -196,11 +184,11 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_generate_knowledge_base_correctly_for_a_single_rule() throws MalformedConfigurationException {
-        knowledgeBaseGenerator.setConfigurations(VALID_RULE_CONFIG_WITH_ONE_RULE);
-        assertNotNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
-        assertNotNull(knowledgeBaseGenerator.getKnowledgeBaseInfo().getKnowledgeBase());
-        assertEquals(1, knowledgeBaseGenerator.getKnowledgeBaseInfo().getKnowledgeBase().getPackage("mrulespack").getRules().size());
-        assertEquals(0, knowledgeBaseGenerator.getKnowledgeBaseInfo().getGlobalFilteringRuleIds().size());
+        MerchandisingRuleKnowledgeBaseInfo knowledgeBaseInfo = knowledgeBaseGenerator.generate(VALID_RULE_CONFIG_WITH_ONE_RULE);
+        assertNotNull(knowledgeBaseInfo);
+        assertNotNull(knowledgeBaseInfo.getKnowledgeBase());
+        assertEquals(1, knowledgeBaseInfo.getKnowledgeBase().getPackage("mrulespack").getRules().size());
+        assertEquals(0, knowledgeBaseInfo.getGlobalFilteringRuleIds().size());
     }
 
     /**
@@ -210,11 +198,11 @@ public class MerchandisingRuleKnowledgeBaseGeneratorTest {
      */
     @Test
     public void should_generate_knowledge_base_correctly_for_a_multiple_rules() throws MalformedConfigurationException {
-        knowledgeBaseGenerator.setConfigurations(VALID_RULE_CONFIG_WITH_MULTIPLE_RULES);
-        assertNotNull(knowledgeBaseGenerator.getKnowledgeBaseInfo());
-        assertNotNull(knowledgeBaseGenerator.getKnowledgeBaseInfo().getKnowledgeBase());
+        MerchandisingRuleKnowledgeBaseInfo knowledgeBaseInfo = knowledgeBaseGenerator.generate(VALID_RULE_CONFIG_WITH_MULTIPLE_RULES);
+        assertNotNull(knowledgeBaseInfo);
+        assertNotNull(knowledgeBaseInfo.getKnowledgeBase());
 
-        assertEquals(4, knowledgeBaseGenerator.getKnowledgeBaseInfo().getKnowledgeBase().getPackage("mrulespack").getRules().size());
-        assertEquals(2, knowledgeBaseGenerator.getKnowledgeBaseInfo().getGlobalFilteringRuleIds().size());
+        assertEquals(4, knowledgeBaseInfo.getKnowledgeBase().getPackage("mrulespack").getRules().size());
+        assertEquals(2, knowledgeBaseInfo.getGlobalFilteringRuleIds().size());
     }
 }

@@ -2,7 +2,6 @@ package com.zone24x7.ibrac.recengine.configuration.sync;
 
 import com.zone24x7.ibrac.recengine.configuration.fetch.CsConfigurationTempCache;
 import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
-import com.zone24x7.ibrac.recengine.pojo.recbundle.ActiveBundleProviderConfig;
 import com.zone24x7.ibrac.recengine.pojo.rules.RecRuleKnowledgeBaseInfo;
 import com.zone24x7.ibrac.recengine.recbundle.ActiveBundleConfigGenerator;
 import com.zone24x7.ibrac.recengine.recbundle.ActiveBundleProvider;
@@ -12,10 +11,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.util.ReflectionTestUtils;
-
-import java.util.concurrent.ExecutionException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.IsEqual.equalTo;
@@ -152,7 +148,7 @@ class RecConfigurationTest {
     @Test
     void should_return_success_if_configuration_is_successful() throws MalformedConfigurationException {
         RecRuleKnowledgeBaseInfo recRuleKnowledgeBaseInfo = new RecRuleKnowledgeBaseInfo();
-        when(recRuleKnowledgeBaseGenerator.getKnowledgeBaseInfo()).thenReturn(recRuleKnowledgeBaseInfo);
+        when(recRuleKnowledgeBaseGenerator.generate(anyString())).thenReturn(recRuleKnowledgeBaseInfo);
 
         //Hashes are set in setup
         ReflectionTestUtils.setField(recConfiguration, "recSlotConfig", REC_SLOT_CONFIG);
@@ -162,7 +158,7 @@ class RecConfigurationTest {
         CsConfigurationStatus result = recConfiguration.configure();
 
         assertThat(result, equalTo(CsConfigurationStatus.SUCCESS));
-        verify(recRuleKnowledgeBaseGenerator).getKnowledgeBaseInfo();
+        verify(recRuleKnowledgeBaseGenerator).generate(anyString());
     }
 
     /**
@@ -170,7 +166,7 @@ class RecConfigurationTest {
      */
     @Test
     void should_return_fail_status_on_exception_received() throws MalformedConfigurationException {
-        doThrow(new MalformedConfigurationException("")).when(recRuleKnowledgeBaseGenerator).setConfigurations(REC_CONFIG);
+        doThrow(new MalformedConfigurationException("")).when(recRuleKnowledgeBaseGenerator).generate(REC_CONFIG);
 
         //Hashes are set in setup
         ReflectionTestUtils.setField(recConfiguration, "recSlotConfig", REC_SLOT_CONFIG);
@@ -180,7 +176,6 @@ class RecConfigurationTest {
         CsConfigurationStatus result = recConfiguration.configure();
 
         assertThat(result, equalTo(CsConfigurationStatus.FAIL));
-        verify(recRuleKnowledgeBaseGenerator, never()).getKnowledgeBaseInfo();
     }
 
     /**

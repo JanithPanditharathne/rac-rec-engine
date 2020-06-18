@@ -52,13 +52,14 @@ public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<Str
     private RecRuleGenerator recRuleGenerator;
 
     /**
-     * Converts the input configuration to knowledge base and sets recRuleKnowledgeBaseInfo
+     * Method to generate the knowledge base for a given configuration
      *
      * @param inputConfigurations the configurations to set
+     * @return the rec rule knowledge base information
      * @throws MalformedConfigurationException if any issue found with the configurations
      */
     @Override
-    public void setConfigurations(String inputConfigurations) throws MalformedConfigurationException {
+    public RecRuleKnowledgeBaseInfo generate(String inputConfigurations) throws MalformedConfigurationException {
         if (StringUtils.isEmpty(inputConfigurations)) {
             throw new MalformedConfigurationException("Rec configurations cannot be empty or null.");
         }
@@ -119,15 +120,6 @@ public class RecRuleKnowledgeBaseGenerator implements KnowledgeBaseGenerator<Str
         recRuleKnowledgeBaseInfo = new RecRuleKnowledgeBaseInfo();
         recRuleKnowledgeBaseInfo.setKnowledgeBase(knowledgeBase);
         recRuleKnowledgeBaseInfo.setRecIdToRecMap(recMap);
-    }
-
-    /**
-     * Method to return the RecRuleKnowledgeBaseInfo
-     *
-     * @return RecRuleKnowledgeBaseInfo
-     */
-    @Override
-    public RecRuleKnowledgeBaseInfo getKnowledgeBaseInfo() {
         return recRuleKnowledgeBaseInfo;
     }
 }

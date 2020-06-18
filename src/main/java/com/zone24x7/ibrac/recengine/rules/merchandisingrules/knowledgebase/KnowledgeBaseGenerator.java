@@ -11,16 +11,10 @@ import com.zone24x7.ibrac.recengine.exceptions.MalformedConfigurationException;
 public interface KnowledgeBaseGenerator<I, O> {
 
     /**
-     * Method to set the configurations.
+     * Method to generate the knowledge base for a given configuration
      *
      * @param inputConfigurations the configurations to set
-     */
-    void setConfigurations(I inputConfigurations) throws MalformedConfigurationException;
-
-    /**
-     * Method to get the knowledge base information.
-     *
      * @return the knowledge base information
      */
-    O getKnowledgeBaseInfo();
+    O generate(I inputConfigurations) throws MalformedConfigurationException;
 }

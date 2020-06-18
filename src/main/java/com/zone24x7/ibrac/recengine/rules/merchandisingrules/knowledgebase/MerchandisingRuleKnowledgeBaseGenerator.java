@@ -55,13 +55,14 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
     private Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     /**
-     * Sets configuration.
+     * Method to generate the knowledge base for a given configuration
      *
      * @param inputConfigurations the configurations to set
+     * @return the merchandising rule knowledge base information
      * @throws MalformedConfigurationException malformed configuration
      */
     @Override
-    public void setConfigurations(String inputConfigurations) throws MalformedConfigurationException {
+    public MerchandisingRuleKnowledgeBaseInfo generate(String inputConfigurations) throws MalformedConfigurationException {
         if (StringUtils.isEmpty(inputConfigurations)) {
             throw new MalformedConfigurationException("Rule configurations cannot be empty or null.");
         }
@@ -119,15 +120,6 @@ public class MerchandisingRuleKnowledgeBaseGenerator implements KnowledgeBaseGen
         knowledgeBaseInfo = new MerchandisingRuleKnowledgeBaseInfo();
         knowledgeBaseInfo.setKnowledgeBase(knowledgeBase);
         knowledgeBaseInfo.addGlobalFilteringRuleIds(globalFilteringRuleIds);
-    }
-
-    /**
-     * Method to get the merchandising rule knowledge base info.
-     *
-     * @return the merchandising rule knowledge base info
-     */
-    @Override
-    public MerchandisingRuleKnowledgeBaseInfo getKnowledgeBaseInfo() {
         return knowledgeBaseInfo;
     }
 

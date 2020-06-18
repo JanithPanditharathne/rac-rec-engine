@@ -83,8 +83,7 @@ public class RuleConfiguration implements CsConfiguration {
         CsConfigurationStatus status = CsConfigurationStatus.SUCCESS;
 
         try {
-            knowledgeBaseGenerator.setConfigurations(ruleConfig);
-            knowledgeBaseInfo = knowledgeBaseGenerator.getKnowledgeBaseInfo();
+            knowledgeBaseInfo = knowledgeBaseGenerator.generate(ruleConfig);
         } catch (MalformedConfigurationException e) {
             LOGGER.error("Error reading rule configuration", e);
             status = CsConfigurationStatus.FAIL;
