@@ -396,4 +396,63 @@ class RecAlgorithmCombinatorTest {
 
         assertThat(combinedAlgoResult.getDisplayText(), is("algo1DefaultDisplayText"));
     }
+
+    /**
+     * When combine = true and first algo produces 0 products. Given limit is not satisfied by next algo. 2nd algo id's display text should be returned.
+     */
+    @Test
+    void should_return_set_the_correct_display_text_when_limit_not_reached_but_result_is_from_single_algo() throws ExecutionException, InterruptedException {
+        //zero product from algo 100
+        //two products from algo 101
+
+        when(future1.get()).thenReturn(new AlgorithmResult());
+
+        algoCombineInfo = new AlgoCombineInfo();
+        algoCombineInfo.setEnableCombine(true);
+        algoCombineInfo.setCombineDisplayText("CombinedDisplayText");
+
+        int limit = 5; // algo 100 satisfies
+
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
+
+        assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(2)));
+        assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
+        assertThat(combinedAlgoResult.getAlgoToProductsMap().get("101"), is("2,3"));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("101"), is(""));
+
+        //Should be algo2 display text as result is only from algo1
+        assertThat(combinedAlgoResult.getDisplayText(), is("algo2DisplayText"));
+    }
+
+
+    /**
+     * When combine = true and first algo throws exception. Given limit is not satisfied by next algo. 2nd algo id's display text should be returned.
+     */
+    @Test
+    void should_return_set_the_correct_display_text_when_limit_not_reached_but_result_is_from_single_algo_with_one_algo_exception() throws ExecutionException, InterruptedException {
+        //zero product from algo 100
+        //two products from algo 101
+
+        when(future1.get()).thenThrow( new InterruptedException());
+
+        algoCombineInfo = new AlgoCombineInfo();
+        algoCombineInfo.setEnableCombine(true);
+        algoCombineInfo.setCombineDisplayText("CombinedDisplayText");
+
+        int limit = 5; // algo 100 satisfies
+
+        ActiveBundle activeBundle = new ActiveBundle(new ActiveBundle.BundleInfo("1", "", "FLAT"), "1", limit, bundleAlgorithms, algoCombineInfo, rules);
+        MultipleAlgorithmResult combinedAlgoResult = recAlgorithmCombinator.getCombinedAlgoResult(recInputParams, activeBundle, recCycleStatus);
+
+        assertThat(combinedAlgoResult.getRecProducts().size(), is(equalTo(2)));
+        assertThat(combinedAlgoResult.getAlgoToProductsMap().size(), is(equalTo(1)));
+        assertThat(combinedAlgoResult.getAlgoToProductsMap().get("101"), is("2,3"));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().size(), is(1));
+        assertThat(combinedAlgoResult.getAlgoToUsedCcp().get("101"), is(""));
+
+        //Should be algo2 display text as result is only from algo1
+        assertThat(combinedAlgoResult.getDisplayText(), is("algo2DisplayText"));
+    }
 }
