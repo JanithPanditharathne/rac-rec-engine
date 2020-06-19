@@ -12,9 +12,9 @@ import com.zone24x7.ibrac.recengine.strategy.PlacementTaskFactory;
 import com.zone24x7.ibrac.recengine.util.*;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -86,7 +86,7 @@ public class RecController {
                                                     @RequestParam(value = "plids", required = false) String placeholderIds,
                                                     @RequestParam(value = "ccp", required = false) String channelContextParameters) {
 
-        String requestId = (String) MDC.get("correlationId");
+        String requestId = MDC.get("correlationId");
         LOGGER.info(StringConstants.REQUEST_ID_LOG_MSG_PREFIX + "Received cid: {}, pgid: {}, plids: {}, ccp: {}",
                     requestId,
                     channelId,

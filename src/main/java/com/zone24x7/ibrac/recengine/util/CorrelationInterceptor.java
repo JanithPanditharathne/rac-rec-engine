@@ -1,9 +1,9 @@
 package com.zone24x7.ibrac.recengine.util;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.MDC;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -45,7 +45,7 @@ public class CorrelationInterceptor extends HandlerInterceptorAdapter {
                     request.getRemoteAddr());
 
         MDC.put(CORRELATION_ID_MDC_ATTRIBUTE_NAME, correlationId);
-        MDC.put(START_DATE_TIME_MDC_ATTRIBUTE_NAME, System.currentTimeMillis());
+        MDC.put(START_DATE_TIME_MDC_ATTRIBUTE_NAME, String.valueOf(System.currentTimeMillis()));
 
         return true;
     }
@@ -63,9 +63,8 @@ public class CorrelationInterceptor extends HandlerInterceptorAdapter {
     public void afterCompletion(final HttpServletRequest request, final HttpServletResponse response,
                                 final Object handler, final Exception ex) throws Exception {
 
-
-        final String correlationId = (String) MDC.get(CORRELATION_ID_MDC_ATTRIBUTE_NAME);
-        final long startTime = (long) MDC.get(START_DATE_TIME_MDC_ATTRIBUTE_NAME);
+        final String correlationId = MDC.get(CORRELATION_ID_MDC_ATTRIBUTE_NAME);
+        final long startTime = Long.parseLong(MDC.get(START_DATE_TIME_MDC_ATTRIBUTE_NAME));
         long endTime = System.currentTimeMillis();
         long requestTime = endTime - startTime;
 
