@@ -359,9 +359,9 @@ public class CsRuleToDroolsRuleTranslator implements RuleTranslator {
 
         if (attributeTypeMappingInfo.get(attribute) != null) {
             if ("double".equalsIgnoreCase(attributeTypeMappingInfo.get(attribute))) {
-                actionConditionAttributeRetrievalPhrase = "Double.valueOf(" + actionConditionAttributeRetrievalPhrase + ")";
+                actionConditionAttributeRetrievalPhrase = "RuleUtils.toDouble(" + actionConditionAttributeRetrievalPhrase + ")";
             } else if ("integer".equalsIgnoreCase(attributeTypeMappingInfo.get(attribute))) {
-                actionConditionAttributeRetrievalPhrase = "Integer.valueOf(" + actionConditionAttributeRetrievalPhrase + ")";
+                actionConditionAttributeRetrievalPhrase = "RuleUtils.toInteger(" + actionConditionAttributeRetrievalPhrase + ")";
             }
         }
 

@@ -28,13 +28,13 @@ public class CsRuleToDroolsRuleTranslatorTest {
     private static final String CS_ACTION_RULE_1 = "department == \"Clothing\"";
     private static final String CS_ACTION_RULE_2 = "department #= \"Clothing & Shoes & a & b\"";
     private static final String CS_ACTION_RULE_3 = "((department #= \"Clothing\" || department == \"Shoes\") && (category == \"sports\" || category #= \"sport\")) && brand #= \"Nike\"";
-    private static final String CS_ACTION_RULE_4 = "((department #= \"Clothing\" || price > \"12.99\") && rating > \"2\")";
+    private static final String CS_ACTION_RULE_4 = "((department #= \"Clothing\" || regularPrice > \"12.99\") && reviewCount > \"2\")";
 
     private static final String EXPECTED_ACTION_RULE_1 = "Product(" + UUID_CONDITION + "(attributesMap[\"department\"] == \"Clothing\"))";
     private static final String EXPECTED_ACTION_RULE_1_1 = "Product((attributesMap[\"department\"] == \"Clothing\"))";
     private static final String EXPECTED_ACTION_RULE_2 = "Product(" + UUID_CONDITION + "(attributesMap[\"department\"] equalsIgnoreCase \"Clothing & Shoes & a & b\"))";
     private static final String EXPECTED_ACTION_RULE_3 = "Product(" + UUID_CONDITION + "(((attributesMap[\"department\"] equalsIgnoreCase \"Clothing\" || attributesMap[\"department\"] == \"Shoes\") && (attributesMap[\"category\"] == \"sports\" || attributesMap[\"category\"] equalsIgnoreCase \"sport\")) && attributesMap[\"brand\"] equalsIgnoreCase \"Nike\"))";
-    private static final String EXPECTED_ACTION_RULE_4 = "Product(" + UUID_CONDITION + "(((attributesMap[\"department\"] equalsIgnoreCase \"Clothing\" || Double.valueOf(attributesMap[\"price\"]) > \"12.99\") && Integer.valueOf(attributesMap[\"rating\"]) > \"2\")))";
+    private static final String EXPECTED_ACTION_RULE_4 = "Product(" + UUID_CONDITION + "(((attributesMap[\"department\"] equalsIgnoreCase \"Clothing\" || RuleUtils.toDouble(attributesMap[\"regularPrice\"]) > \"12.99\") && RuleUtils.toInteger(attributesMap[\"reviewCount\"]) > \"2\")))";
 
     /**
      * Method to setup the dependencies for the test class
@@ -42,8 +42,8 @@ public class CsRuleToDroolsRuleTranslatorTest {
     @BeforeEach
     public void setup() {
         Map<String, String> map = new HashMap<>();
-        map.put("price", "double");
-        map.put("rating", "integer");
+        map.put("regularPrice", "double");
+        map.put("reviewCount", "integer");
         csRuleToDroolsRuleTranslator = new CsRuleToDroolsRuleTranslator(map);
     }
 

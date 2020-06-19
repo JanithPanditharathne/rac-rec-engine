@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -25,6 +26,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"1\"\n" +
             "when\n" +
@@ -45,6 +47,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"2\"\n" +
             "when\n" +
@@ -66,6 +69,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"3\"\n" +
             "when\n" +
@@ -88,6 +92,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"4\"\n" +
             "when\n" +
@@ -108,6 +113,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"5\"\n" +
             "when\n" +
@@ -128,6 +134,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"6\"\n" +
             "when\n" +
@@ -149,6 +156,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"7\"\n" +
             "when\n" +
@@ -169,6 +177,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"8\"\n" +
             "when\n" +
@@ -189,6 +198,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"9\"\n" +
             "when\n" +
@@ -210,6 +220,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"10\"\n" +
             "when\n" +
@@ -230,6 +241,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"11\"\n" +
             "when\n" +
@@ -251,6 +263,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"12\"\n" +
             "when\n" +
@@ -273,6 +286,7 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
             "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
             "\n" +
             "rule \"13\"\n" +
             "when\n" +
@@ -286,13 +300,59 @@ public class DroolsMerchandisingRuleGeneratorTest {
             "    }\n" +
             "end";
 
+    private static final String EXPECTED_RULE_14 = "package mrulespack\n" +
+            "\n" +
+            "import java.util.List;\n" +
+            "import java.util.LinkedList;\n" +
+            "import com.zone24x7.ibrac.recengine.enumeration.RuleType;\n" +
+            "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
+            "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
+            "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
+            "\n" +
+            "rule \"14\"\n" +
+            "when\n" +
+            "    $products: List();\n" +
+            "    $product : Product((\"14\" == \"14\") && (RuleUtils.toDouble(attributesMap[\"regularPrice\"]) >= \"5.99\")) from $products\n" +
+            "    $ruleExecutionStatus : RuleExecutionStatus()\n" +
+            "then\n" +
+            "    $products.remove($product);\n" +
+            "    $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);\n" +
+            "    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);\n" +
+            "end";
+
+    private static final String EXPECTED_RULE_15 = "package mrulespack\n" +
+            "\n" +
+            "import java.util.List;\n" +
+            "import java.util.LinkedList;\n" +
+            "import com.zone24x7.ibrac.recengine.enumeration.RuleType;\n" +
+            "import com.zone24x7.ibrac.recengine.pojo.Product;\n" +
+            "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;\n" +
+            "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;\n" +
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;\n" +
+            "\n" +
+            "rule \"15\"\n" +
+            "when\n" +
+            "    $products: List();\n" +
+            "    $product : Product((\"15\" == \"15\") && (RuleUtils.toInteger(attributesMap[\"reviewCount\"]) < \"52\")) from $products\n" +
+            "    $ruleExecutionStatus : RuleExecutionStatus()\n" +
+            "then\n" +
+            "    $products.remove($product);\n" +
+            "    $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);\n" +
+            "    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);\n" +
+            "end";
     /**
      * Setup method
      */
     @BeforeEach
     public void setup() {
         ruleGenerator = new DroolsMerchandisingRuleGenerator();
-        ReflectionTestUtils.setField(ruleGenerator, "ruleTranslator", new CsRuleToDroolsRuleTranslator(new HashMap<>()));
+        Map<String, String> attributeMapping = new HashMap<>();
+        attributeMapping.put("regularPrice", "double");
+        attributeMapping.put("reviewCount", "integer");
+        attributeMapping.put("rating", "double");
+
+        ReflectionTestUtils.setField(ruleGenerator, "ruleTranslator", new CsRuleToDroolsRuleTranslator(attributeMapping));
     }
 
     /**
@@ -672,5 +732,27 @@ public class DroolsMerchandisingRuleGeneratorTest {
     public void should_generate_a_do_not_recommend_rule_correctly() throws RuleGeneratorException {
         String actualResult = ruleGenerator.generateDoNotRecommendRule("13", null, "department #= \"wrong department\"");
         assertEquals(EXPECTED_RULE_13, actualResult);
+    }
+
+    /**
+     * Test to verify that rules with regular price is executed correctly.
+     * @throws RuleGeneratorException if an error occurs
+     */
+    @Test
+    public void should_generate_a_boost_rule_with_regular_price() throws RuleGeneratorException {
+        String actualResult = ruleGenerator.generateBoostRule("14", "", "regularPrice >= \"5.99\"", null);
+        System.out.println(actualResult);
+        assertEquals(EXPECTED_RULE_14, actualResult);
+    }
+
+    /**
+     * Test to verify that rules with review count is executed correctly.
+     * @throws RuleGeneratorException if an error occurs
+     */
+    @Test
+    public void should_generate_a_boost_rule_with_review_count() throws RuleGeneratorException {
+        String actualResult = ruleGenerator.generateBoostRule("15", "", "reviewCount < \"52\"", null);
+        System.out.println(actualResult);
+        assertEquals(EXPECTED_RULE_15, actualResult);
     }
 }

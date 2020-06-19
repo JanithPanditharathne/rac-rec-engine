@@ -6,6 +6,7 @@ import com.zone24x7.ibrac.recengine.enumeration.RuleType;
 import com.zone24x7.ibrac.recengine.pojo.Product;
 import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;
 import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;
+import com.zone24x7.ibrac.recengine.util.RuleUtils;
 
 // Boost Rules
 rule "1"
@@ -161,4 +162,26 @@ then
         $products.removeAll($newProductList);
         $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.DO_NOT_RECOMMEND);
     }
+end
+
+rule "14"
+when
+    $products: List();
+    $product : Product(("14" == "14") && (RuleUtils.toDouble(attributesMap["regularPrice"]) >= "5.99")) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);
+end
+
+rule "15"
+when
+    $products: List();
+    $product : Product(("15" == "15") && (RuleUtils.toInteger(attributesMap["reviewCount"]) < "52")) from $products
+    $ruleExecutionStatus : RuleExecutionStatus()
+then
+    $products.remove($product);
+    $products.add($ruleExecutionStatus.getHitCount(drools.getRule().getName()), $product);
+    $ruleExecutionStatus.addExecutedRuleId(drools.getRule().getName(), RuleType.BOOST);
 end

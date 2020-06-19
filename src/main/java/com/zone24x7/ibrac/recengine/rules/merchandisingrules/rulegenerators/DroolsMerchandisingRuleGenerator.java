@@ -25,7 +25,8 @@ public class DroolsMerchandisingRuleGenerator implements MerchandisingRuleGenera
             "import com.zone24x7.ibrac.recengine.enumeration.RuleType;",
             "import com.zone24x7.ibrac.recengine.pojo.Product;",
             "import com.zone24x7.ibrac.recengine.pojo.rules.MatchingCondition;",
-            "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;");
+            "import com.zone24x7.ibrac.recengine.pojo.rules.RuleExecutionStatus;",
+            "import com.zone24x7.ibrac.recengine.util.RuleUtils;");
 
     private static final String WHEN = "when";
     private static final String THEN = "then";

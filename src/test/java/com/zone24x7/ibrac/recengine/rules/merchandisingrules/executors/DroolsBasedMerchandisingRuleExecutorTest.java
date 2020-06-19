@@ -47,7 +47,7 @@ public class DroolsBasedMerchandisingRuleExecutorTest {
      * Setup method
      */
     @BeforeEach
-    public void setup() {
+    public void setup() throws Exception {
         recCycleStatus = mock(RecCycleStatus.class);
         ruleExecutor = new DroolsBasedMerchandisingRuleExecutor();
 
@@ -59,6 +59,10 @@ public class DroolsBasedMerchandisingRuleExecutorTest {
         KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder(builderConf);
         knowledgeBuilder.add(ResourceFactory.newFileResource(Paths.get("").toAbsolutePath() + "/src/test/java/com/zone24x7/ibrac/recengine/rules/merchandisingrules/executors/MerchandisingTestRules.drl"), ResourceType.DRL);
         Collection<KiePackage> knowledgePackages = knowledgeBuilder.getKnowledgePackages();
+
+        if (knowledgeBuilder.hasErrors()) {
+            throw new Exception("Error in knowledge builder. " + knowledgeBuilder.getErrors());
+        }
 
         // Create knowledge base
         knowledgeBase = KnowledgeBaseFactory.newKnowledgeBase();
@@ -109,6 +113,22 @@ public class DroolsBasedMerchandisingRuleExecutorTest {
         product6.getAttributesMap().put("brand", "nike");
         product7.getAttributesMap().put("department", "clothing");
         product8.getAttributesMap().put("department", "shoes");
+
+        product1.getAttributesMap().put("regularPrice", "5");
+        product3.getAttributesMap().put("regularPrice", "5.6");
+        product4.getAttributesMap().put("regularPrice", "6.1");
+        product5.getAttributesMap().put("regularPrice", "0.05");
+        product6.getAttributesMap().put("regularPrice", "9.99");
+        product7.getAttributesMap().put("regularPrice", "");
+        product8.getAttributesMap().put("regularPrice", "4.444");
+
+        product1.getAttributesMap().put("reviewCount", "79");
+        product2.getAttributesMap().put("reviewCount", "502");
+        product3.getAttributesMap().put("reviewCount", "51");
+        product5.getAttributesMap().put("reviewCount", "");
+        product6.getAttributesMap().put("reviewCount", "25");
+        product7.getAttributesMap().put("reviewCount", "0");
+        product8.getAttributesMap().put("reviewCount", "88");
 
         productList = new LinkedList<>();
         productList.add(product1);
@@ -464,6 +484,32 @@ public class DroolsBasedMerchandisingRuleExecutorTest {
         FilteringRulesResult filteredRecommendations = ruleExecutor.getFilteredRecommendations(productList, ruleIds, new HashMap<>(), recCycleStatus);
         assertRuleInfoInFilteringRuleResult(filteredRecommendations, 0);
         assertProductsInFilteringRuleResult(filteredRecommendations, 8, "1", "2", "3", "4", "5", "6", "7", "8");
+    }
+
+    /**
+     * Test to verify that products with regular price are boosted correctly.
+     */
+    @Test
+    public void should_boost_products_with_regular_price_correctly() {
+        Set<String> ruleIds = new HashSet<>();
+        ruleIds.add("14");
+
+        FilteringRulesResult filteredRecommendations = ruleExecutor.getFilteredRecommendations(productList, ruleIds, new HashMap<>(), recCycleStatus);
+        assertRuleInfoInFilteringRuleResult(filteredRecommendations, 1, "14");
+        assertProductsInFilteringRuleResult(filteredRecommendations, 8, "4", "6", "1", "2", "3", "5", "7", "8");
+    }
+
+    /**
+     * Test to verify that products with review count price are boosted correctly.
+     */
+    @Test
+    public void should_boost_products_with_review_count_correctly() {
+        Set<String> ruleIds = new HashSet<>();
+        ruleIds.add("15");
+
+        FilteringRulesResult filteredRecommendations = ruleExecutor.getFilteredRecommendations(productList, ruleIds, new HashMap<>(), recCycleStatus);
+        assertRuleInfoInFilteringRuleResult(filteredRecommendations, 1, "15");
+        assertProductsInFilteringRuleResult(filteredRecommendations, 8, "3", "6", "7", "1", "2", "4", "5", "8");
     }
 
     /**
