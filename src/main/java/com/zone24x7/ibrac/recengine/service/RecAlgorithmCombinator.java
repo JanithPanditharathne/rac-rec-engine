@@ -115,6 +115,10 @@ public class RecAlgorithmCombinator implements AlgorithmCombinator {
             }
         }
 
+        if (algoToProductsMap.size() == 1 && (combinedProducts.size() < activeBundle.getLimitToApply())) {
+            displayText = algoIdToDisplayText.get(algoToProductsMap.keySet().stream().findFirst().orElse(null));
+        }
+
         MultipleAlgorithmResult multipleAlgorithmResult = new MultipleAlgorithmResult();
         multipleAlgorithmResult.setRecProducts(new LinkedList<>(combinedProducts));
         multipleAlgorithmResult.addToAlgoToProductsMap(algoToProductsMap);
