@@ -42,9 +42,15 @@ public class TestConfigTest {
 
         testConfig2 = new TestConfig();
         assertThat(testConfig.equals(testConfig2), is(equalTo(false)));
+        assertThat(testConfig2.equals(testConfig), is(equalTo(false)));
+
+        testConfig2.setId("Invalid id");
+        assertThat(testConfig.equals(testConfig2), is(equalTo(false)));
+        assertThat(testConfig2.equals(testConfig), is(equalTo(false)));
 
         testConfig2.setId("1");
         assertThat(testConfig.equals(testConfig2), is(equalTo(true)));
+        assertThat(testConfig2.equals(testConfig), is(equalTo(true)));
     }
 
     /**

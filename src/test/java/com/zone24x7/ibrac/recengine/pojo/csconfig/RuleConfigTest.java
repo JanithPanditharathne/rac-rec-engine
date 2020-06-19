@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pojo.csconfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,9 +52,15 @@ public class RuleConfigTest {
 
         ruleConfig2 = new RuleConfig();
         assertThat(ruleConfig.equals(ruleConfig2), is(equalTo(false)));
+        assertThat(ruleConfig2.equals(ruleConfig), is(equalTo(false)));
+
+        ruleConfig2.setRules(Collections.emptyList());
+        assertThat(ruleConfig.equals(ruleConfig2), is(equalTo(false)));
+        assertThat(ruleConfig2.equals(ruleConfig), is(equalTo(false)));
 
         ruleConfig2.setRules(ruleList);
         assertThat(ruleConfig.equals(ruleConfig2), is(equalTo(true)));
+        assertThat(ruleConfig2.equals(ruleConfig), is(equalTo(true)));
     }
 
     /**

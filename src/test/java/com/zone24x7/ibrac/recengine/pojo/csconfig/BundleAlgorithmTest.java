@@ -51,21 +51,47 @@ public class BundleAlgorithmTest {
 
         bundleAlgorithm2 = new BundleAlgorithm();
         assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
+
+        bundleAlgorithm2.setId("2222");
+        assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
 
         bundleAlgorithm2.setId("1");
         assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
+
+        bundleAlgorithm2.setName("Algo B");
+        assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
 
         bundleAlgorithm2.setName("Algo A");
         assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
+
+        bundleAlgorithm2.setType("INVALID TYPE");
+        assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
 
         bundleAlgorithm2.setType("FLAT");
         assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
+
+        bundleAlgorithm2.setCustomDisplayText("Some other Custom Text");
+        assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
 
         bundleAlgorithm2.setCustomDisplayText("Custom Text");
         assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
+
+        bundleAlgorithm2.setDefaultDisplayText("Some other Default Text");
+        assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(false)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(false)));
 
         bundleAlgorithm2.setDefaultDisplayText("Default Text");
         assertThat(bundleAlgorithm.equals(bundleAlgorithm2), is(equalTo(true)));
+        assertThat(bundleAlgorithm2.equals(bundleAlgorithm), is(equalTo(true)));
     }
 
     /**

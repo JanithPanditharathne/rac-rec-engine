@@ -42,9 +42,15 @@ public class RegularConfigTest {
 
         regularConfig2 = new RegularConfig();
         assertThat(regularConfig.equals(regularConfig2), is(equalTo(false)));
+        assertThat(regularConfig2.equals(regularConfig), is(equalTo(false)));
+
+        regularConfig2.setBundleId("1111");
+        assertThat(regularConfig.equals(regularConfig2), is(equalTo(false)));
+        assertThat(regularConfig2.equals(regularConfig), is(equalTo(false)));
 
         regularConfig2.setBundleId("1");
         assertThat(regularConfig.equals(regularConfig2), is(equalTo(true)));
+        assertThat(regularConfig2.equals(regularConfig), is(equalTo(true)));
     }
 
     /**

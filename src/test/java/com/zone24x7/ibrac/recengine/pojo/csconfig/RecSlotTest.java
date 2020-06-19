@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pojo.csconfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,6 +24,12 @@ public class RecSlotTest {
      */
     @BeforeEach
     void setUp() {
+        recIdList.add("Rec 1");
+        recIdList.add("Rec 2");
+
+        ruleIdList.add("Rule 1");
+        ruleIdList.add("Rule 2");
+
         recSlot = new RecSlot();
         recSlot.setChannel("Web");
         recSlot.setPage("Home");
@@ -55,21 +62,47 @@ public class RecSlotTest {
 
         recSlot2 = new RecSlot();
         assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
+
+        recSlot2.setChannel("Invalid channel");
+        assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
 
         recSlot2.setChannel("Web");
         assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
+
+        recSlot2.setPage("Invalid page");
+        assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
 
         recSlot2.setPage("Home");
         assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
+
+        recSlot2.setPlaceholder("Invalid placement");
+        assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
 
         recSlot2.setPlaceholder("Horizontal");
         assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
+
+        recSlot2.setRecIds(Collections.emptyList());
+        assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
 
         recSlot2.setRecIds(recIdList);
         assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
+
+        recSlot2.setRuleIds(Collections.emptyList());
+        assertThat(recSlot.equals(recSlot2), is(equalTo(false)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(false)));
 
         recSlot2.setRuleIds(ruleIdList);
         assertThat(recSlot.equals(recSlot2), is(equalTo(true)));
+        assertThat(recSlot2.equals(recSlot), is(equalTo(true)));
     }
 
     /**
@@ -77,7 +110,7 @@ public class RecSlotTest {
      */
     @Test
     public void should_generate_the_hash_code_correctly() {
-        assertThat(recSlot.hashCode(), is(equalTo(-710704327)));
+        assertThat(recSlot.hashCode(), is(equalTo(1560278233)));
     }
 
     @Test

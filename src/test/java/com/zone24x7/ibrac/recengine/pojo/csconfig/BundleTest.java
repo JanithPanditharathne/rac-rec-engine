@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pojo.csconfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -62,24 +63,57 @@ public class BundleTest {
 
         bundle2 = new Bundle();
         assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
+
+        bundle2.setId("Invalid id");
+        assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
 
         bundle2.setId("1");
         assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
+
+        bundle2.setName("Invalid Bundle");
+        assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
 
         bundle2.setName("Bundle A");
         assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
+
+        bundle2.setType("Invalid type");
+        assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
 
         bundle2.setType("Flat");
         assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
+
+        bundle2.setDefaultLimit(-1);
+        assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
 
         bundle2.setDefaultLimit(5);
         assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
+
+        AlgoCombineInfo invalidAlgoCombineInfo = new AlgoCombineInfo();
+        invalidAlgoCombineInfo.setCombineDisplayText("Invalid display text");
+        bundle2.setAlgoCombineInfo(invalidAlgoCombineInfo);
+        assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
 
         bundle2.setAlgoCombineInfo(algoCombineInfo);
         assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
+
+        bundle2.setAlgorithms(Collections.emptyList());
+        assertThat(bundle.equals(bundle2), is(equalTo(false)));
+        assertThat(bundle2.equals(bundle), is(equalTo(false)));
 
         bundle2.setAlgorithms(algoList);
         assertThat(bundle.equals(bundle2), is(equalTo(true)));
+        assertThat(bundle2.equals(bundle), is(equalTo(true)));
     }
 
     /**

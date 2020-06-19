@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pojo.csconfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,9 +51,15 @@ public class RecConfigTest {
 
         recConfig2 = new RecConfig();
         assertThat(recConfig.equals(recConfig2), is(equalTo(false)));
+        assertThat(recConfig2.equals(recConfig), is(equalTo(false)));
+
+        recConfig2.setRecs(Collections.emptyList());
+        assertThat(recConfig.equals(recConfig2), is(equalTo(false)));
+        assertThat(recConfig2.equals(recConfig), is(equalTo(false)));
 
         recConfig2.setRecs(recList);
         assertThat(recConfig.equals(recConfig2), is(equalTo(true)));
+        assertThat(recConfig2.equals(recConfig), is(equalTo(true)));
     }
 
     /**

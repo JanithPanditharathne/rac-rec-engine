@@ -44,12 +44,23 @@ public class AlgoCombineInfoTest {
 
         algoCombineInfo2 = new AlgoCombineInfo();
         assertThat(algoCombineInfo.equals(algoCombineInfo2), is(equalTo(false)));
+        assertThat(algoCombineInfo2.equals(algoCombineInfo), is(equalTo(false)));
+
+        algoCombineInfo2.setEnableCombine(false);
+        assertThat(algoCombineInfo.equals(algoCombineInfo2), is(equalTo(false)));
+        assertThat(algoCombineInfo2.equals(algoCombineInfo), is(equalTo(false)));
 
         algoCombineInfo2.setEnableCombine(true);
         assertThat(algoCombineInfo.equals(algoCombineInfo2), is(equalTo(false)));
+        assertThat(algoCombineInfo2.equals(algoCombineInfo), is(equalTo(false)));
+
+        algoCombineInfo2.setCombineDisplayText("Invalid Combined Display Text");
+        assertThat(algoCombineInfo.equals(algoCombineInfo2), is(equalTo(false)));
+        assertThat(algoCombineInfo2.equals(algoCombineInfo), is(equalTo(false)));
 
         algoCombineInfo2.setCombineDisplayText("Combined Display Text");
         assertThat(algoCombineInfo.equals(algoCombineInfo2), is(equalTo(true)));
+        assertThat(algoCombineInfo2.equals(algoCombineInfo), is(equalTo(true)));
     }
 
     /**

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.in;
 import static org.hamcrest.core.Is.is;
 
 /**
@@ -45,12 +46,27 @@ public class BundleAlgorithmContainerTest {
 
         bundleAlgorithmContainer2 = new BundleAlgorithmContainer();
         assertThat(bundleAlgorithmContainer.equals(bundleAlgorithmContainer2), is(equalTo(false)));
+        assertThat(bundleAlgorithmContainer2.equals(bundleAlgorithmContainer), is(equalTo(false)));
+
+        bundleAlgorithmContainer2.setRank(5);
+        assertThat(bundleAlgorithmContainer.equals(bundleAlgorithmContainer2), is(equalTo(false)));
+        assertThat(bundleAlgorithmContainer2.equals(bundleAlgorithmContainer), is(equalTo(false)));
 
         bundleAlgorithmContainer2.setRank(1);
         assertThat(bundleAlgorithmContainer.equals(bundleAlgorithmContainer2), is(equalTo(false)));
+        assertThat(bundleAlgorithmContainer2.equals(bundleAlgorithmContainer), is(equalTo(false)));
+
+        BundleAlgorithm invalidBundleAlgorithm = new BundleAlgorithm();
+        invalidBundleAlgorithm.setType("Invalid");
+        invalidBundleAlgorithm.setId("10");
+
+        bundleAlgorithmContainer2.setAlgorithm(invalidBundleAlgorithm);
+        assertThat(bundleAlgorithmContainer.equals(bundleAlgorithmContainer2), is(equalTo(false)));
+        assertThat(bundleAlgorithmContainer2.equals(bundleAlgorithmContainer), is(equalTo(false)));
 
         bundleAlgorithmContainer2.setAlgorithm(bundleAlgorithm);
         assertThat(bundleAlgorithmContainer.equals(bundleAlgorithmContainer2), is(equalTo(true)));
+        assertThat(bundleAlgorithmContainer2.equals(bundleAlgorithmContainer), is(equalTo(true)));
     }
 
     /**

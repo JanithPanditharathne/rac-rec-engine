@@ -54,24 +54,63 @@ public class RecTest {
 
         rec2 = new Rec();
         assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        rec2.setId("Invalid 1");
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
 
         rec2.setId("1");
         assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        rec2.setName("Invalid Rec 1");
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
 
         rec2.setName("Rec 1");
         assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        rec2.setType("Invalid Regular");
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        rec2.setType("Invalid Regular");
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
 
         rec2.setType("Regular");
         assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
 
-        rec2.setRegularConfig(regularConfig);
+        RegularConfig invalidRegularConfig = new RegularConfig();
+        invalidRegularConfig.setBundleId("Invalid bundle for regular config");
+        rec2.setRegularConfig(invalidRegularConfig);
         assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        rec2.setRegularConfig(this.regularConfig);
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        TestConfig invalidTestConfig = new TestConfig();
+        invalidTestConfig.setId("Invalid bundle for test config");
+        rec2.setTestConfig(invalidTestConfig);
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
 
         rec2.setTestConfig(testConfig);
         assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        rec2.setMatchingCondition("department == \"clothing\"");
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
 
         rec2.setMatchingCondition("department == \"shoes\"");
         assertThat(rec.equals(rec2), is(equalTo(true)));
+        assertThat(rec2.equals(rec), is(equalTo(true)));
     }
 
     /**

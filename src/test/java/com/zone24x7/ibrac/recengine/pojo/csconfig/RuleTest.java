@@ -52,24 +52,55 @@ public class RuleTest {
 
         rule2 = new Rule();
         assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
+
+        rule2.setId("Invalid id");
+        assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
 
         rule2.setId("1");
         assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
+
+        rule2.setName("Invalid Rule name");
+        assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
 
         rule2.setName("Rule 1");
         assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
+
+        rule2.setType("Invalid Type");
+        assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
 
         rule2.setType("Boost");
         assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
+
+        rule2.setGlobal(false);
+        assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
 
         rule2.setGlobal(true);
         assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
+
+        rule2.setActionCondition("department == \"invalid\"");
+        assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
 
         rule2.setActionCondition("department == \"shoes\"");
         assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
+
+        rule2.setMatchingCondition("category == \"invalid\"");
+        assertThat(rule.equals(rule2), is(equalTo(false)));
+        assertThat(rule2.equals(rule), is(equalTo(false)));
 
         rule2.setMatchingCondition("category == \"clothing\"");
         assertThat(rule.equals(rule2), is(equalTo(true)));
+        assertThat(rule2.equals(rule), is(equalTo(true)));
     }
 
     /**

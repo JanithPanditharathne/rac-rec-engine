@@ -3,6 +3,7 @@ package com.zone24x7.ibrac.recengine.pojo.csconfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -50,9 +51,15 @@ public class BundleConfigTest {
 
         bundleConfig2 = new BundleConfig();
         assertThat(bundleConfig.equals(bundleConfig2), is(equalTo(false)));
+        assertThat(bundleConfig2.equals(bundleConfig), is(equalTo(false)));
+
+        bundleConfig2.setBundles(Collections.emptyList());
+        assertThat(bundleConfig.equals(bundleConfig2), is(equalTo(false)));
+        assertThat(bundleConfig2.equals(bundleConfig), is(equalTo(false)));
 
         bundleConfig2.setBundles(bundleList);
         assertThat(bundleConfig.equals(bundleConfig2), is(equalTo(true)));
+        assertThat(bundleConfig2.equals(bundleConfig), is(equalTo(true)));
     }
 
     /**
