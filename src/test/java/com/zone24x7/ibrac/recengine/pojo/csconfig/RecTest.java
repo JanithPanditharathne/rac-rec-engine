@@ -84,6 +84,14 @@ public class RecTest {
         assertThat(rec.equals(rec2), is(equalTo(false)));
         assertThat(rec2.equals(rec), is(equalTo(false)));
 
+        rec2.setMatchingCondition("department == \"clothing\"");
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
+        rec2.setMatchingCondition("department == \"shoes\"");
+        assertThat(rec.equals(rec2), is(equalTo(false)));
+        assertThat(rec2.equals(rec), is(equalTo(false)));
+
         RegularConfig invalidRegularConfig = new RegularConfig();
         invalidRegularConfig.setBundleId("Invalid bundle for regular config");
         rec2.setRegularConfig(invalidRegularConfig);
@@ -101,14 +109,6 @@ public class RecTest {
         assertThat(rec2.equals(rec), is(equalTo(false)));
 
         rec2.setTestConfig(testConfig);
-        assertThat(rec.equals(rec2), is(equalTo(false)));
-        assertThat(rec2.equals(rec), is(equalTo(false)));
-
-        rec2.setMatchingCondition("department == \"clothing\"");
-        assertThat(rec.equals(rec2), is(equalTo(false)));
-        assertThat(rec2.equals(rec), is(equalTo(false)));
-
-        rec2.setMatchingCondition("department == \"shoes\"");
         assertThat(rec.equals(rec2), is(equalTo(true)));
         assertThat(rec2.equals(rec), is(equalTo(true)));
     }
