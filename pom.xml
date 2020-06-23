@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.zone24x7</groupId>
 	<artifactId>recengine</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1</version>
 	<name>recengine</name>
 	<description>Recommendation Engine </description>
 
