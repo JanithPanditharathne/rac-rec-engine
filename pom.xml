@@ -21,7 +21,7 @@
 	<repositories>
 		<repository>
 			<id>Nexus-Zone24x7</id>
-			<url>https://nexus.zone24x7.lk/repository/snapshots</url>
+			<url>https://nexus.zone24x7.lk/repository/releases</url>
 		</repository>
 	</repositories>
 
@@ -45,9 +45,9 @@
 
 	<dependencies>
         <dependency>
-            <groupId>com.zone24x7.ibrac</groupId>
+            <groupId>com.zone.ibrac</groupId>
             <artifactId>reconlib</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>1.0.0</version>
         </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
